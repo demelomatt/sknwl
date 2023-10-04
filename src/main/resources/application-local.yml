@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    show_sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: update
+
+server:
+  error:
+    include-stacktrace: never
