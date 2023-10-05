@@ -1,10 +1,12 @@
 package com.sknwl.shareknowledge.domain.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 public class Badge {
     private Long id;
     private String subject;

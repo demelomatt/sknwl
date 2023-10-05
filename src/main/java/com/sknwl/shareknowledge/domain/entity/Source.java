@@ -1,8 +1,10 @@
 package com.sknwl.shareknowledge.domain.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Source {
     private Long id;
     private String name;

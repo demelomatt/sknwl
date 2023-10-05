@@ -1,12 +1,14 @@
 package com.sknwl.shareknowledge.domain.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 public class StudyGuide {
     private Long id;
     private Member publisher;

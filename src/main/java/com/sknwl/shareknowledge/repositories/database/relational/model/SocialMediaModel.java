@@ -1,9 +1,11 @@
 package com.sknwl.shareknowledge.repositories.database.relational.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="social_media")
 public class SocialMediaModel {

@@ -2,13 +2,15 @@ package com.sknwl.shareknowledge.repositories.database.relational.model;
 
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="content")
 public class ContentModel {
@@ -53,6 +55,4 @@ public class ContentModel {
 
     @OneToMany(mappedBy = "content")
     private List<CommentModel> comments;
-
-    private String coverUrl;
 }

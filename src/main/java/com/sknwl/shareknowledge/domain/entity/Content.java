@@ -1,14 +1,15 @@
 package com.sknwl.shareknowledge.domain.entity;
 
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
 
-@Data
+@Getter
+@Setter
 public class Content {
     private Long id;
     private String name;
@@ -25,5 +26,4 @@ public class Content {
     private Long rating;
     private Long reviewers;
     private List<Comment> comments;
-    private InputStream cover;
 }

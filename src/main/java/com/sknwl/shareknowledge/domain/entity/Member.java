@@ -1,12 +1,14 @@
 package com.sknwl.shareknowledge.domain.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.SortedSet;
 
-@Data
+@Getter
+@Setter
 public class Member {
     private Long id;
     private String name;
