@@ -10,7 +10,7 @@ import java.util.SortedSet;
 public record ContentRequest(Long id, String name, String description, ContentType contentType, String url,
                              SourceRequest source,
                              List<String> authors, SortedSet<String> subjects, LanguageRequest language, Long durationMinutes,
-                             MemberRequest publisher,
+                             MemberRequestCreate publisher,
                              LocalDateTime publishedDateTime, Long rating, Long reviewers, List<CommentRequest> comments,
                              MultipartFile cover) {
 }

@@ -28,13 +28,21 @@ public class MemberUseCase {
         return memberRepository.create(member);
     }
 
+    public Member update(Member member) {
+        return memberRepository.update(member);
+    }
+
     public Page<Member> list(Integer pageNumber, Integer pageSize) {
         var pageable = PageRequest.of(pageNumber, pageSize);
         return memberRepository.list(pageable);
     }
 
-    public void delete(Long id) {
-        memberRepository.delete(id);
+    public void delete(Long id, Boolean hardDelete) {
+        if (hardDelete) {
+            memberRepository.hardDelete(id);
+        } else{
+            memberRepository.softDelete(id);
+        }
     }
 
     public Member get(Long id) {

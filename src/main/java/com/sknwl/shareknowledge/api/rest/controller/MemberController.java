@@ -1,7 +1,8 @@
 package com.sknwl.shareknowledge.api.rest.controller;
 
 import com.sknwl.shareknowledge.api.rest.mapper.MemberApiMapper;
-import com.sknwl.shareknowledge.api.rest.model.MemberRequest;
+import com.sknwl.shareknowledge.api.rest.model.MemberRequestCreate;
+import com.sknwl.shareknowledge.api.rest.model.MemberRequestUpdate;
 import com.sknwl.shareknowledge.api.rest.model.MemberResponse;
 import com.sknwl.shareknowledge.domain.usecase.MemberUseCase;
 import org.springframework.data.domain.Page;
@@ -22,18 +23,24 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<MemberResponse> create(
-            @RequestBody MemberRequest memberRequest,
+            @RequestBody MemberRequestCreate memberRequestCreate,
             UriComponentsBuilder uriBuilder
     ) {
-        var member = memberUseCase.create(mapper.map(memberRequest));
+        var member = memberUseCase.create(mapper.map(memberRequestCreate));
 
         var uri = uriBuilder.path("/members").buildAndExpand(member.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(member));
     }
 
+    @PutMapping
+    public ResponseEntity<MemberResponse> update(@RequestBody MemberRequestUpdate memberRequestUpdate) {
+        var member = memberUseCase.update(mapper.map(memberRequestUpdate));
+        return ResponseEntity.ok(mapper.map(member));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        memberUseCase.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestParam(defaultValue = "false") Boolean hardDelete) {
+        memberUseCase.delete(id, hardDelete);
         return ResponseEntity.noContent().build();
     }
 

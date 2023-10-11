@@ -1,12 +1,12 @@
 package com.sknwl.shareknowledge.repositories.database.relational.repository;
 
 import com.sknwl.shareknowledge.domain.entity.Member;
+import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import com.sknwl.shareknowledge.repositories.MemberRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.mapper.MemberRepositoryMapper;
 import com.sknwl.shareknowledge.repositories.database.relational.model.MemberModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.SocialMediaModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.MemberJpaRepository;
-import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.SocialMediaJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -17,37 +17,40 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MemberRelationalRepository implements MemberRepository {
     private final MemberJpaRepository memberJpaRepository;
-    private final SocialMediaJpaRepository socialMediaJpaRepository;
     private final MemberRepositoryMapper mapper = MemberRepositoryMapper.INSTANCE;
 
-    public MemberRelationalRepository(MemberJpaRepository memberJpaRepository, SocialMediaJpaRepository socialMediaJpaRepository) {
+    public MemberRelationalRepository(MemberJpaRepository memberJpaRepository) {
         this.memberJpaRepository = memberJpaRepository;
-        this.socialMediaJpaRepository = socialMediaJpaRepository;
     }
 
     @Transactional
     @Override
     public Member create(Member member) {
         MemberModel memberModel = mapper.map(member);
-        var createdMemberModel = memberJpaRepository.save(memberModel);
-        if (createdMemberModel.getSocialMedias() != null) {
-            for (SocialMediaModel socialMedia : createdMemberModel.getSocialMedias()) {
-                socialMedia.setMember(createdMemberModel);
-            }
-            socialMediaJpaRepository.saveAll(createdMemberModel.getSocialMedias());
+        for (SocialMediaModel socialMedia : memberModel.getSocialMedias()) {
+            socialMedia.setMember(memberModel);
         }
-        return mapper.map(createdMemberModel);
-    }
-
-    @Override
-    public Member update(Member member) {
-        return null;
+        memberJpaRepository.save(memberModel);
+        return mapper.map(memberModel);
     }
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        var memberModel = memberJpaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Member update(Member member) {
+        var memberModel = memberJpaRepository.findById(member.getId()).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        mapper.update(member, memberModel);
+
+        for (SocialMediaModel socialMedia : memberModel.getSocialMedias()) {
+            socialMedia.setMember(memberModel);
+        }
+        memberJpaRepository.save(memberModel);
+        return mapper.map(memberModel);
+    }
+
+    @Transactional
+    @Override
+    public void softDelete(Long id) {
+        var memberModel = memberJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
         if (memberModel.getActive()) {
             memberModel.setActive(false);
         } else {
@@ -56,10 +59,16 @@ public class MemberRelationalRepository implements MemberRepository {
     }
 
     @Override
+    @Transactional
+    public void hardDelete(Long id) {
+        var memberModel = memberJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        memberJpaRepository.deleteById(id);
+    }
+
+    @Override
     public Member get(Long id) {
         var optional = memberJpaRepository.findById(id);
-        var memberModel = optional.orElseThrow(EntityNotFoundException::new);
-
+        var memberModel = optional.orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
         return mapper.map(memberModel);
     }
 

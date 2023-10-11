@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 public record BadgeRequest(
         String subject,
         LocalDateTime issuanceDateTime,
-        MemberRequest member
+        MemberRequestCreate member
 ) {
 }

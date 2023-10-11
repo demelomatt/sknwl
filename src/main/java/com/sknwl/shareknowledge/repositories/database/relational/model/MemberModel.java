@@ -21,7 +21,7 @@ public class MemberModel {
     private String name;
     private String biography;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<SocialMediaModel> socialMedias;
 
     @ManyToMany

@@ -8,8 +8,8 @@ public interface MemberRepository {
 
     Member create(Member member);
     Member update(Member member);
-    void delete(Long id);
+    void softDelete(Long id);
+    void hardDelete(Long id);
     Member get(Long id);
-
     Page<Member> list(PageRequest pageable);
 }
