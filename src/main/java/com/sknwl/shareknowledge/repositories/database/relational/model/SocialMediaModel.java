@@ -16,7 +16,7 @@ public class SocialMediaModel {
     private String name;
     private String url;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private MemberModel member;
 }

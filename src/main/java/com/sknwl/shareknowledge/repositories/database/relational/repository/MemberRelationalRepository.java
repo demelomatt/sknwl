@@ -37,7 +37,7 @@ public class MemberRelationalRepository implements MemberRepository {
     @Transactional
     @Override
     public Member update(Member member) {
-        var memberModel = memberJpaRepository.findById(member.getId()).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        var memberModel = getMember(member.getId());
         mapper.update(member, memberModel);
 
         for (SocialMediaModel socialMedia : memberModel.getSocialMedias()) {
@@ -50,7 +50,7 @@ public class MemberRelationalRepository implements MemberRepository {
     @Transactional
     @Override
     public void softDelete(Long id) {
-        var memberModel = memberJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        var memberModel = getMember(id);
         if (memberModel.getActive()) {
             memberModel.setActive(false);
         } else {
@@ -61,14 +61,13 @@ public class MemberRelationalRepository implements MemberRepository {
     @Override
     @Transactional
     public void hardDelete(Long id) {
-        var memberModel = memberJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        getMember(id);
         memberJpaRepository.deleteById(id);
     }
 
     @Override
     public Member get(Long id) {
-        var optional = memberJpaRepository.findById(id);
-        var memberModel = optional.orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        var memberModel = getMember(id);
         return mapper.map(memberModel);
     }
 
@@ -79,5 +78,9 @@ public class MemberRelationalRepository implements MemberRepository {
                 .map(mapper::map)
                 .toList();
         return new PageImpl<>(members);
+    }
+
+    private MemberModel getMember(Long id) {
+        return memberJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
     }
 }

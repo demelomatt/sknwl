@@ -13,5 +13,6 @@ public class LanguageModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String code;
     private String iconUrl;
 }

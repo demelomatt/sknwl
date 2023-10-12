@@ -8,6 +8,6 @@ import lombok.Setter;
 public class Source {
     private Long id;
     private String name;
-    private String webSiteUrl;
+    private String webSiteUri;
     private String iconUrl;
 }

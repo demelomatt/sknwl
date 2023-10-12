@@ -4,3 +4,6 @@ server:
 spring:
   application:
     name: ShareKnowledge
+
+  liquibase:
+    change-log: classpath:/migrations/db-changelog-master.yaml

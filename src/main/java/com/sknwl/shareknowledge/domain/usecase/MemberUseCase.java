@@ -17,14 +17,8 @@ public class MemberUseCase {
     }
 
     public Member create(Member member) {
-        if (member.getActive() == null) {
-            member.setActive(true);
-        }
-
-        if (member.getJoinedDateTime() == null) {
-            member.setJoinedDateTime(LocalDateTime.now());
-        }
-
+        member.setActive(true);
+        member.setJoinedDateTime(LocalDateTime.now());
         return memberRepository.create(member);
     }
 

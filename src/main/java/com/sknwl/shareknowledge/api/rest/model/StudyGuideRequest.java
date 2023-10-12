@@ -8,6 +8,6 @@ public record StudyGuideRequest(Long id, MemberRequestCreate publisher, List<Mem
                                 String description,
                                 Set<String> subjects, String language, Long durationMinutes, LocalDateTime publishedDateTime,
                                 Long rating, Long reviewers,
-                                Long subscribers, Long finished, Long favorites, List<ContentRequest> contents,
+                                Long subscribers, Long finished, Long favorites, List<ContentRequestCreate> contents,
                                 List<CommentRequest> comments, boolean verified) {
 }

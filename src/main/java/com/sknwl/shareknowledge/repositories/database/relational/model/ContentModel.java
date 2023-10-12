@@ -45,14 +45,17 @@ public class ContentModel {
 
     private Long durationMinutes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", referencedColumnName = "id")
     private MemberModel publisher;
 
     private LocalDateTime publishedDateTime;
     private Long rating;
     private Long reviewers;
-
+/*
     @OneToMany(mappedBy = "content")
     private List<CommentModel> comments;
+
+ */
+
 }

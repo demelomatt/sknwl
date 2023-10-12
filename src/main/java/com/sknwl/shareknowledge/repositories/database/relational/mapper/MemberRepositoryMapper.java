@@ -22,6 +22,4 @@ public interface MemberRepositoryMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(Member member, @MappingTarget MemberModel memberModel);
-
-
 }
