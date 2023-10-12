@@ -16,9 +16,10 @@ public record ContentResponse(Long id,
                               SortedSet<String> subjects,
                               LanguageResponse language,
                               Long durationMinutes,
-                              MemberResponse publisher,
+                              MemberResponseId publisher,
                               LocalDateTime publishedDateTime,
-                              Long rating,
-                              Long reviewers)
+                              Long reviewers,
+                              Double rating
+   )
 {
 }

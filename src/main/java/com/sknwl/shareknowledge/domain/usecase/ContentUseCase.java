@@ -1,6 +1,7 @@
 package com.sknwl.shareknowledge.domain.usecase;
 
 import com.sknwl.shareknowledge.domain.entity.Content;
+import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.Source;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
@@ -40,6 +41,27 @@ public class ContentUseCase {
 
     public Content get(Long id) {
         return contentRepository.get(id);
+    }
+
+    public ContentRating newRating(ContentRating contentRating) {
+        contentRating.setRatingDateTime(LocalDateTime.now());
+        return contentRepository.newRating(contentRating);
+    }
+
+    public ContentRating updateRating(ContentRating contentRating) {
+        return contentRepository.updateRating(contentRating);
+    }
+
+    public void deleteRating(Long id) {
+        contentRepository.deleteRating(id);
+    }
+
+    public ContentRating getRating(Long id) {
+        return contentRepository.getRating(id);
+    }
+
+    public List<ContentRating> listRating() {
+        return contentRepository.listRating();
     }
 
     public Source newSource(Source source) {

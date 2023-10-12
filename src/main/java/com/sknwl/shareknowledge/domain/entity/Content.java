@@ -23,7 +23,7 @@ public class Content {
     private Long durationMinutes;
     private Member publisher;
     private LocalDateTime publishedDateTime;
-    private Long rating;
     private Long reviewers;
+    private Double rating;
     private List<Comment> comments;
 }

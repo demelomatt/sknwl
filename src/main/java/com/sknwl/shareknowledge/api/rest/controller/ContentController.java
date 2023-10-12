@@ -63,6 +63,45 @@ public class ContentController {
         return ResponseEntity.ok(new PageImpl<>(contents));
     }
 
+    @PostMapping("/ratings")
+    public ResponseEntity<ContentRatingResponse> createRating(
+            @RequestBody ContentRatingRequest contentRatingRequest,
+            UriComponentsBuilder uriBuilder
+    ) {
+        var rating = contentUseCase.newRating(mapper.map(contentRatingRequest));
+
+        var uri = uriBuilder.path("/contents/ratings").buildAndExpand(rating.getId()).toUri();
+        return ResponseEntity.created(uri).body(mapper.map(rating));
+    }
+
+    @PutMapping("/ratings")
+    public ResponseEntity<ContentRatingResponse> updateRating(@RequestBody ContentRatingRequest contentRatingRequest) {
+        var rating = contentUseCase.updateRating(mapper.map(contentRatingRequest));
+        return ResponseEntity.ok(mapper.map(rating));
+    }
+
+    @DeleteMapping("/ratings/{id}")
+    public ResponseEntity<Void> deleteRating(@PathVariable Long id) {
+        contentUseCase.deleteRating(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/ratings/{id}")
+    public ResponseEntity<ContentRatingResponse> getRating(@PathVariable Long id) {
+        var rating = contentUseCase.getRating(id);
+        return ResponseEntity.ok(mapper.map(rating));
+    }
+
+    @GetMapping("/ratings")
+    public ResponseEntity<List<ContentRatingResponse>> list(
+    ) {
+        var ratings = contentUseCase.listRating()
+                .stream()
+                .map(mapper::map)
+                .toList();
+        return ResponseEntity.ok(ratings);
+    }
+
     @PostMapping("/sources")
     public ResponseEntity<SourceResponse> createSource(
             @RequestBody SourceRequest sourceRequest,

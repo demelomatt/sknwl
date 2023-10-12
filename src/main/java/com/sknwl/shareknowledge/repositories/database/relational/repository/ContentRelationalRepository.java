@@ -1,16 +1,20 @@
 package com.sknwl.shareknowledge.repositories.database.relational.repository;
 
 import com.sknwl.shareknowledge.domain.entity.Content;
+import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.Source;
 import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.mapper.ContentRepositoryMapper;
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModel;
+import com.sknwl.shareknowledge.repositories.database.relational.model.ContentRatingModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.SourceModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentJpaRepository;
+import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.LanguageJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.SourceJpaRepository;
+import com.sknwl.shareknowledge.repositories.model.RatingSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,18 +22,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ContentRelationalRepository implements ContentRepository {
     private final ContentJpaRepository contentJpaRepository;
     private final SourceJpaRepository sourceJpaRepository;
     private final LanguageJpaRepository languageJpaRepository;
+    private final ContentRatingJpaRepository contentRatingJpaRepository;
     private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
 
-    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, SourceJpaRepository sourceJpaRepository, LanguageJpaRepository languageJpaRepository) {
+    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, SourceJpaRepository sourceJpaRepository, LanguageJpaRepository languageJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository) {
         this.contentJpaRepository = contentJpaRepository;
         this.sourceJpaRepository = sourceJpaRepository;
         this.languageJpaRepository = languageJpaRepository;
+        this.contentRatingJpaRepository = contentRatingJpaRepository;
     }
 
     @Transactional
@@ -60,20 +67,93 @@ public class ContentRelationalRepository implements ContentRepository {
     @Override
     public Content get(Long id) {
         var contentModel = getContent(id);
+        var summary = getSummary(id);
+        if (summary != null) {
+            contentModel.setReviewers(summary.getCount());
+            contentModel.setRating(summary.getAverage());
+        } else{
+            contentModel.setReviewers(0L);
+            contentModel.setRating(0.0);
+        }
         return mapper.map(contentModel);
     }
 
     @Override
     public Page<Content> list(Pageable pageable) {
-        var contents = contentJpaRepository.findAll(pageable)
+
+        var contentsModel = contentJpaRepository.findAll(pageable);
+        var summaries = listSummary(contentsModel
                 .stream()
-                .map(mapper::map)
+                .map(ContentModel::getId)
+                .toList());
+
+        var contents = contentsModel
+                .stream()
+                .map(contentModel -> {
+                    var ratingSummary = summaries.getOrDefault(contentModel.getId(), new RatingSummary(contentModel.getId(), 0L, 0.0));
+                    contentModel.setReviewers(ratingSummary.getCount());
+                    contentModel.setRating(ratingSummary.getAverage());
+                    return mapper.map(contentModel);
+                })
                 .toList();
+
         return new PageImpl<>(contents);
     }
 
     private ContentModel getContent(Long id) {
         return contentJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified content"));
+    }
+
+    private RatingSummary getSummary(Long contentId) {
+        return contentRatingJpaRepository.findRatingCountAndAverageByContentId(contentId);
+    }
+
+    private Map<Long, RatingSummary> listSummary(List<Long> contentIds) {
+        return contentRatingJpaRepository.findRatingCountAndAverageByContentIds(contentIds);
+    }
+
+    @Transactional
+    @Override
+    public ContentRating newRating(ContentRating contentRating) {
+        ContentRatingModel contentRatingModel = mapper.map(contentRating);
+        contentRatingJpaRepository.save(contentRatingModel);
+        return mapper.map(contentRatingModel);
+    }
+
+    @Transactional
+    @Override
+    public ContentRating updateRating(ContentRating contentRating) {
+        ContentRatingModel contentRatingModel = getRatingIfExists(contentRating.getId());
+        mapper.update(contentRating, contentRatingModel);
+
+        contentRatingJpaRepository.save(contentRatingModel);
+        return mapper.map(contentRatingModel);
+    }
+
+    @Transactional
+    @Override
+    public void deleteRating(Long id) {
+        getRatingIfExists(id);
+        contentRatingJpaRepository.deleteById(id);
+
+    }
+
+    @Override
+    public ContentRating getRating(Long id) {
+        var ratingModel = getRatingIfExists(id);
+        return mapper.map(ratingModel);
+    }
+
+    @Override
+    public List<ContentRating> listRating() {
+        return contentRatingJpaRepository.findAll()
+                .stream()
+                .map(mapper::map)
+                .toList();
+    }
+
+    private ContentRatingModel getRatingIfExists(Long id) {
+        return contentRatingJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified rating"));
     }
 
     @Transactional
