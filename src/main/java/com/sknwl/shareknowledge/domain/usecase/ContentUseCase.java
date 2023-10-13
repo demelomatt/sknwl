@@ -4,6 +4,8 @@ import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.Source;
+import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,14 @@ public class ContentUseCase {
     public Page<Content> list(Integer pageNumber, Integer pageSize) {
         var pageable = PageRequest.of(pageNumber, pageSize);
         return contentRepository.list(pageable);
+    }
+
+    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration) {
+        var pageable = PageRequest.of(pageNumber, pageSize);
+        if (contentTypes == null) {
+            contentTypes = List.of(ContentType.values());
+        }
+        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration);
     }
 
     public void delete(Long id) {

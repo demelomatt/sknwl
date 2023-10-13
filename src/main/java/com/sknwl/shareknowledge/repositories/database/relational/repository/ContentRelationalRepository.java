@@ -4,6 +4,8 @@ import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.Source;
+import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.mapper.ContentRepositoryMapper;
@@ -80,7 +82,6 @@ public class ContentRelationalRepository implements ContentRepository {
 
     @Override
     public Page<Content> list(Pageable pageable) {
-
         var contentsModel = contentJpaRepository.findAll(pageable);
         var summaries = listSummary(contentsModel
                 .stream()
@@ -97,6 +98,17 @@ public class ContentRelationalRepository implements ContentRepository {
                 })
                 .toList();
 
+        return new PageImpl<>(contents);
+    }
+
+    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration) {
+        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, sourceId, languageId, minDuration, maxDuration, minRatings, sort.name(), pageable);
+        var contents = contentsSummary.getContent().stream().map(contentModelSummary -> {
+            var contentModel = contentModelSummary.getContent();
+            contentModel.setReviewers(contentModelSummary.getCount());
+            contentModel.setRating(contentModelSummary.getAverage());
+            return mapper.map(contentModel);
+        }).toList();
         return new PageImpl<>(contents);
     }
 
@@ -232,5 +244,4 @@ public class ContentRelationalRepository implements ContentRepository {
                 .map(mapper::map)
                 .toList();
     }
-
 }

@@ -4,6 +4,8 @@ import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.Source;
+import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,6 +17,7 @@ public interface ContentRepository {
     void hardDelete(Long id);
     Content get(Long id);
     Page<Content> list(Pageable pageable);
+    Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration);
 
     ContentRating newRating(ContentRating contentRating);
     ContentRating updateRating(ContentRating contentRating);

@@ -2,6 +2,8 @@ package com.sknwl.shareknowledge.api.rest.controller;
 
 import com.sknwl.shareknowledge.api.rest.mapper.ContentApiMapper;
 import com.sknwl.shareknowledge.api.rest.model.*;
+import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.usecase.ContentUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -50,11 +52,11 @@ public class ContentController {
         return ResponseEntity.ok(mapper.map(content));
     }
 
+    /*
     @GetMapping
     public ResponseEntity<Page<ContentResponse>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "25") int pageSize,
-            @RequestParam(defaultValue = "asc") String sortOrder
+            @RequestParam(defaultValue = "25") int pageSize
     ) {
         var contents = contentUseCase.list(pageNumber, pageSize)
                 .stream()
@@ -62,6 +64,29 @@ public class ContentController {
                 .toList();
         return ResponseEntity.ok(new PageImpl<>(contents));
     }
+
+     */
+
+    @GetMapping
+    public ResponseEntity<Page<ContentResponse>> list(
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "25") int pageSize,
+            @RequestParam(defaultValue = "RATING_AVG_COUNT_DESC") SortType sort,
+            @RequestParam(required = false) String keyphrase,
+            @RequestParam(defaultValue = "0") Integer minRatings,
+            @RequestParam(required = false) List<ContentType> contentTypes,
+            @RequestParam(required = false) Long sourceId,
+            @RequestParam(required = false) Long languageId,
+            @RequestParam(required = false) Integer minDuration,
+            @RequestParam(required = false) Integer maxDuration
+            ) {
+        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration)
+                .stream()
+                .map(mapper::map)
+                .toList();
+        return ResponseEntity.ok(new PageImpl<>(contents));
+    }
+
 
     @PostMapping("/ratings")
     public ResponseEntity<ContentRatingResponse> createRating(
