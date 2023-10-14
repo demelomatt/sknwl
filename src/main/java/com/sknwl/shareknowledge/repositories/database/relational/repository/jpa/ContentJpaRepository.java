@@ -16,7 +16,11 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
     @Query("SELECT new com.sknwl.shareknowledge.repositories.model.ContentModelSummary(c, COALESCE(COUNT(r), 0), COALESCE(AVG(r.rating), 0.0))" +
             "FROM ContentModel c " +
             "LEFT JOIN ContentRatingModel r ON c.id = r.content.id " +
-            "WHERE ((:keyphrase IS NULL OR c.name LIKE %:keyphrase%) OR (:keyphrase IS NOT NULL AND EXISTS (SELECT s FROM c.subjects s WHERE s LIKE %:keyphrase%))) " +
+            "WHERE (" +
+            "   (:keyphrase IS NULL OR c.name LIKE %:keyphrase%) " +
+            "   OR (:keyphrase IS NULL OR c.studyField.name LIKE %:keyphrase%) " +
+            "   OR (:keyphrase IS NOT NULL AND EXISTS (SELECT s FROM c.subjects s WHERE s LIKE %:keyphrase%))" +
+            ") " +
             "   AND (c.contentType IN :contentTypes) " +
             "   AND (:sourceId IS NULL OR c.source.id = :sourceId) " +
             "   AND (:languageId IS NULL OR c.language.id = :languageId) " +

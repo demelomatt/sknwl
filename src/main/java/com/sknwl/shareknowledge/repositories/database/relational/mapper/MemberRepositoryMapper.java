@@ -7,7 +7,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.model.SocialMed
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {ContentRepositoryMapper.class})
 public interface MemberRepositoryMapper {
     MemberRepositoryMapper INSTANCE = Mappers.getMapper(MemberRepositoryMapper.class);
 

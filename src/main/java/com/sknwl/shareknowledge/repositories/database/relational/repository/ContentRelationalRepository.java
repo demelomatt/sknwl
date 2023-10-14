@@ -191,7 +191,6 @@ public class ContentRelationalRepository implements ContentRepository {
     public void deleteSource(Long id) {
         getSourceIfExists(id);
         sourceJpaRepository.deleteById(id);
-
     }
 
     @Override

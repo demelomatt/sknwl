@@ -13,6 +13,7 @@ public record ContentRequestCreate(
         SourceRequest source,
         List<String> authors,
         SortedSet<String> subjects,
+        StudyFieldRequest studyField,
         LanguageRequest language,
         Long durationMinutes,
         MemberRequestUpdate publisher) {

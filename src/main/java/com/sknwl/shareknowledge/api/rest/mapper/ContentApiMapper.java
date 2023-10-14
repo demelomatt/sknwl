@@ -1,10 +1,7 @@
 package com.sknwl.shareknowledge.api.rest.mapper;
 
 import com.sknwl.shareknowledge.api.rest.model.*;
-import com.sknwl.shareknowledge.domain.entity.Content;
-import com.sknwl.shareknowledge.domain.entity.ContentRating;
-import com.sknwl.shareknowledge.domain.entity.Language;
-import com.sknwl.shareknowledge.domain.entity.Source;
+import com.sknwl.shareknowledge.domain.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -30,4 +27,7 @@ public interface ContentApiMapper {
 
     Language map(LanguageRequest languageRequest);
     LanguageResponse map(Language language);
+
+    StudyField map(StudyFieldRequest studyFieldRequest);
+    StudyFieldResponse map(StudyField studyField);
 }

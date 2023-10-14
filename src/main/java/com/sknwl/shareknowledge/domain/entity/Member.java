@@ -17,6 +17,7 @@ public class Member {
     private List<Member> following;
     private List<Member> followers;
     private SortedSet<String> subjects;
+    private List<StudyField> studyFields;
     private List<Certificate> certificates;
     private List<Comment> comments;
     private List<Badge> specializations;

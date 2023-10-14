@@ -13,8 +13,8 @@ import java.util.SortedSet;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="content")
 public class ContentModel {
@@ -44,6 +44,10 @@ public class ContentModel {
     private SortedSet<String> subjects;
 
     @ManyToOne
+    @JoinColumn(name = "study_field_id", referencedColumnName = "id")
+    private StudyFieldModel studyField;
+
+    @ManyToOne
     @JoinColumn(name = "language_id", referencedColumnName = "id")
     private LanguageModel language;
 
@@ -54,6 +58,9 @@ public class ContentModel {
     private MemberModel publisher;
 
     private LocalDateTime publishedDateTime;
+
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
+    private List<ContentRatingModel> ratings;
 
     @Transient
     private Long reviewers;

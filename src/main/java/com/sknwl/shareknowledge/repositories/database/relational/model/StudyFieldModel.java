@@ -6,27 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="certificate")
-public class CertificateModel {
+@Table(name="study_field")
+public class StudyFieldModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private LocalDateTime issuanceDateTime;
-
-    @ManyToOne
-    @JoinColumn(name = "study_guide_id", referencedColumnName = "id")
-    private StudyGuideModel studyGuide;
-
-    @ManyToOne
-    @JoinColumn(name = "member_id", referencedColumnName = "id")
-    private MemberModel member;
 }

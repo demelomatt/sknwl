@@ -7,7 +7,7 @@ import com.sknwl.shareknowledge.domain.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {ContentApiMapper.class})
 
 public interface MemberApiMapper {
     MemberApiMapper INSTANCE = Mappers.getMapper(MemberApiMapper.class);

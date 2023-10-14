@@ -1,4 +1,8 @@
 package com.sknwl.shareknowledge.api.rest.model;
 
-public record SourceResponse(Long id, String name, String webSiteUri) {
+import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+
+import java.util.List;
+
+public record SourceResponse(Long id, String name, String webSiteUri, List<ContentType> contentTypes) {
 }

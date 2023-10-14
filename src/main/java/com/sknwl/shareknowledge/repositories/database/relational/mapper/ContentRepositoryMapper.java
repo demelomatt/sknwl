@@ -29,6 +29,11 @@ public interface ContentRepositoryMapper {
     LanguageModel map(Language language);
     Language map(LanguageModel languageModel);
 
+    StudyFieldModel map(StudyField studyField);
+    StudyField map(StudyFieldModel studyFieldModel);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(StudyField studyField, @MappingTarget StudyFieldModel studyFieldModel);
+
     @Named("memberModelToMember")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id")

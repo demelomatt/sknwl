@@ -2,13 +2,17 @@ package com.sknwl.shareknowledge.repositories.database.relational.model;
 
 import com.sknwl.shareknowledge.domain.entity.enums.StudyGuideStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="member_study_guide")
 public class MemberGuideSubModel {

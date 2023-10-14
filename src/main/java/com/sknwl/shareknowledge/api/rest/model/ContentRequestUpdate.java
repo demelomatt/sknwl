@@ -14,6 +14,7 @@ public record ContentRequestUpdate(
         SourceRequest source,
         List<String> authors,
         SortedSet<String> subjects,
+        StudyFieldRequest studyField,
         LanguageRequest language,
         Long durationMinutes) {
 }
