@@ -221,24 +221,8 @@ public class ContentRelationalRepository implements ContentRepository {
     }
 
     @Override
-    public List<Language> listLanguageByName(String name) {
-        return languageJpaRepository.findByNameContainingIgnoreCase(name)
-                .stream()
-                .map(mapper::map)
-                .toList();
-    }
-
-    @Override
-    public List<Language> listLanguageByCode(String code) {
-        return languageJpaRepository.findByCodeContainingIgnoreCase(code)
-                .stream()
-                .map(mapper::map)
-                .toList();
-    }
-
-    @Override
-    public List<Language> listLanguage() {
-        return languageJpaRepository.findAll()
+    public List<Language> listLanguage(String code, String name) {
+        return languageJpaRepository.findByCodeAndName(code, name)
                 .stream()
                 .map(mapper::map)
                 .toList();

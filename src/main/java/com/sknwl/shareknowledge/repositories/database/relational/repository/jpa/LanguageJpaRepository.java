@@ -8,4 +8,6 @@ import java.util.List;
 public interface LanguageJpaRepository extends JpaRepository<LanguageModel, Long> {
     List<LanguageModel> findByNameContainingIgnoreCase(String name);
     List<LanguageModel> findByCodeContainingIgnoreCase(String code);
+
+    List<LanguageModel> findByCodeAndName(String code, String name);
 }

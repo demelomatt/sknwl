@@ -34,7 +34,6 @@ public interface ContentRepository {
     Source getSource(Long id);
     List<Source> listSource(String uri);
     Page<Source> listSource(Pageable pageable);
-    List<Language> listLanguageByName(String name);
-    List<Language> listLanguageByCode(String code);
-    List<Language> listLanguage();
+
+    List<Language> listLanguage(String code, String name);
 }

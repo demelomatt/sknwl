@@ -180,32 +180,12 @@ public class ContentController {
         return ResponseEntity.ok(sources);
     }
 
-    @GetMapping("/languages/name/{name}")
-    public ResponseEntity<List<LanguagePayload>> listLanguageByName(
-            @PathVariable String name
-    ) {
-        var languages = contentUseCase.listLanguageByName(name)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(languages);
-    }
-
-    @GetMapping("/languages/code/{code}")
-    public ResponseEntity<List<LanguagePayload>> listLanguageByCode(
-            @PathVariable String code
-    ) {
-        var languages = contentUseCase.listLanguageByCode(code)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(languages);
-    }
-
     @GetMapping("/languages")
     public ResponseEntity<List<LanguagePayload>> listLanguage(
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String name
     ) {
-        var languages = contentUseCase.listLanguage()
+        var languages = contentUseCase.listLanguage(code, name)
                 .stream()
                 .map(mapper::map)
                 .toList();

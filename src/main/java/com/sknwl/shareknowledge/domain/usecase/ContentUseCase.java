@@ -99,15 +99,7 @@ public class ContentUseCase {
         return contentRepository.listSource(uri);
     }
 
-    public List<Language> listLanguageByName(String name) {
-        return contentRepository.listLanguageByName(name);
-    }
-
-    public List<Language> listLanguageByCode(String name) {
-        return contentRepository.listLanguageByCode(name);
-    }
-
-    public List<Language> listLanguage() {
-        return contentRepository.listLanguage();
+    public List<Language> listLanguage(String code, String name) {
+        return contentRepository.listLanguage(code, name);
     }
 }

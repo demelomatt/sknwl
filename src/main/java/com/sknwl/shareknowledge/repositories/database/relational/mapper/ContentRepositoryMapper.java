@@ -29,11 +29,11 @@ public interface ContentRepositoryMapper {
     LanguageModel map(Language language);
     Language map(LanguageModel languageModel);
 
-    MoneyModel map(Money money);
-    Money map(MoneyModel moneyModel);
-
     ContentPriceModel map(ContentPrice contentPrice);
     ContentPrice map(ContentPriceModel contentPriceModel);
+
+    MoneyModel map(Money money);
+    Money map(MoneyModel moneyModel);
 
     StudyFieldModel map(StudyField studyField);
     StudyField map(StudyFieldModel studyFieldModel);
