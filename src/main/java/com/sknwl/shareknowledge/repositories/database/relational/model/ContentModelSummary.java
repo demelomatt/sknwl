@@ -1,4 +1,4 @@
-package com.sknwl.shareknowledge.repositories.model;
+package com.sknwl.shareknowledge.repositories.database.relational.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RatingSummary {
-    private Long contentId;
+public class ContentModelSummary {
+    private ContentModel content;
     private Long count;
     private Double average;
 }

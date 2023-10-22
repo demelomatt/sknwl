@@ -67,4 +67,9 @@ public class ContentModel {
 
     @Transient
     private Double rating;
+
+    @OneToOne(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ContentPriceModel price;
+
+    private String coverUri;
 }

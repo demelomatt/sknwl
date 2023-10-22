@@ -1,8 +1,7 @@
 package com.sknwl.shareknowledge.api.rest.controller;
 
 import com.sknwl.shareknowledge.api.rest.mapper.ContentApiMapper;
-import com.sknwl.shareknowledge.api.rest.model.StudyFieldRequest;
-import com.sknwl.shareknowledge.api.rest.model.StudyFieldResponse;
+import com.sknwl.shareknowledge.api.rest.model.StudyFieldPayload;
 import com.sknwl.shareknowledge.domain.usecase.StudyFieldUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,8 +22,8 @@ public class StudyFieldController {
     }
 
     @PostMapping()
-    public ResponseEntity<StudyFieldResponse> create(
-            @RequestBody StudyFieldRequest studyFieldRequest,
+    public ResponseEntity<StudyFieldPayload> create(
+            @RequestBody StudyFieldPayload studyFieldRequest,
             UriComponentsBuilder uriBuilder
     ) {
         var studyField = studyFieldUseCase.create(mapper.map(studyFieldRequest));
@@ -34,7 +33,7 @@ public class StudyFieldController {
     }
 
     @PutMapping()
-    public ResponseEntity<StudyFieldResponse> update(@RequestBody StudyFieldRequest studyFieldRequest) {
+    public ResponseEntity<StudyFieldPayload> update(@RequestBody StudyFieldPayload studyFieldRequest) {
         var studyField = studyFieldUseCase.update(mapper.map(studyFieldRequest));
         return ResponseEntity.ok(mapper.map(studyField));
     }
@@ -46,13 +45,13 @@ public class StudyFieldController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudyFieldResponse> get(@PathVariable Long id) {
+    public ResponseEntity<StudyFieldPayload> get(@PathVariable Long id) {
         var studyField = studyFieldUseCase.get(id);
         return ResponseEntity.ok(mapper.map(studyField));
     }
 
     @GetMapping()
-    public ResponseEntity<Page<StudyFieldResponse>> list(
+    public ResponseEntity<Page<StudyFieldPayload>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
             @RequestParam(defaultValue = "asc") String sortOrder
@@ -65,7 +64,7 @@ public class StudyFieldController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<StudyFieldResponse>> list(
+    public ResponseEntity<List<StudyFieldPayload>> list(
             @PathVariable String name
     ) {
         var fields = studyFieldUseCase.list(name)

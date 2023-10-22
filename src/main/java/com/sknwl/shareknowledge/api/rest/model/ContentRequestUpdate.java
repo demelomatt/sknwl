@@ -11,10 +11,12 @@ public record ContentRequestUpdate(
         String description,
         ContentType contentType,
         String url,
-        SourceRequest source,
+        SourcePayload source,
         List<String> authors,
         SortedSet<String> subjects,
-        StudyFieldRequest studyField,
-        LanguageRequest language,
-        Long durationMinutes) {
+        StudyFieldPayload studyField,
+        LanguagePayload language,
+        Long durationMinutes,
+        String coverUri,
+        MoneyPayload price) {
 }

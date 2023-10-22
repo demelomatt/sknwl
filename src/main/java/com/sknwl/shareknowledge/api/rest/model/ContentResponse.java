@@ -11,16 +11,17 @@ public record ContentResponse(Long id,
                               String description,
                               ContentType contentType,
                               String url,
-                              SourceResponse source,
+                              SourcePayload source,
                               List<String> authors,
                               SortedSet<String> subjects,
-                              StudyFieldResponse studyField,
-                              LanguageResponse language,
+                              StudyFieldPayload studyField,
+                              LanguagePayload language,
                               Long durationMinutes,
-                              MemberResponseId publisher,
+                              Long publisherId,
                               LocalDateTime publishedDateTime,
                               Long reviewers,
-                              Double rating
+                              Double rating,
+                              MoneyPayload price
    )
 {
 }

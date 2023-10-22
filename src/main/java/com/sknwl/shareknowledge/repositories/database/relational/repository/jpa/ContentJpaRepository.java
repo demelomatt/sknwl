@@ -2,7 +2,7 @@ package com.sknwl.shareknowledge.repositories.database.relational.repository.jpa
 
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModel;
-import com.sknwl.shareknowledge.repositories.model.ContentModelSummary;
+import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModelSummary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> {
 
-    @Query("SELECT new com.sknwl.shareknowledge.repositories.model.ContentModelSummary(c, COALESCE(COUNT(r), 0), COALESCE(AVG(r.rating), 0.0))" +
+    @Query("SELECT new com.sknwl.shareknowledge.repositories.database.relational.model.ContentModelSummary(c, COALESCE(COUNT(r), 0), COALESCE(AVG(r.rating), 0.0))" +
             "FROM ContentModel c " +
             "LEFT JOIN ContentRatingModel r ON c.id = r.content.id " +
             "WHERE (" +

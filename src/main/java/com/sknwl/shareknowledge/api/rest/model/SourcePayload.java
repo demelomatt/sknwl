@@ -4,5 +4,5 @@ import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 
 import java.util.List;
 
-public record SourceResponse(Long id, String name, String webSiteUri, List<ContentType> contentTypes) {
+public record SourcePayload(Long id, String name, String webSiteUri, List<ContentType> contentTypes) {
 }

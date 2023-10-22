@@ -12,7 +12,6 @@ public class MemberGuideSub {
     private Long id;
     private StudyGuideStatus status;
     private StudyGuide studyGuide;
-    private Long rating;
-    private LocalDateTime subscribedDateTime;
     private Member member;
+    private LocalDateTime subscribedDateTime;
 }

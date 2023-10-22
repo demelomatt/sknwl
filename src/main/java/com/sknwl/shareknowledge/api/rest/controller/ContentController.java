@@ -89,8 +89,8 @@ public class ContentController {
 
 
     @PostMapping("/ratings")
-    public ResponseEntity<ContentRatingResponse> createRating(
-            @RequestBody ContentRatingRequest contentRatingRequest,
+    public ResponseEntity<ContentRatingPayload> createRating(
+            @RequestBody ContentRatingPayload contentRatingRequest,
             UriComponentsBuilder uriBuilder
     ) {
         var rating = contentUseCase.newRating(mapper.map(contentRatingRequest));
@@ -100,7 +100,7 @@ public class ContentController {
     }
 
     @PutMapping("/ratings")
-    public ResponseEntity<ContentRatingResponse> updateRating(@RequestBody ContentRatingRequest contentRatingRequest) {
+    public ResponseEntity<ContentRatingPayload> updateRating(@RequestBody ContentRatingPayload contentRatingRequest) {
         var rating = contentUseCase.updateRating(mapper.map(contentRatingRequest));
         return ResponseEntity.ok(mapper.map(rating));
     }
@@ -112,13 +112,13 @@ public class ContentController {
     }
 
     @GetMapping("/ratings/{id}")
-    public ResponseEntity<ContentRatingResponse> getRating(@PathVariable Long id) {
+    public ResponseEntity<ContentRatingPayload> getRating(@PathVariable Long id) {
         var rating = contentUseCase.getRating(id);
         return ResponseEntity.ok(mapper.map(rating));
     }
 
     @GetMapping("/ratings")
-    public ResponseEntity<List<ContentRatingResponse>> list(
+    public ResponseEntity<List<ContentRatingPayload>> list(
     ) {
         var ratings = contentUseCase.listRating()
                 .stream()
@@ -128,8 +128,8 @@ public class ContentController {
     }
 
     @PostMapping("/sources")
-    public ResponseEntity<SourceResponse> createSource(
-            @RequestBody SourceRequest sourceRequest,
+    public ResponseEntity<SourcePayload> createSource(
+            @RequestBody SourcePayload sourceRequest,
             UriComponentsBuilder uriBuilder
     ) {
         var source = contentUseCase.newSource(mapper.map(sourceRequest));
@@ -139,7 +139,7 @@ public class ContentController {
     }
 
     @PutMapping("/sources")
-    public ResponseEntity<SourceResponse> updateSource(@RequestBody SourceRequest sourceRequest) {
+    public ResponseEntity<SourcePayload> updateSource(@RequestBody SourcePayload sourceRequest) {
         var source = contentUseCase.updateSource(mapper.map(sourceRequest));
         return ResponseEntity.ok(mapper.map(source));
     }
@@ -151,13 +151,13 @@ public class ContentController {
     }
 
     @GetMapping("/sources/{id}")
-    public ResponseEntity<SourceResponse> getSource(@PathVariable Long id) {
+    public ResponseEntity<SourcePayload> getSource(@PathVariable Long id) {
         var source = contentUseCase.getSource(id);
         return ResponseEntity.ok(mapper.map(source));
     }
 
     @GetMapping("/sources")
-    public ResponseEntity<Page<SourceResponse>> listSource(
+    public ResponseEntity<Page<SourcePayload>> listSource(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
             @RequestParam(defaultValue = "asc") String sortOrder
@@ -170,7 +170,7 @@ public class ContentController {
     }
 
     @GetMapping("/sources/uri/{uri}")
-    public ResponseEntity<List<SourceResponse>> listSource(
+    public ResponseEntity<List<SourcePayload>> listSource(
             @PathVariable String uri
     ) {
         var sources = contentUseCase.listSource(uri)
@@ -181,7 +181,7 @@ public class ContentController {
     }
 
     @GetMapping("/languages/name/{name}")
-    public ResponseEntity<List<LanguageResponse>> listLanguageByName(
+    public ResponseEntity<List<LanguagePayload>> listLanguageByName(
             @PathVariable String name
     ) {
         var languages = contentUseCase.listLanguageByName(name)
@@ -192,7 +192,7 @@ public class ContentController {
     }
 
     @GetMapping("/languages/code/{code}")
-    public ResponseEntity<List<LanguageResponse>> listLanguageByCode(
+    public ResponseEntity<List<LanguagePayload>> listLanguageByCode(
             @PathVariable String code
     ) {
         var languages = contentUseCase.listLanguageByCode(code)
@@ -203,7 +203,7 @@ public class ContentController {
     }
 
     @GetMapping("/languages")
-    public ResponseEntity<List<LanguageResponse>> listLanguage(
+    public ResponseEntity<List<LanguagePayload>> listLanguage(
     ) {
         var languages = contentUseCase.listLanguage()
                 .stream()

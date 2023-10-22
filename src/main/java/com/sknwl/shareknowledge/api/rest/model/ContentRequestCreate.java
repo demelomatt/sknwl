@@ -10,11 +10,13 @@ public record ContentRequestCreate(
         String description,
         ContentType contentType,
         String url,
-        SourceRequest source,
+        SourcePayload source,
         List<String> authors,
         SortedSet<String> subjects,
-        StudyFieldRequest studyField,
-        LanguageRequest language,
+        StudyFieldPayload studyField,
+        LanguagePayload language,
         Long durationMinutes,
-        MemberRequestUpdate publisher) {
+        Long publisherId,
+        String coverUri,
+        MoneyPayload price) {
 }

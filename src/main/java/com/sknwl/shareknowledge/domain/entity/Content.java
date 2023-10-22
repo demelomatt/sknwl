@@ -26,5 +26,7 @@ public class Content {
     private LocalDateTime publishedDateTime;
     private Long reviewers;
     private Double rating;
+    private ContentPrice price;
     private List<Comment> comments;
+    private String coverUri;
 }

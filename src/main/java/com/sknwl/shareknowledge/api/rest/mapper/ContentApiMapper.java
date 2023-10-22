@@ -16,18 +16,18 @@ public interface ContentApiMapper {
 
     @Mapping(target = "member.id", source = "memberId")
     @Mapping(target = "content.id", source = "contentId")
-    ContentRating map(ContentRatingRequest contentRatingRequest);
+    ContentRating map(ContentRatingPayload contentRatingRequest);
 
     @Mapping(target = "memberId", source = "member.id")
     @Mapping(target = "contentId", source = "content.id")
-    ContentRatingResponse map(ContentRating contentRating);
+    ContentRatingPayload map(ContentRating contentRating);
 
-    Source map(SourceRequest sourceRequest);
-    SourceResponse map(Source source);
+    Source map(SourcePayload sourceRequest);
+    SourcePayload map(Source source);
 
-    Language map(LanguageRequest languageRequest);
-    LanguageResponse map(Language language);
+    Language map(LanguagePayload languageRequest);
+    LanguagePayload map(Language language);
 
-    StudyField map(StudyFieldRequest studyFieldRequest);
-    StudyFieldResponse map(StudyField studyField);
+    StudyField map(StudyFieldPayload studyFieldRequest);
+    StudyFieldPayload map(StudyField studyField);
 }

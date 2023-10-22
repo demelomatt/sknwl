@@ -16,7 +16,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.LanguageJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.SourceJpaRepository;
-import com.sknwl.shareknowledge.repositories.model.RatingSummary;
+import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModelSummary;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -91,7 +91,7 @@ public class ContentRelationalRepository implements ContentRepository {
         var contents = contentsModel
                 .stream()
                 .map(contentModel -> {
-                    var ratingSummary = summaries.getOrDefault(contentModel.getId(), new RatingSummary(contentModel.getId(), 0L, 0.0));
+                    var ratingSummary = summaries.getOrDefault(contentModel.getId(), new ContentModelSummary(contentModel, 0L, 0.0));
                     contentModel.setReviewers(ratingSummary.getCount());
                     contentModel.setRating(ratingSummary.getAverage());
                     return mapper.map(contentModel);
@@ -116,11 +116,11 @@ public class ContentRelationalRepository implements ContentRepository {
         return contentJpaRepository.findById(id).orElseThrow(()-> new NotFoundException("Unable to find the specified content"));
     }
 
-    private RatingSummary getSummary(Long contentId) {
+    private ContentModelSummary getSummary(Long contentId) {
         return contentRatingJpaRepository.findRatingCountAndAverageByContentId(contentId);
     }
 
-    private Map<Long, RatingSummary> listSummary(List<Long> contentIds) {
+    private Map<Long, ContentModelSummary> listSummary(List<Long> contentIds) {
         return contentRatingJpaRepository.findRatingCountAndAverageByContentIds(contentIds);
     }
 
