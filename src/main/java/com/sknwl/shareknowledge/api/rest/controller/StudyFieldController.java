@@ -1,6 +1,6 @@
 package com.sknwl.shareknowledge.api.rest.controller;
 
-import com.sknwl.shareknowledge.api.rest.mapper.ContentApiMapper;
+import com.sknwl.shareknowledge.api.rest.mapper.StudyFieldApiMapper;
 import com.sknwl.shareknowledge.api.rest.model.StudyFieldPayload;
 import com.sknwl.shareknowledge.domain.usecase.StudyFieldUseCase;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("fields")
 public class StudyFieldController {
     private final StudyFieldUseCase studyFieldUseCase;
-    private final ContentApiMapper mapper = ContentApiMapper.INSTANCE;
+    private final StudyFieldApiMapper mapper = StudyFieldApiMapper.INSTANCE;
 
     public StudyFieldController(StudyFieldUseCase studyFieldUseCase) {
         this.studyFieldUseCase = studyFieldUseCase;
@@ -26,7 +26,7 @@ public class StudyFieldController {
             @RequestBody StudyFieldPayload studyFieldRequest,
             UriComponentsBuilder uriBuilder
     ) {
-        var studyField = studyFieldUseCase.create(mapper.map(studyFieldRequest));
+        var studyField = studyFieldUseCase.register(mapper.map(studyFieldRequest));
 
         var uri = uriBuilder.path("/fields").buildAndExpand(studyField.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(studyField));

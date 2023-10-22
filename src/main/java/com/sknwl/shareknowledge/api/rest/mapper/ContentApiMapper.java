@@ -1,7 +1,11 @@
 package com.sknwl.shareknowledge.api.rest.mapper;
 
-import com.sknwl.shareknowledge.api.rest.model.*;
-import com.sknwl.shareknowledge.domain.entity.*;
+import com.sknwl.shareknowledge.api.rest.model.ContentRatingPayload;
+import com.sknwl.shareknowledge.api.rest.model.ContentRequestCreate;
+import com.sknwl.shareknowledge.api.rest.model.ContentRequestUpdate;
+import com.sknwl.shareknowledge.api.rest.model.ContentResponse;
+import com.sknwl.shareknowledge.domain.entity.Content;
+import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -21,13 +25,4 @@ public interface ContentApiMapper {
     @Mapping(target = "memberId", source = "member.id")
     @Mapping(target = "contentId", source = "content.id")
     ContentRatingPayload map(ContentRating contentRating);
-
-    Source map(SourcePayload sourceRequest);
-    SourcePayload map(Source source);
-
-    Language map(LanguagePayload languageRequest);
-    LanguagePayload map(Language language);
-
-    StudyField map(StudyFieldPayload studyFieldRequest);
-    StudyFieldPayload map(StudyField studyField);
 }

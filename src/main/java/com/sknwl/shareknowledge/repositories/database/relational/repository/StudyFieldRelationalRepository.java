@@ -3,7 +3,7 @@ package com.sknwl.shareknowledge.repositories.database.relational.repository;
 import com.sknwl.shareknowledge.domain.entity.StudyField;
 import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import com.sknwl.shareknowledge.repositories.StudyFieldRepository;
-import com.sknwl.shareknowledge.repositories.database.relational.mapper.ContentRepositoryMapper;
+import com.sknwl.shareknowledge.repositories.database.relational.mapper.StudyFieldRepositoryMapper;
 import com.sknwl.shareknowledge.repositories.database.relational.model.StudyFieldModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.StudyFieldJpaRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 public class StudyFieldRelationalRepository implements StudyFieldRepository {
-    private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
+    private final StudyFieldRepositoryMapper mapper = StudyFieldRepositoryMapper.INSTANCE;
     private final StudyFieldJpaRepository studyFieldJpaRepository;
 
     public StudyFieldRelationalRepository(StudyFieldJpaRepository studyFieldJpaRepository) {
@@ -25,7 +25,7 @@ public class StudyFieldRelationalRepository implements StudyFieldRepository {
 
     @Transactional
     @Override
-    public StudyField create(StudyField studyField) {
+    public StudyField register(StudyField studyField) {
         var studyFieldModel = mapper.map(studyField);
         studyFieldJpaRepository.save(studyFieldModel);
         return mapper.map(studyFieldModel);

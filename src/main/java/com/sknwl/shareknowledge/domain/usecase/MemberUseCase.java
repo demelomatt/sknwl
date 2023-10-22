@@ -16,10 +16,10 @@ public class MemberUseCase {
         this.memberRepository = memberRepository;
     }
 
-    public Member create(Member member) {
+    public Member register(Member member) {
         member.setActive(true);
         member.setJoinedDateTime(LocalDateTime.now());
-        return memberRepository.create(member);
+        return memberRepository.register(member);
     }
 
     public Member update(Member member) {
@@ -31,8 +31,8 @@ public class MemberUseCase {
         return memberRepository.list(pageable);
     }
 
-    public void delete(Long id, Boolean hardDelete) {
-        if (hardDelete) {
+    public void delete(Long id, Boolean permanent) {
+        if (permanent) {
             memberRepository.hardDelete(id);
         } else{
             memberRepository.softDelete(id);

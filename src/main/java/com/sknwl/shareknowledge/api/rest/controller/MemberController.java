@@ -25,7 +25,7 @@ public class MemberController {
             @RequestBody MemberRequest memberRequest,
             UriComponentsBuilder uriBuilder
     ) {
-        var member = memberUseCase.create(mapper.map(memberRequest));
+        var member = memberUseCase.register(mapper.map(memberRequest));
 
         var uri = uriBuilder.path("/members").buildAndExpand(member.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(member));
@@ -38,8 +38,8 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestParam(defaultValue = "false") Boolean hardDelete) {
-        memberUseCase.delete(id, hardDelete);
+    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestParam(defaultValue = "false") Boolean permanent) {
+        memberUseCase.delete(id, permanent);
         return ResponseEntity.noContent().build();
     }
 

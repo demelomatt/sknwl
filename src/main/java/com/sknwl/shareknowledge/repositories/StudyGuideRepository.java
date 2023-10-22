@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 public interface StudyGuideRepository {
-    StudyGuide publish(StudyGuide studyGuide);
+    StudyGuide register(StudyGuide studyGuide);
     StudyGuide update(StudyGuide studyGuide);
     void delete(Long id);
     Optional<StudyGuide> get(Long id);

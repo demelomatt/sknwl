@@ -2,8 +2,6 @@ package com.sknwl.shareknowledge.domain.usecase;
 
 import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
-import com.sknwl.shareknowledge.domain.entity.Language;
-import com.sknwl.shareknowledge.domain.entity.Source;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
@@ -23,9 +21,9 @@ public class ContentUseCase {
         this.contentRepository = contentRepository;
     }
 
-    public Content create(Content content) {
+    public Content register(Content content) {
         content.setPublishedDateTime(LocalDateTime.now());
-        return contentRepository.publish(content);
+        return contentRepository.register(content);
     }
 
     public Content update(Content content) {
@@ -53,9 +51,9 @@ public class ContentUseCase {
         return contentRepository.get(id);
     }
 
-    public ContentRating newRating(ContentRating contentRating) {
+    public ContentRating registerRating(ContentRating contentRating) {
         contentRating.setRatingDateTime(LocalDateTime.now());
-        return contentRepository.newRating(contentRating);
+        return contentRepository.registerRating(contentRating);
     }
 
     public ContentRating updateRating(ContentRating contentRating) {
@@ -72,34 +70,5 @@ public class ContentUseCase {
 
     public List<ContentRating> listRating() {
         return contentRepository.listRating();
-    }
-
-    public Source newSource(Source source) {
-        return contentRepository.newSource(source);
-    }
-
-    public Source updateSource(Source source) {
-        return contentRepository.updateSource(source);
-    }
-
-    public void deleteSource(Long id) {
-        contentRepository.deleteSource(id);
-    }
-
-    public Source getSource(Long id) {
-        return contentRepository.getSource(id);
-    }
-
-    public Page<Source> listSource(Integer pageNumber, Integer pageSize) {
-        var pageable = PageRequest.of(pageNumber, pageSize);
-        return contentRepository.listSource(pageable);
-    }
-
-    public List<Source> listSource(String uri) {
-        return contentRepository.listSource(uri);
-    }
-
-    public List<Language> listLanguage(String code, String name) {
-        return contentRepository.listLanguage(code, name);
     }
 }

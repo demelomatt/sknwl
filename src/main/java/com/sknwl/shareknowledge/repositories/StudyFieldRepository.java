@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface StudyFieldRepository {
-    StudyField create(StudyField studyField);
+    StudyField register(StudyField studyField);
     StudyField update(StudyField studyField);
     void delete(Long id);
     StudyField get(Long id);

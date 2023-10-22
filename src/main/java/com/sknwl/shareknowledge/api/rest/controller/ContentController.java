@@ -28,7 +28,7 @@ public class ContentController {
             @RequestBody ContentRequestCreate contentRequestCreate,
             UriComponentsBuilder uriBuilder
     ) {
-        var content = contentUseCase.create(mapper.map(contentRequestCreate));
+        var content = contentUseCase.register(mapper.map(contentRequestCreate));
 
         var uri = uriBuilder.path("/contents").buildAndExpand(content.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(content));
@@ -93,7 +93,7 @@ public class ContentController {
             @RequestBody ContentRatingPayload contentRatingRequest,
             UriComponentsBuilder uriBuilder
     ) {
-        var rating = contentUseCase.newRating(mapper.map(contentRatingRequest));
+        var rating = contentUseCase.registerRating(mapper.map(contentRatingRequest));
 
         var uri = uriBuilder.path("/contents/ratings").buildAndExpand(rating.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(rating));
@@ -127,68 +127,4 @@ public class ContentController {
         return ResponseEntity.ok(ratings);
     }
 
-    @PostMapping("/sources")
-    public ResponseEntity<SourcePayload> createSource(
-            @RequestBody SourcePayload sourceRequest,
-            UriComponentsBuilder uriBuilder
-    ) {
-        var source = contentUseCase.newSource(mapper.map(sourceRequest));
-
-        var uri = uriBuilder.path("/contents/sources").buildAndExpand(source.getId()).toUri();
-        return ResponseEntity.created(uri).body(mapper.map(source));
-    }
-
-    @PutMapping("/sources")
-    public ResponseEntity<SourcePayload> updateSource(@RequestBody SourcePayload sourceRequest) {
-        var source = contentUseCase.updateSource(mapper.map(sourceRequest));
-        return ResponseEntity.ok(mapper.map(source));
-    }
-
-    @DeleteMapping("/sources/{id}")
-    public ResponseEntity<Void> deleteSource(@PathVariable Long id) {
-        contentUseCase.deleteSource(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/sources/{id}")
-    public ResponseEntity<SourcePayload> getSource(@PathVariable Long id) {
-        var source = contentUseCase.getSource(id);
-        return ResponseEntity.ok(mapper.map(source));
-    }
-
-    @GetMapping("/sources")
-    public ResponseEntity<Page<SourcePayload>> listSource(
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "25") int pageSize,
-            @RequestParam(defaultValue = "asc") String sortOrder
-    ) {
-        var sources = contentUseCase.listSource(pageNumber, pageSize)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(new PageImpl<>(sources));
-    }
-
-    @GetMapping("/sources/uri/{uri}")
-    public ResponseEntity<List<SourcePayload>> listSource(
-            @PathVariable String uri
-    ) {
-        var sources = contentUseCase.listSource(uri)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(sources);
-    }
-
-    @GetMapping("/languages")
-    public ResponseEntity<List<LanguagePayload>> listLanguage(
-            @RequestParam(required = false) String code,
-            @RequestParam(required = false) String name
-    ) {
-        var languages = contentUseCase.listLanguage(code, name)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(languages);
-    }
 }

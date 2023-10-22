@@ -16,8 +16,8 @@ public class StudyFieldUseCase {
         this.studyFieldRepository = studyFieldRepository;
     }
 
-    public StudyField create(StudyField studyField) {
-        return studyFieldRepository.create(studyField);
+    public StudyField register(StudyField studyField) {
+        return studyFieldRepository.register(studyField);
     }
 
     public StudyField update(StudyField studyField) {

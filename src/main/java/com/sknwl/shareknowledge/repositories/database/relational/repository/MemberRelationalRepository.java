@@ -25,7 +25,7 @@ public class MemberRelationalRepository implements MemberRepository {
 
     @Transactional
     @Override
-    public Member create(Member member) {
+    public Member register(Member member) {
         MemberModel memberModel = mapper.map(member);
         for (SocialMediaModel socialMedia : memberModel.getSocialMedias()) {
             socialMedia.setMember(memberModel);

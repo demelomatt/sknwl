@@ -18,7 +18,7 @@ public class StudyGuideRelationalRepository implements StudyGuideRepository {
     }
 
     @Override
-    public StudyGuide publish(StudyGuide studyGuide) {
+    public StudyGuide register(StudyGuide studyGuide) {
         return null;
     }
 
