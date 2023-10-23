@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class Content {
     private String url;
     private Source source;
     private List<String> authors;
-    private SortedSet<String> subjects;
+    private List<String> subjects;
     private StudyField studyField;
     private Language language;
     private Long durationMinutes;

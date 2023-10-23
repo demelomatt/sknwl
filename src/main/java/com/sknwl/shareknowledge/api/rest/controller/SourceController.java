@@ -22,7 +22,7 @@ public class SourceController {
     }
 
     @PostMapping
-    public ResponseEntity<SourcePayload> createSource(
+    public ResponseEntity<SourcePayload> register(
             @RequestBody SourcePayload sourceRequest,
             UriComponentsBuilder uriBuilder
     ) {
@@ -33,25 +33,25 @@ public class SourceController {
     }
 
     @PutMapping
-    public ResponseEntity<SourcePayload> updateSource(@RequestBody SourcePayload sourceRequest) {
+    public ResponseEntity<SourcePayload> update(@RequestBody SourcePayload sourceRequest) {
         var source = coreUseCase.update(mapper.map(sourceRequest));
         return ResponseEntity.ok(mapper.map(source));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSource(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         coreUseCase.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SourcePayload> getSource(@PathVariable Long id) {
+    public ResponseEntity<SourcePayload> get(@PathVariable Long id) {
         var source = coreUseCase.get(id);
         return ResponseEntity.ok(mapper.map(source));
     }
 
     @GetMapping
-    public ResponseEntity<Page<SourcePayload>> listSource(
+    public ResponseEntity<Page<SourcePayload>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
             @RequestParam(defaultValue = "asc") String sortOrder
@@ -64,7 +64,7 @@ public class SourceController {
     }
 
     @GetMapping("/uri/{uri}")
-    public ResponseEntity<List<SourcePayload>> listSource(
+    public ResponseEntity<List<SourcePayload>> list(
             @PathVariable String uri
     ) {
         var sources = coreUseCase.list(uri)

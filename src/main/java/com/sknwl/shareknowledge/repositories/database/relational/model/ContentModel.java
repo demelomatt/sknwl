@@ -9,7 +9,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -41,7 +40,7 @@ public class ContentModel {
     @ElementCollection
     @CollectionTable(name = "content_subject", joinColumns = @JoinColumn(name = "content_id"))
     @Column(name = "name")
-    private SortedSet<String> subjects;
+    private List<String> subjects;
 
     @ManyToOne
     @JoinColumn(name = "study_field_id", referencedColumnName = "id")

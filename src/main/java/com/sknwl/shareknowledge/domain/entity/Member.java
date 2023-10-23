@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class Member {
     private List<SocialMedia> socialMedias;
     private List<Member> following;
     private List<Member> followers;
-    private SortedSet<String> subjects;
+    private List<String> subjects;
     private List<StudyField> studyFields;
     private List<Certificate> certificates;
     private List<Comment> comments;

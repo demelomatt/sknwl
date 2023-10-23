@@ -21,7 +21,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<MemberResponse> create(
+    public ResponseEntity<MemberResponse> register(
             @RequestBody MemberRequest memberRequest,
             UriComponentsBuilder uriBuilder
     ) {

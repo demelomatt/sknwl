@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class StudyGuide {
     private List<Member> contributors;
     private String name;
     private String description;
-    private SortedSet<String> subjects;
+    private List<String> subjects;
     private StudyField studyField;
     private Language language;
     private Long durationMinutes;

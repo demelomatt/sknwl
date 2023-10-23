@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -28,8 +27,28 @@ public class DonationModel {
     @JoinColumn(name = "member_to_id", referencedColumnName = "id")
     private MemberModel to;
 
-    private BigDecimal amount;
-    private BigDecimal systemFee;
-    private BigDecimal total;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "member_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "member_amount_currency_id"))
+    })
+    @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "member_amount_currency_id"))
+    private MoneyModel memberAmount;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "system_fee")),
+            @AttributeOverride(name = "currency", column = @Column(name = "system_fee_currency_id"))
+    })
+    @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "system_fee_currency_id"))
+    private MoneyModel systemFee;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "total")),
+            @AttributeOverride(name = "currency", column = @Column(name = "total_currency_id"))
+    })
+    @AssociationOverride(name = "currency", joinColumns = @JoinColumn(name = "total_currency_id"))
+    private MoneyModel total;
     private LocalDateTime executedDateTime;
 }

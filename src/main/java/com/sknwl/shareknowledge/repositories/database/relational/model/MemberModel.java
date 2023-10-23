@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 @Getter
 @Setter
@@ -42,9 +41,9 @@ public class MemberModel {
     @ElementCollection
     @CollectionTable(name = "member_subject", joinColumns = @JoinColumn(name = "member_id"))
     @Column(name = "name")
-    private SortedSet<String> subjects;
+    private List<String> subjects;
 
-    @ManyToMany()
+    @ManyToMany
     private List<StudyFieldModel> studyFields;
 
     @OneToMany(mappedBy = "member")

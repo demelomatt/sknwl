@@ -4,7 +4,6 @@ import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 
 public record ContentResponse(Long id,
                               String name,
@@ -13,7 +12,7 @@ public record ContentResponse(Long id,
                               String url,
                               SourcePayload source,
                               List<String> authors,
-                              SortedSet<String> subjects,
+                              List<String> subjects,
                               StudyFieldPayload studyField,
                               LanguagePayload language,
                               Long durationMinutes,

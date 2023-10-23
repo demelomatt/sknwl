@@ -3,10 +3,12 @@ package com.sknwl.shareknowledge.repositories.database.relational.mapper;
 import com.sknwl.shareknowledge.domain.entity.Source;
 import com.sknwl.shareknowledge.repositories.database.relational.model.SourceModel;
 import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
+@Mapper
 public interface SourceRepositoryMapper {
     SourceRepositoryMapper INSTANCE = Mappers.getMapper(SourceRepositoryMapper.class);
 

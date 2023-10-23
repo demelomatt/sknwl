@@ -3,7 +3,6 @@ package com.sknwl.shareknowledge.api.rest.model;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 
 import java.util.List;
-import java.util.SortedSet;
 
 public record ContentRequestCreate(
         String name,
@@ -12,7 +11,7 @@ public record ContentRequestCreate(
         String url,
         SourcePayload source,
         List<String> authors,
-        SortedSet<String> subjects,
+        List<String> subjects,
         StudyFieldPayload studyField,
         LanguagePayload language,
         Long durationMinutes,

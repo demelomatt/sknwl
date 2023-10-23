@@ -5,7 +5,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.model.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {CoreRepositoryMapper.class})
 public interface ContentRepositoryMapper {
     ContentRepositoryMapper INSTANCE = Mappers.getMapper(ContentRepositoryMapper.class);
 

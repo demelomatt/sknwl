@@ -6,8 +6,10 @@ import com.sknwl.shareknowledge.domain.entity.Money;
 import com.sknwl.shareknowledge.repositories.database.relational.model.CurrencyModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.LanguageModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.MoneyModel;
+import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+@Mapper
 public interface CoreRepositoryMapper {
     CoreRepositoryMapper INSTANCE = Mappers.getMapper(CoreRepositoryMapper.class);
 

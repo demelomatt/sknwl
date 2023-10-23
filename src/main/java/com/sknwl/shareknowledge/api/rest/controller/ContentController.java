@@ -24,7 +24,7 @@ public class ContentController {
     }
 
     @PostMapping
-    public ResponseEntity<ContentResponse> create(
+    public ResponseEntity<ContentResponse> register(
             @RequestBody ContentRequestCreate contentRequestCreate,
             UriComponentsBuilder uriBuilder
     ) {
