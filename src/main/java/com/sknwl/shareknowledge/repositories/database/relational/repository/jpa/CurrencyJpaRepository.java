@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CurrencyJpaRepository extends JpaRepository<CurrencyModel, Long> {
-    List<CurrencyModel> findByCodeAndName(String code, String name);
+    List<CurrencyModel> findByCodeAndCurrency(String code, String currency);
 }

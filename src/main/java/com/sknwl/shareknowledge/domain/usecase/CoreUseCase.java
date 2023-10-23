@@ -15,8 +15,8 @@ public class CoreUseCase {
         this.coreRepository = coreRepository;
     }
 
-    public List<Currency> listCurrencies(String code, String name) {
-        return coreRepository.listCurrencies(code, name);
+    public List<Currency> listCurrencies(String code, String currencyName) {
+        return coreRepository.listCurrencies(code, currencyName);
     }
 
     public List<Language> listLanguage(String code, String name) {

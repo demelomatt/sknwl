@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 public class Currency {
     private Long id;
-    private String name;
+    private String country;
+    private String currency;
     private String code;
     private String symbol;
 }

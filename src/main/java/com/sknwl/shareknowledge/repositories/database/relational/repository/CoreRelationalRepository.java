@@ -24,8 +24,8 @@ public class CoreRelationalRepository implements CoreRepository {
     }
 
     @Override
-    public List<Currency> listCurrencies(String code, String name) {
-        return currencyJpaRepository.findByCodeAndName(code, name)
+    public List<Currency> listCurrencies(String code, String currencyName) {
+        return currencyJpaRepository.findByCodeAndCurrency(code, currencyName)
                 .stream()
                 .map(mapper::map)
                 .toList();

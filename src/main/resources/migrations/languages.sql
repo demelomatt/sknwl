@@ -607,3 +607,6 @@ INSERT INTO language (code, name) VALUES ('za', 'Zhuang');
 INSERT INTO language (code, name) VALUES ('gbz', 'Zoroastrian Dari');
 INSERT INTO language (code, name) VALUES ('zu', 'Zulu');
 INSERT INTO language (code, name) VALUES ('zun', 'Zuni');
+
+-- Select values from table
+SELECT * FROM language;
