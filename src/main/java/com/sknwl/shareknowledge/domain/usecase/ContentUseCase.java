@@ -5,6 +5,7 @@ import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
+import com.sknwl.shareknowledge.repositories.CoverImageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,17 @@ import java.util.List;
 public class ContentUseCase {
 
     private final ContentRepository contentRepository;
+    private final CoverImageRepository coverImageRepository;
 
-    public ContentUseCase(ContentRepository contentRepository) {
+    public ContentUseCase(ContentRepository contentRepository, CoverImageRepository coverImageRepository) {
         this.contentRepository = contentRepository;
+        this.coverImageRepository = coverImageRepository;
     }
 
     public Content register(Content content) {
         content.setPublishedDateTime(LocalDateTime.now());
+        var coverImage = coverImageRepository.getRandomPhoto(content);
+        content.setCoverImage(coverImage);
         return contentRepository.register(content);
     }
 

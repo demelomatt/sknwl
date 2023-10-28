@@ -20,7 +20,8 @@ public record ContentResponse(Long id,
                               LocalDateTime publishedDateTime,
                               Long reviewers,
                               Double rating,
-                              MoneyPayload price
+                              MoneyPayload price,
+                              CoverImageResponse coverImage
    )
 {
 }

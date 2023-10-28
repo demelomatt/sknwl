@@ -70,5 +70,7 @@ public class ContentModel {
     @OneToOne(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
     private ContentPriceModel price;
 
-    private String coverUri;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cover_image_id", referencedColumnName = "id")
+    private CoverImageModel coverImage;
 }

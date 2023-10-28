@@ -1,6 +1,7 @@
 package com.sknwl.shareknowledge.domain.entity;
 
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Content {
     private Long id;
     private String name;
@@ -27,5 +29,5 @@ public class Content {
     private Double rating;
     private ContentPrice price;
     private List<Comment> comments;
-    private String coverUri;
+    private CoverImage coverImage;
 }

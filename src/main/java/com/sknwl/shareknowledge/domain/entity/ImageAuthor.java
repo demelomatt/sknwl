@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ContentPrice {
+public class ImageAuthor {
     private Long id;
-    private Content content;
-    private Money price;
+    private String identifier;
+    private String name;
+    private String userName;
+    private String profileUrl;
 }

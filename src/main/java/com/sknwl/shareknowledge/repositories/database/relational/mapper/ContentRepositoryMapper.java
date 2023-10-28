@@ -24,6 +24,9 @@ public interface ContentRepositoryMapper {
     ContentPriceModel map(ContentPrice contentPrice);
     ContentPrice map(ContentPriceModel contentPriceModel);
 
+    CoverImageModel map(CoverImage coverImage);
+    CoverImage map(CoverImageModel coverImageModel);
+
     @Named("memberModelToMember")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id")

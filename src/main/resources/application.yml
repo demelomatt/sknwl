@@ -7,3 +7,8 @@ spring:
 
   liquibase:
     change-log: classpath:/migrations/db-changelog-master.yaml
+
+sknwl:
+  api:
+   unsplash:
+     client: ${UNSPLASH_CLIENT}

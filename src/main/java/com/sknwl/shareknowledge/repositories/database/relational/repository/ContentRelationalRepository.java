@@ -25,6 +25,7 @@ import java.util.Map;
 public class ContentRelationalRepository implements ContentRepository {
     private final ContentJpaRepository contentJpaRepository;
     private final ContentRatingJpaRepository contentRatingJpaRepository;
+
     private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
 
     public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository) {

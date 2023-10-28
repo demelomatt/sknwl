@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class ContentPrice {
+public class CoverImage {
     private Long id;
-    private Content content;
-    private Money price;
+    private String identifier;
+    private ImageAuthor author;
+    private List<CoverUrl> urls;
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ContentPrice {
+public class CoverUrl {
     private Long id;
-    private Content content;
-    private Money price;
+    private String quality;
+    private String url;
 }
