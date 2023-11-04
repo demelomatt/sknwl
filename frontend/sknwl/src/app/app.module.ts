@@ -17,13 +17,15 @@ import { ContentService } from './content/content.service';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SidebarComponent,
-    CardContentComponent
+    CardContentComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
