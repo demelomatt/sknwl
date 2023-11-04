@@ -3,12 +3,12 @@
     <p-card
       header= {{content.title}}
       subheader="Publicado por {{content.publisher.name}}, {{content.publishedDateTime}} "
-      [style]="{ width: '360px' }">
+   >
       <ng-template pTemplate="header">
         <img
           style="width: 100%; height: 200px; object-fit:cover"
           alt="Card"
-          src="{{content.coverImage.urls[0]}}"
+          src="{{content.coverImage.urls[0].url}}"
         />
       </ng-template>
       <div>
@@ -95,6 +95,6 @@
   </div>
 
   <div>
-    <p-paginator (onPageChange)="onPageChange($event)" [first]="page.number" [rows]="page.size" [totalRecords]="page.totalElements" [rowsPerPageOptions]="[pageSize]"></p-paginator>
+    <p-paginator (onPageChange)="onPageChange($event)"[rows]="pageSize" [totalRecords]="totalElements" [rowsPerPageOptions]="[pageSize]"></p-paginator>
   </div>
 </main>
