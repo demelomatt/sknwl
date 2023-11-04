@@ -1,0 +1,16 @@
+<header>
+    <nav class="flex align-items-center justify-content-around m-2">
+        <a href="#"><img src="../../assets/logo.png" alt="Logo" class="logo"></a>
+        <div >
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [style]="{'width':'40vw'}"placeholder="Pesquisar por um tema" [(ngModel)]="value" />
+            </span>
+        </div>
+
+        <div class="flex gap-2">
+            <p-avatar icon="pi pi-user" styleClass="mr-2" size="large" shape="circle" (click)="''"></p-avatar>
+            <p>Perfil</p>
+        </div>
+    </nav>
+</header>
