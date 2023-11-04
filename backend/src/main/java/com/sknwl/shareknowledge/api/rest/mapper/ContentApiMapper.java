@@ -14,6 +14,7 @@ import org.mapstruct.factory.Mappers;
 public interface ContentApiMapper {
     ContentApiMapper INSTANCE = Mappers.getMapper(ContentApiMapper.class);
 
+    @Mapping(target = "publisher.id", source = "publisherId")
     Content map(ContentRequestCreate contentRequestCreate);
     Content map (ContentRequestUpdate contentRequestUpdate);
     ContentResponse map(Content content);

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ContentResponse(Long id,
-                              String name,
+                              String title,
                               String description,
                               ContentType contentType,
                               String url,
@@ -16,7 +16,7 @@ public record ContentResponse(Long id,
                               StudyFieldPayload studyField,
                               LanguagePayload language,
                               Long durationMinutes,
-                              Long publisherId,
+                              MemberBasicResponse publisher,
                               LocalDateTime publishedDateTime,
                               Long reviewers,
                               Double rating,

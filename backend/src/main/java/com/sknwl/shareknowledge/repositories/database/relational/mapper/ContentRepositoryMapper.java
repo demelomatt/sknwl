@@ -30,5 +30,6 @@ public interface ContentRepositoryMapper {
     @Named("memberModelToMember")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id")
+    @Mapping(target = "name")
     Member map(MemberModel memberModel);
 }

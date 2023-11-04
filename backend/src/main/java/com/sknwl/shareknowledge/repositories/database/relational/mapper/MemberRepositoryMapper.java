@@ -14,6 +14,7 @@ public interface MemberRepositoryMapper {
     MemberModel map(Member member);
 
     @Mapping(target = "socialMedias", qualifiedByName = "socialMediaModelToSocialMedia")
+    @Mapping(target = "publishedContents", ignore = true)
     Member map(MemberModel memberModel);
 
     @Named("socialMediaModelToSocialMedia")
