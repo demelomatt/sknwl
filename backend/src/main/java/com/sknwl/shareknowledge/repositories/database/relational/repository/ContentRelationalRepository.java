@@ -10,6 +10,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.mapper.ContentR
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModelSummary;
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentRatingModel;
+import com.sknwl.shareknowledge.repositories.database.relational.model.CoverUrlModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,9 @@ public class ContentRelationalRepository implements ContentRepository {
     @Override
     public Content register(Content content) {
         ContentModel contentModel = mapper.map(content);
+        for (CoverUrlModel url : contentModel.getCoverImage().getUrls()) {
+            url.setCoverImage(contentModel.getCoverImage());
+        }
         contentJpaRepository.save(contentModel);
         return mapper.map(contentModel);
     }
@@ -94,6 +98,7 @@ public class ContentRelationalRepository implements ContentRepository {
     }
 
     public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration) {
+
         var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, sourceId, languageId, minDuration, maxDuration, minRatings, sort.name(), pageable);
         var contents = contentsSummary.getContent().stream().map(contentModelSummary -> {
             var contentModel = contentModelSummary.getContent();
@@ -101,7 +106,7 @@ public class ContentRelationalRepository implements ContentRepository {
             contentModel.setRating(contentModelSummary.getAverage());
             return mapper.map(contentModel);
         }).toList();
-        return new PageImpl<>(contents);
+        return new PageImpl<>(contents, pageable, contentsSummary.getTotalElements());
     }
 
     private ContentModel getContent(Long id) {

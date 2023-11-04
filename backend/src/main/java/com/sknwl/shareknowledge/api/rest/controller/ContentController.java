@@ -7,6 +7,7 @@ import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.usecase.ContentUseCase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -80,11 +81,9 @@ public class ContentController {
             @RequestParam(required = false) Integer minDuration,
             @RequestParam(required = false) Integer maxDuration
             ) {
-        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(new PageImpl<>(contents));
+        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration);
+        var responseContents = mapper.map(contents.getContent());
+        return ResponseEntity.ok(new PageImpl<>(responseContents, PageRequest.of(contents.getNumber(), contents.getSize()), contents.getTotalElements()));
     }
 
 

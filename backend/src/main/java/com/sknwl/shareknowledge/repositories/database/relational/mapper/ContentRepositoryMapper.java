@@ -5,6 +5,8 @@ import com.sknwl.shareknowledge.repositories.database.relational.model.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(uses = {CoreRepositoryMapper.class})
 public interface ContentRepositoryMapper {
     ContentRepositoryMapper INSTANCE = Mappers.getMapper(ContentRepositoryMapper.class);
@@ -32,4 +34,6 @@ public interface ContentRepositoryMapper {
     @Mapping(target = "id")
     @Mapping(target = "name")
     Member map(MemberModel memberModel);
+
+    List<Content> map(List<ContentModel> contentModels);
 }

@@ -24,6 +24,6 @@ public class CoverImageModel {
     @JoinColumn(name = "cover_image_author_id", referencedColumnName = "id")
     private ImageAuthorModel author;
 
-    @OneToMany(mappedBy = "coverImage", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coverImage", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CoverUrlModel> urls;
 }
