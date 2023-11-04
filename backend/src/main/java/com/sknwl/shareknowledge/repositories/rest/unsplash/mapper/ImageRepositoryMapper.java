@@ -27,11 +27,8 @@ public interface ImageRepositoryMapper {
 
     @Mapping(target = "userName", source = "username")
     @Mapping(target = "identifier",source = "id")
+    @Mapping(target = "profileUrl",source = "links.html")
     ImageAuthor map(UserModel userModel);
-
-    default String map(UserLink userLink) {
-        return userLink.html();
-    }
 
     default List<CoverUrl> map(UrlModel urlModel) {
         var regular = new CoverUrl(null, "regular", urlModel.regular());

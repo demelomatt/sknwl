@@ -17,7 +17,7 @@ public class CoverUrlModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_image_id", referencedColumnName = "id")
     private CoverImageModel coverImage;
 

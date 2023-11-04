@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Content {
     private Long id;
-    private String name;
+    private String title;
     private String description;
     private ContentType contentType;
     private String url;

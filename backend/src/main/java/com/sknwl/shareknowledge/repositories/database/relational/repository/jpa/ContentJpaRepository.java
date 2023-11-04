@@ -17,7 +17,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "FROM ContentModel c " +
             "LEFT JOIN ContentRatingModel r ON c.id = r.content.id " +
             "WHERE (" +
-            "   (:keyphrase IS NULL OR c.name LIKE %:keyphrase%) " +
+            "   (:keyphrase IS NULL OR c.title LIKE %:keyphrase%) " +
             "   OR (:keyphrase IS NULL OR c.studyField.name LIKE %:keyphrase%) " +
             "   OR (:keyphrase IS NOT NULL AND EXISTS (SELECT s FROM c.subjects s WHERE s LIKE %:keyphrase%))" +
             ") " +

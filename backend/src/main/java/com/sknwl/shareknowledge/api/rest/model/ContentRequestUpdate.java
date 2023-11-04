@@ -6,7 +6,7 @@ import java.util.List;
 
 public record ContentRequestUpdate(
         Long id,
-        String name,
+        String title,
         String description,
         ContentType contentType,
         String url,

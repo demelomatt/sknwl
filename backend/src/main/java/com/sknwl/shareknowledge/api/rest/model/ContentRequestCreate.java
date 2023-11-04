@@ -5,7 +5,7 @@ import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import java.util.List;
 
 public record ContentRequestCreate(
-        String name,
+        String title,
         String description,
         ContentType contentType,
         String url,
