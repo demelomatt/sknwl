@@ -27,7 +27,9 @@ export class ContentService {
     minDuration?: number,
     maxDuration?: number
     ): Observable<Page<Content>> {
-      let params = new HttpParams();
-      return this.http.get<Page<Content>>(this.url);
+      let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+      return this.http.get<Page<Content>>(this.url, { params });
   }
 }

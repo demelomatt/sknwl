@@ -12,23 +12,30 @@ import { PaginatorState } from 'primeng/paginator';
 export class CardContentComponent implements OnInit{
   page: Page<Content> = {} as Page<Content>; 
   pageNumber: number = 0;  
-  pageSize: number = 10;
+  pageSize: number = 5;
+  totalElements: number = 0;
 
   constructor(private service: ContentService) {}
 
   ngOnInit(): void {
-      this.getContents(this.pageNumber, this.pageSize);
+      this.getContents();
   }
 
   onPageChange(event: PaginatorState) {
-    if (event && event.first !== undefined && event.rows !== undefined) {
-      this.getContents(event.first, event.rows);
+
+    if (event.page !== this.pageNumber || event.rows !== this.pageSize)
+    //if (event && event.page !== undefined && event.page > 0 && event.rows !== undefined) 
+    {
+      this.pageNumber = event.page ?? this.pageNumber;
+      this.pageSize = event.rows ?? this.pageSize;
+      this.getContents(); 
     }
 }
 
-  getContents(pageNumber: number, pageSize: number) {
-    this.service.getContents(pageNumber, pageSize).subscribe((response) => {
+  getContents() {
+    this.service.getContents(this.pageNumber, this.pageSize).subscribe((response) => {
       this.page = response;
+      this.totalElements = response.totalElements;
     })
   }
 }
