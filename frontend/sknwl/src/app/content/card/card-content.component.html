@@ -1,6 +1,6 @@
 
-  <div class="flex flex-wrap gap-4 m-3 w-11 md:w-screen">
-    <div *ngFor="let content of page.content" class="w-12 md:w-3">
+  <div class="flex flex-wrap gap-4 m-3">
+    <div *ngFor="let content of page.content" class="w-12 md:w-24rem">
       <p-card 
         header= {{content.title}}
         subheader="Publicado por {{content.publisher.name}}, {{content.publishedDateTime | date: 'dd/MM/yyyy'}}"
@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  <div class="w-9">
-    <p-paginator (onPageChange)="onPageChange($event)"[rows]="pageSize" [totalRecords]="totalElements" [rowsPerPageOptions]="[pageSize]"></p-paginator>
+  <div class="w-10">
+    <p-paginator (onPageChange)="onPageChange($event)"[rows]="pageSize" [totalRecords]="totalElements" [rowsPerPageOptions]="defaultPageSizes"></p-paginator>
   </div>
 

@@ -12,7 +12,8 @@ import { PaginatorState } from 'primeng/paginator';
 export class CardContentComponent implements OnInit{
   page: Page<Content> = {} as Page<Content>; 
   pageNumber: number = 0;  
-  pageSize: number = 9;
+  defaultPageSizes: number[] = [12, 8, 4];
+  pageSize: number = 12;
   totalElements: number = 0;
 
   constructor(private service: ContentService) {}
