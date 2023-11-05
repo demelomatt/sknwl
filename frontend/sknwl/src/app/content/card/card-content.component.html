@@ -1,18 +1,18 @@
 
-  <div class="flex flex-wrap gap-4">
-    <div class="card__row" *ngFor="let content of page.content">
+  <div class="flex flex-wrap gap-4 m-3 w-11 md:w-screen">
+    <div *ngFor="let content of page.content" class="w-12 md:w-3">
       <p-card 
         header= {{content.title}}
-        subheader="Publicado por {{content.publisher.name}}, {{content.publishedDateTime}} "
+        subheader="Publicado por {{content.publisher.name}}, {{content.publishedDateTime | date: 'dd/MM/yyyy'}}"
       >
         <ng-template pTemplate="header">
           <img
-            style="width: 100%; height: 200px; object-fit:cover"
+            style="width: 100%; height: 25vh; object-fit:cover"
             alt="Card"
             src="{{content.coverImage.urls[0].url}}"
           />
         </ng-template>
-        <div>
+        <div class="flex">
           <p-tag
             styleClass="mx-1"
             icon="pi pi-file"
@@ -37,27 +37,30 @@
         </div>
         <div class="pt-4 mx-1">
           Assuntos
-          <p *ngFor="let subject of content.subjects">
-            <p-tag
-              [style]="{ background: '#64748B' }"
-              styleClass="mx-1"
-              value={{subject}}
-            >
-            </p-tag>
-          </p>
+          <div class="flex flex-wrap">
+            <p *ngFor="let subject of content.subjects">
+              <p-tag
+                [style]="{ background: '#64748B' }"
+                styleClass="mx-1"
+                value={{subject}}>
+              </p-tag>
+            </p>
+        </div>
         </div>
         <div class="pt- mx-1">
           Autores
-          <p *ngFor="let author of content.authors">
-            <p-tag [style]="{ background: '#64748B' }" value={{author}}> </p-tag>
-          </p>
+          <div class="flex flex-wrap">
+            <p *ngFor="let author of content.authors">
+              <p-tag [style]="{ background: '#64748B' }" value={{author}}> </p-tag>
+            </p>
+        </div>
         </div>
         <div class="pt-2">
-          <span class="m-2 pi pi-clock" pTooltip="Duração">{{content.durationMinutes}} minutos</span>
+          <span class="m-2 pi pi-clock" pTooltip="Duração"> {{content.durationMinutes}} minutos</span>
         </div>
         <div class="pt-3">
-          <span class="mx-2 mt-2 pi pi-star" pTooltip="Avaliações">{{content.rating}}</span>
-          <span class="mx-2 mt-2 pi pi-user" pTooltip="Avaliadores">{{content.reviewers}}</span>
+          <span class="mx-2 mt-2 pi pi-star" pTooltip="Avaliações"> {{content.rating}}</span>
+          <span class="mx-2 mt-2 pi pi-user" pTooltip="Avaliadores"> {{content.reviewers}}</span>
         </div>
         <ng-template pTemplate="footer">
           <p-button
@@ -95,7 +98,7 @@
     </div>
   </div>
 
-  <div class="">
+  <div class="w-9">
     <p-paginator (onPageChange)="onPageChange($event)"[rows]="pageSize" [totalRecords]="totalElements" [rowsPerPageOptions]="[pageSize]"></p-paginator>
   </div>
 

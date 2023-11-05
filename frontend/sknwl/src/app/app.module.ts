@@ -18,6 +18,9 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainComponent } from './main/main.component';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { MainComponent } from './main/main.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
     AppRoutingModule,
     InputTextModule,
@@ -39,7 +43,9 @@ import { MainComponent } from './main/main.component';
     TagModule,
     ButtonModule,
     PaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    SelectButtonModule,
+    MultiSelectModule
   ],
   providers: [ContentService],
   bootstrap: [AppComponent]

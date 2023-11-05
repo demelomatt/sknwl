@@ -1,6 +1,3 @@
 <aside class="menu__container">
-    <div class="p-float-label">
-        <p-dropdown [options]="sortValues" [(ngModel)]="selectedSort" optionLabel="type"></p-dropdown>
-        <label for="float-label">Ordenar por</label>
-    </div>
+    <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" placeholder="Formatos"></p-multiSelect>
 </aside>

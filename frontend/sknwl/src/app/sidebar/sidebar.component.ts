@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContentType } from '../content/content-type';
 
 interface Sort {
   type: string;
@@ -11,8 +12,10 @@ interface Sort {
 })
 export class SidebarComponent implements OnInit{
   sortValues: Sort[] | undefined;
-
   selectedSort: Sort | undefined;
+
+  formatOptions: string[] = Object.values(ContentType);
+  selectedFormats!: string[];
 
   ngOnInit() {
     this.sortValues = [
