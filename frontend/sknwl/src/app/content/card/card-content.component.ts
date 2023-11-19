@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Content } from '../content';
 import { ContentService } from '../content.service';
 import { Page } from 'src/app/core/page';
 import { PaginatorState } from 'primeng/paginator';
+import { ContentParams } from '../content-params';
 
 @Component({
   selector: 'app-card-content',
@@ -16,10 +17,19 @@ export class CardContentComponent implements OnInit{
   pageSize: number = 12;
   totalElements: number = 0;
 
+  @Input() searchValue?: string;
+  
   constructor(private service: ContentService) {}
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Check if 'myProperty' has changed
+    if (changes['searchValue']) {
+      // Call your method here
       this.getContents();
+    }
   }
 
   onPageChange(event: PaginatorState) {
@@ -34,7 +44,13 @@ export class CardContentComponent implements OnInit{
 }
 
   getContents() {
-    this.service.getContents(this.pageNumber, this.pageSize).subscribe((response) => {
+    const contentParams: Partial<ContentParams> = {
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+      keyphrase: this.searchValue,
+    };
+
+    this.service.getContents(contentParams as ContentParams).subscribe((response) => {
       this.page = response;
       this.totalElements = response.totalElements;
     })

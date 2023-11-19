@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Page } from '../core/page';
 import { Content } from './content';
-import { ContentSortType } from './content-sort-type';
-import { ContentType } from './content-type';
+import { ContentParams } from './content-params';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +16,29 @@ export class ContentService {
 
   constructor(private http: HttpClient) { }
 
-  getContents(
-    pageNumber: number, 
-    pageSize: number, 
-    sort?: ContentSortType, 
-    keyphrase?: string, 
-    minRatings?: number, 
-    contentTypes?: ContentType[],
-    sourceId?: number,
-    languageId?: number,
-    minDuration?: number,
-    maxDuration?: number
-    ): Observable<Page<Content>> {
-      let params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-      return this.http.get<Page<Content>>(this.url, { params });
+  private convertToHttpParams(contentParams: ContentParams): HttpParams {
+    let params = new HttpParams();
+
+    // Iterate through the fields of the interface and add them to the params if they exist in the data object
+    Object.entries(contentParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        if (Array.isArray(value)) {
+          // If the value is an array, serialize it as a comma-separated string
+          value.forEach(item => {
+            params = params.append(key, item.toString());
+          });
+        } else {
+          params = params.set(key, value.toString());
+        }
+      }
+    });
+
+    return params;
+  }
+
+
+  getContents(contentParams: ContentParams): Observable<Page<Content>> {
+    const params = this.convertToHttpParams(contentParams);
+    return this.http.get<Page<Content>>(this.url, { params });
   }
 }

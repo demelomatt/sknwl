@@ -17,7 +17,7 @@ import { ContentService } from './content/content.service';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MainComponent } from './main/main.component';
+import { HomeComponent } from './home/home.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     SidebarComponent,
     CardContentComponent,
-    MainComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
