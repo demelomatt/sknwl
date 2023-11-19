@@ -1,0 +1,23 @@
+<form [formGroup]="contentForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+        <label for="title" class="block">Título</label>
+        <input id="title" formControlName="title" pInputText type="text"/>
+    </div>
+    <div class="field">
+        <label for="description" class="block">Descrição</label>
+        <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28"></textarea>
+    </div>
+    <div class="field">
+        <label for="contentType" class="block">Tipo de conteúdo</label>
+        <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" ></p-dropdown>
+    </div>
+    <div class="field">
+        <label for="url" class="block">URL</label>
+        <input id="url" formControlName="url" pInputText type="text"/>
+    </div>
+    <div class="field">
+        <label for="authors" class="block">Autores</label>
+        <p-chips id="authors" formControlName="authors"></p-chips>
+    </div>
+</form>
+  
