@@ -2,37 +2,45 @@
     <div>
         <div class="field">
             <label for="title" class="block">Título</label>
-            <input id="title" formControlName="title" pInputText type="text" [style]="{width: '40vw'}"/>
+            <input id="title" formControlName="title" pInputText type="text" [style]="{width: '30vw'}"/>
         </div>
         <div class="field">
             <label for="description" class="block">Descrição</label>
-            <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28" [style]="{width: '40vw'}"></textarea>
+            <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28" [style]="{width: '30vw'}"></textarea>
         </div>
         <div class="field">
             <label for="contentType" class="block">Tipo de conteúdo</label>
-            <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" [style]="{width: '40vw'}"></p-dropdown>
+            <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" [style]="{width: '30vw'}"></p-dropdown>
         </div>
         <div class="field">
             <label for="url" class="block">URL</label>
-            <input id="url" formControlName="url" pInputText type="text" [style]="{width: '40vw'}"/>
-        </div>
-        <div class="field">
-            <label for="authors" class="block">Autores</label>
-            <p-chips id="authors" formControlName="authors" [style]="{width: '40vw'}"></p-chips>
-        </div>
-        <div class="field">
-            <label for="subjects" class="block">Assuntos</label>
-            <p-chips id="subjects" formControlName="subjects" [style]="{width: '40vw'}" placeholder="Assuntos relacionados a esse conteúdo. Ex.: Data Science, Marketing"></p-chips>
+            <input id="url" formControlName="url" pInputText type="text" [style]="{width: '30vw'}"/>
         </div>
         <div class="field">
             <label for="durationMinutes" class="block">Duração (min)</label>
-            <p-inputNumber id="durationMinutes" formControlName="durationMinutes" inputId="integeronly" ></p-inputNumber>
+            <p-inputNumber id="durationMinutes" formControlName="durationMinutes" inputId="integeronly" [style]="{width: '30vw'}"></p-inputNumber>
+        </div>
+        <div class="field">
+            <label for="price" class="block">Preço</label>
+            <p-inputNumber id="price" formControlName="price" mode="currency" inputId="currency-brazil" currency="BRL" locale="pt-BR" [style]="{width: '30vw'}"></p-inputNumber>
         </div>
         <div class="field">
             <label for="languages" class="block">Idioma</label>
-            <p-autoComplete id="languages" formControlName="languages" [dropdown]="true" [suggestions]="filteredLanguages" (completeMethod)="filter($event)" field="name"></p-autoComplete>
+            <p-autoComplete id="languages" formControlName="languages" [dropdown]="true" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" field="name" [style]="{width: '30vw'}"></p-autoComplete>
         </div>
-
+        <div class="field">
+            <label for="authors" class="block">Autores</label>
+            <p-chips id="authors" formControlName="authors" [style]="{width: '30vw'}"></p-chips>
+        </div>
+        <div class="field">
+            <label for="subjects" class="block">Assuntos</label>
+            <p-chips id="subjects" formControlName="subjects" [style]="{width: '30vw'}" placeholder="Assuntos relacionados a esse conteúdo. Ex.: Data Science, Marketing"></p-chips>
+        </div>
+        <div class="field">
+            <label for="studyFields" class="block">Campo de estudo</label>
+            <p-autoComplete id="studyFields" formControlName="studyFields" [suggestions]="studyFields" (completeMethod)="filterField($event)" field="name" [style]="{width: '30vw'}"></p-autoComplete>
+        </div>
+        <button pButton type="submit" label="Cadastrar" [style]="{width: '30vw'}"></button>
     </div>
 </form>
   

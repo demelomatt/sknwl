@@ -4,6 +4,9 @@ import { ContentType } from '../content-type';
 import { LanguageService } from 'src/app/core/language.service';
 import { Language } from 'src/app/core/language';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { StudyField } from '../study-field';
+import { ContentService } from '../content.service';
+import { Content } from '../content';
 
 @Component({
   selector: 'app-content-form',
@@ -16,10 +19,29 @@ export class ContentFormComponent implements OnInit{
 
   formatOptions: string[] = Object.values(ContentType);
   filteredLanguages: Language[] = [];
-  private searchTerms = new Subject<string>();
+
+  private languageSearchTerms = new Subject<string>();
+  private fieldSearchTerms = new Subject<string>();
+
+  studyFields: StudyField[] = [];
+
+  constructor(private fb: FormBuilder, private languageService: LanguageService, private contentService: ContentService) {
+    this.contentForm = this.fb.group({
+      title: [''],
+      description: [''],
+      contentType: [''],
+      url: [''],
+      authors: [[]],
+      subjects: [[]],
+      languages: [[]],
+      studyFields: [[]],
+      durationMinutes: [0],
+      price: [0]
+    });
+  }
 
   ngOnInit() {
-    this.searchTerms
+    this.languageSearchTerms
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
@@ -28,32 +50,33 @@ export class ContentFormComponent implements OnInit{
       .subscribe(languages => { 
         this.filteredLanguages = languages;
       });
+
+      this.fieldSearchTerms
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(query => this.contentService.getStudyFields(query))
+      )
+      .subscribe(fields => { 
+        this.studyFields = fields;
+      });
   }
 
-
-  constructor(private fb: FormBuilder, private languageService: LanguageService) {
-    this.contentForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      contentType: ['', Validators.required],
-      url: ['', Validators.required],
-      authors: [[]],
-      subjects: [[]],
-      languages: [[]],
-      durationMinutes: [0, Validators.min(0)]
-    });
-  }
-
-  filter(event: { query: any; }) {
+  filterLanguage(event: { query: any; }) {
     let query = event.query;
-    this.searchTerms.next(query);
+    this.languageSearchTerms.next(query);
   };
 
+  filterField(event: { query: any; }) {
+    let query = event.query;
+    this.fieldSearchTerms.next(query);
+  };
 
   onSubmit() {
     if (this.contentForm.valid) {
-      // Process the form data
-      console.log(this.contentForm.value);
+    } else {
+      console.log("Preencha todos os campos");
     }
+
   }
 }

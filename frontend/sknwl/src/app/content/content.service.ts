@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Page } from '../core/page';
 import { Content } from './content';
 import { ContentParams } from './content-params';
+import { StudyField } from './study-field';
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +35,17 @@ export class ContentService {
     return params;
   }
 
-
   getContents(contentParams: ContentParams): Observable<Page<Content>> {
     const params = this.convertToHttpParams(contentParams);
     return this.http.get<Page<Content>>(this.url, { params });
+  }
+
+  getStudyFields(field: string) {
+    const apiUrl = environment.field + "/name/" + field;
+    return this.http.get<StudyField[]>(apiUrl);
+  }
+
+  registerContent(content: Content) {
+    return this.http.post<Content>(this.url, content);
   }
 }

@@ -17,7 +17,7 @@ export interface Content {
     authors: string[],
     subjects: string[],
     studyField: {
-        id: number,
+        id?: number,
         name: string
     },
     language: {
