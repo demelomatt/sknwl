@@ -19,6 +19,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { StyleClassModule } from 'primeng/styleclass';
 import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardContentComponent } from './content/card/card-content.component';
@@ -27,8 +28,6 @@ import { ContentFormComponent } from './content/form/content-form.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
-
 
 @NgModule({
   declarations: [
@@ -62,7 +61,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     StyleClassModule,
     InputTextModule,
     ChipsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    TooltipModule
   ],
   providers: [ContentService],
   bootstrap: [AppComponent]

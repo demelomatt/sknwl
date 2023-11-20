@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContentType } from '../content-type';
 import { CoreService } from 'src/app/core/core.service';
@@ -16,6 +16,8 @@ import { Currency } from 'src/app/core/currency';
   styleUrls: ['./content-form.component.scss']
 })
 export class ContentFormComponent implements OnInit{
+  @Output() submitEvent = new EventEmitter<void>();
+
   contentForm: FormGroup;
   authors: string[] | undefined;
 
@@ -23,6 +25,7 @@ export class ContentFormComponent implements OnInit{
   filteredLanguages: Language[] = [];
   filteredCurrencies: Currency[] = [];
   selectedCurrency: Currency = {} as Currency;
+  selectedField: StudyField = {} as StudyField;
 
   private languageSearchTerms = new Subject<string>();
   private currencySearchTerms = new Subject<string>();
@@ -49,7 +52,7 @@ export class ContentFormComponent implements OnInit{
   ngOnInit() {
     this.languageSearchTerms
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap(query => this.coreService.getLanguages(query))
       )
@@ -59,7 +62,7 @@ export class ContentFormComponent implements OnInit{
 
     this.currencySearchTerms
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap(query => this.coreService.getCurrencies(query))
       )
@@ -69,7 +72,7 @@ export class ContentFormComponent implements OnInit{
 
       this.fieldSearchTerms
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap(query => this.contentService.getStudyFields(query))
       )
@@ -91,10 +94,6 @@ export class ContentFormComponent implements OnInit{
   filterField(event: { query: any; }) {
     let query = event.query;
     this.fieldSearchTerms.next(query);
-    if(this.studyFields.length === 0) {
-      const newStudyField: StudyField = {name: query };
-      this.contentForm.patchValue({ studyField: newStudyField });
-    }
   };
 
   onSubmit() {
@@ -110,7 +109,7 @@ export class ContentFormComponent implements OnInit{
         authors: this.contentForm.value.authors,
         subjects: this.contentForm.value.subjects,
         language: this.contentForm.value.language,
-        studyField: this.contentForm.value.studyField,
+        studyField: Object.hasOwn(this.selectedField , 'id') ? this.selectedField : {name: this.contentForm.value.studyField},
         durationMinutes: this.contentForm.value.durationMinutes,
         price: {amount: this.contentForm.value.price, currency: {id: 19, code: 'BRL'}},
         publisher: {
@@ -129,6 +128,7 @@ export class ContentFormComponent implements OnInit{
           console.error('Error submitting content', error);
         }
       );
+      this.submitEvent.emit();
     } else {
       console.log("Preencha todos os campos");
     }

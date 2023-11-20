@@ -39,7 +39,7 @@
         </div>
         <div class="field">
             <label for="studyField" class="block">Campo de estudo</label>
-            <p-autoComplete id="studyField" formControlName="studyField" [suggestions]="studyFields" (completeMethod)="filterField($event)" field="name" [style]="{width: '30vw'}"></p-autoComplete>
+            <p-autoComplete id="studyField" [(ngModel)]="selectedField" formControlName="studyField" [suggestions]="studyFields" (completeMethod)="filterField($event)" field="name" [style]="{width: '30vw'}"></p-autoComplete>
         </div>
         <button pButton type="submit" label="Cadastrar" [style]="{width: '30vw'}"></button>
     </div>

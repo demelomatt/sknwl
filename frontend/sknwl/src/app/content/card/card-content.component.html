@@ -67,7 +67,8 @@
             styleClass="mx-1"
             icon="pi pi-external-link"
             [outlined]="true"
-            pTooltip="Ir para conteúdo"
+            pTooltip="{{content.url}}"
+            (onClick)="openExternalLink(content.url)"
           ></p-button>
           <p-button
             styleClass="mx-1"

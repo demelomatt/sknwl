@@ -55,4 +55,8 @@ export class CardContentComponent implements OnInit{
       this.totalElements = response.totalElements;
     })
   }
+
+  openExternalLink(url: string) {
+    window.open(url, '_blank');
+  }
 }

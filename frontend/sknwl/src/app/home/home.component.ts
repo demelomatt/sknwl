@@ -15,13 +15,17 @@ export class HomeComponent{
   selectedSort!: string;
 
   searchValue?: string;
-  showContentForm: boolean = false;
+  contentFormVisible: boolean = false;
 
   onSearchValueChanged(value: string) {
     this.searchValue = value
   }
 
-  contentForm() {
-    this.showContentForm = true;
+  showContentForm() {
+    this.contentFormVisible = true;
+  }
+
+  hideContentForm() {
+    this.contentFormVisible = false;
   }
 }
