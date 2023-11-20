@@ -35,10 +35,9 @@ public class CoreController {
 
     @GetMapping("/currencies")
     public ResponseEntity<List<CurrencyPayload>> listCurrencies(
-            @RequestParam(required = false) String code,
-            @RequestParam(required = false) String name
+            @RequestParam(required = false) String code
     ) {
-        var languages = coreUseCase.listCurrencies(code, name)
+        var languages = coreUseCase.listCurrencies(code)
                 .stream()
                 .map(mapper::map)
                 .toList();

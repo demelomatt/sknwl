@@ -15,7 +15,7 @@ public record ContentRequestCreate(
         StudyFieldPayload studyField,
         LanguagePayload language,
         Long durationMinutes,
-        Long publisherId,
+        MemberRequest publisher,
         String coverUri,
         MoneyPayload price) {
 }
