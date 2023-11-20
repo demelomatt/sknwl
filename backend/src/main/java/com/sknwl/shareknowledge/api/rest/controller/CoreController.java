@@ -24,10 +24,9 @@ public class CoreController {
 
     @GetMapping("/languages")
     public ResponseEntity<List<LanguagePayload>> listLanguage(
-            @RequestParam(required = false) String code,
-            @RequestParam(required = false) String name
+            @RequestParam(required = false) String search
     ) {
-        var languages = coreUseCase.listLanguage(code, name)
+        var languages = coreUseCase.listLanguage(search)
                 .stream()
                 .map(mapper::map)
                 .toList();

@@ -8,5 +8,7 @@ import java.util.List;
 public interface CoreRepository {
     List<Currency> listCurrencies(String code, String currencyName);
 
-    List<Language> listLanguage(String code, String name);
+    List<Language> listLanguage();
+
+    List<Language> listLanguageByValue(String search);
 }

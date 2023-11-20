@@ -17,7 +17,6 @@ public class CoreRelationalRepository implements CoreRepository {
     private final CurrencyJpaRepository currencyJpaRepository;
     private final LanguageJpaRepository languageJpaRepository;
 
-
     public CoreRelationalRepository(CurrencyJpaRepository currencyJpaRepository, LanguageJpaRepository languageJpaRepository) {
         this.currencyJpaRepository = currencyJpaRepository;
         this.languageJpaRepository = languageJpaRepository;
@@ -32,8 +31,30 @@ public class CoreRelationalRepository implements CoreRepository {
     }
 
     @Override
-    public List<Language> listLanguage(String code, String name) {
-        return languageJpaRepository.findByCodeAndName(code, name)
+    public List<Language> listLanguage() {
+        return languageJpaRepository.findAll()
+                .stream()
+                .map(mapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<Language> listLanguageByValue(String search) {
+        return languageJpaRepository.findByValue(search)
+                .stream()
+                .map(mapper::map)
+                .toList();
+    }
+
+    public List<Language> listLanguageByCode(String code) {
+        return languageJpaRepository.findByCode(code)
+                .stream()
+                .map(mapper::map)
+                .toList();
+    }
+
+    public List<Language> listLanguageByName(String name) {
+        return languageJpaRepository.findByName(name)
                 .stream()
                 .map(mapper::map)
                 .toList();

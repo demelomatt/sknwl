@@ -19,7 +19,12 @@ public class CoreUseCase {
         return coreRepository.listCurrencies(code, currencyName);
     }
 
-    public List<Language> listLanguage(String code, String name) {
-        return coreRepository.listLanguage(code, name);
+    public List<Language> listLanguage(String search) {
+        if (search != null) {
+            return coreRepository.listLanguageByValue(search);
+        }
+
+        return coreRepository.listLanguage();
+
     }
 }
