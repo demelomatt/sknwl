@@ -31,9 +31,9 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "ORDER BY " +
             "   CASE WHEN :sort = 'LATEST' THEN c.publishedDateTime END DESC, " +
             "   CASE WHEN :sort = 'OLDEST' THEN c.publishedDateTime END ASC, " +
-            "   CASE WHEN :sort = 'RATING_AVG_DESC' THEN AVG(r.rating) END DESC, " +
-            "   CASE WHEN :sort = 'RATING_COUNT_DESC' THEN COUNT(r) END DESC, " +
-            "   CASE WHEN :sort = 'RATING_AVG_COUNT_DESC' THEN COUNT(r) END DESC, AVG(r.rating) DESC")
+            "   CASE WHEN :sort = 'RATING_AVG' THEN AVG(r.rating) END DESC, " +
+            "   CASE WHEN :sort = 'RATING_COUNT' THEN COUNT(r) END DESC, " +
+            "   CASE WHEN :sort = 'RATING_AVG_COUNT' THEN COUNT(r) END DESC, AVG(r.rating) DESC")
     Page<ContentModelSummary> findContents(
             @Param("keyphrase") String keyphrase,
             @Param("contentTypes") List<ContentType> contentTypes,

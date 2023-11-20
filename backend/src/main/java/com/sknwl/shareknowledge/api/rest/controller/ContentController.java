@@ -72,7 +72,7 @@ public class ContentController {
     public ResponseEntity<Page<ContentResponse>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
-            @RequestParam(defaultValue = "RATING_AVG_COUNT_DESC") SortType sort,
+            @RequestParam(defaultValue = "LATEST") SortType sort,
             @RequestParam(required = false) String keyphrase,
             @RequestParam(defaultValue = "0") Integer minRatings,
             @RequestParam(required = false) List<ContentType> contentTypes,
