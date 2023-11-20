@@ -2,8 +2,8 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Content } from '../content';
 import { ContentService } from '../content.service';
 import { Page } from 'src/app/core/page';
-import { PaginatorState } from 'primeng/paginator';
 import { ContentParams } from '../content-params';
+import { PaginatorState } from 'primeng/paginator';
 
 @Component({
   selector: 'app-card-content',

@@ -6,8 +6,6 @@ import { Page } from '../core/page';
 import { Content } from './content';
 import { ContentParams } from './content-params';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

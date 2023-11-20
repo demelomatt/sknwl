@@ -9,9 +9,9 @@
     
             <div class="flex gap-4">
                 <p-button (click)="contentForm()" label="Novo" icon="pi pi-plus" iconPos="right" [text]="true" [raised]="true" ></p-button>
-                <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="showContentForm" [style]="{width: '50vw'}">
-                    <app-content-form></app-content-form>
-                </p-dialog>
+                    <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="showContentForm" [style]="{width: '50vw'}">
+                        <app-content-form></app-content-form>
+                    </p-dialog>
                 <div class="p-float-label">
                     <p-dropdown [options]="sortValues" [(ngModel)]="selectedSort"></p-dropdown>
                     <label for="float-label">Ordenar por</label>

@@ -1,23 +1,38 @@
-<form [formGroup]="contentForm" (ngSubmit)="onSubmit()">
-    <div class="field">
-        <label for="title" class="block">Título</label>
-        <input id="title" formControlName="title" pInputText type="text"/>
-    </div>
-    <div class="field">
-        <label for="description" class="block">Descrição</label>
-        <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28"></textarea>
-    </div>
-    <div class="field">
-        <label for="contentType" class="block">Tipo de conteúdo</label>
-        <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" ></p-dropdown>
-    </div>
-    <div class="field">
-        <label for="url" class="block">URL</label>
-        <input id="url" formControlName="url" pInputText type="text"/>
-    </div>
-    <div class="field">
-        <label for="authors" class="block">Autores</label>
-        <p-chips id="authors" formControlName="authors"></p-chips>
+<form [formGroup]="contentForm" (ngSubmit)="onSubmit()" class="flex flex-column justify-content-center align-items-center">
+    <div>
+        <div class="field">
+            <label for="title" class="block">Título</label>
+            <input id="title" formControlName="title" pInputText type="text" [style]="{width: '40vw'}"/>
+        </div>
+        <div class="field">
+            <label for="description" class="block">Descrição</label>
+            <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28" [style]="{width: '40vw'}"></textarea>
+        </div>
+        <div class="field">
+            <label for="contentType" class="block">Tipo de conteúdo</label>
+            <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" [style]="{width: '40vw'}"></p-dropdown>
+        </div>
+        <div class="field">
+            <label for="url" class="block">URL</label>
+            <input id="url" formControlName="url" pInputText type="text" [style]="{width: '40vw'}"/>
+        </div>
+        <div class="field">
+            <label for="authors" class="block">Autores</label>
+            <p-chips id="authors" formControlName="authors" [style]="{width: '40vw'}"></p-chips>
+        </div>
+        <div class="field">
+            <label for="subjects" class="block">Assuntos</label>
+            <p-chips id="subjects" formControlName="subjects" [style]="{width: '40vw'}" placeholder="Assuntos relacionados a esse conteúdo. Ex.: Data Science, Marketing"></p-chips>
+        </div>
+        <div class="field">
+            <label for="durationMinutes" class="block">Duração (min)</label>
+            <p-inputNumber id="durationMinutes" formControlName="durationMinutes" inputId="integeronly" ></p-inputNumber>
+        </div>
+        <div class="field">
+            <label for="languages" class="block">Idioma</label>
+            <p-autoComplete id="languages" formControlName="languages" [dropdown]="true" [suggestions]="filteredLanguages" (completeMethod)="filter($event)" field="name"></p-autoComplete>
+        </div>
+
     </div>
 </form>
   
