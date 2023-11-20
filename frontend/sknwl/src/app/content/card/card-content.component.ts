@@ -4,6 +4,8 @@ import { ContentService } from '../content.service';
 import { Page } from 'src/app/core/page';
 import { ContentParams } from '../content-params';
 import { PaginatorState } from 'primeng/paginator';
+import { ContentSortType } from '../content-sort-type';
+import { ContentType } from '../content-type';
 
 @Component({
   selector: 'app-card-content',
@@ -17,7 +19,10 @@ export class CardContentComponent implements OnInit{
   pageSize: number = 12;
   totalElements: number = 0;
 
+  private isFirstChange = true;
   @Input() searchValue?: string;
+  @Input() sort?: string;
+  @Input() types?: string[];
   
   constructor(private service: ContentService) {}
 
@@ -25,11 +30,18 @@ export class CardContentComponent implements OnInit{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.isFirstChange) {
+      this.isFirstChange = false;
+      return;
+    }
+    this.getContents();
     // Check if 'myProperty' has changed
+    /*
     if (changes['searchValue']) {
       // Call your method here
       this.getContents();
     }
+    */
   }
 
   onPageChange(event: PaginatorState) {
@@ -48,6 +60,10 @@ export class CardContentComponent implements OnInit{
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
       keyphrase: this.searchValue,
+      sort: this.getEnumKeyByValue(this.sort) as ContentSortType,
+      contentTypes: this.types?.map((value: string) => {
+        return Object.keys(ContentType).find(key => ContentType[key as keyof typeof ContentType] === value) as keyof typeof ContentType
+    }) as unknown as ContentType[]
     };
 
     this.service.getContents(contentParams as ContentParams).subscribe((response) => {
@@ -58,5 +74,15 @@ export class CardContentComponent implements OnInit{
 
   openExternalLink(url: string) {
     window.open(url, '_blank');
+  }
+
+  private getEnumKeyByValue(value: any): keyof typeof ContentSortType {
+    const keys = Object.keys(ContentSortType) as (keyof typeof ContentSortType)[];
+    for (const key of keys) {
+      if (ContentSortType[key] === value) {
+        return key;
+      }
+    }
+    return "LATEST";
   }
 }

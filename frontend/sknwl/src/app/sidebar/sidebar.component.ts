@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ContentType } from '../content/content-type';
 
 interface Sort {
@@ -17,6 +17,8 @@ export class SidebarComponent implements OnInit{
   formatOptions: string[] = Object.values(ContentType);
   selectedFormats!: string[];
 
+  @Output() formatsChanged = new EventEmitter<string[]>();
+
   ngOnInit() {
     this.sortValues = [
       {type: 'Relevância'},
@@ -24,5 +26,9 @@ export class SidebarComponent implements OnInit{
       {type: 'Maior nota'},
       {type: 'Mais recente'}
     ];
-}
+  }
+
+  onTypesChange() {
+    this.formatsChanged.emit(this.selectedFormats);
+  }
 }

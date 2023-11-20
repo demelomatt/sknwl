@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContentType } from '../content/content-type';
 import { CardContentComponent } from '../content/card/card-content.component';
+import { ContentSortType } from '../content/content-sort-type';
 
 @Component({
   selector: 'app-home',
@@ -13,12 +14,17 @@ export class HomeComponent{
 
   sortValues: string[] = ['Relevância', 'Nº Avaliações', 'Maior nota', 'Mais recente'];
   selectedSort!: string;
-
   searchValue?: string;
+  formatTypes?: string[];
+
   contentFormVisible: boolean = false;
 
   onSearchValueChanged(value: string) {
     this.searchValue = value
+  }
+
+  onTypesChange(types: string[]) {
+    this.formatTypes = types;
   }
 
   showContentForm() {
