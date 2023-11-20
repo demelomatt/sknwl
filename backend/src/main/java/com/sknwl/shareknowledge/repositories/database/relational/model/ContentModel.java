@@ -44,7 +44,7 @@ public class ContentModel {
     @Column(name = "name")
     private List<String> subjects;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "study_field_id", referencedColumnName = "id")
     private StudyFieldModel studyField;
 

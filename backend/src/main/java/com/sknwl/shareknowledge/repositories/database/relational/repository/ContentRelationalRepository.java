@@ -13,6 +13,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.model.ContentRa
 import com.sknwl.shareknowledge.repositories.database.relational.model.CoverUrlModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
+import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.StudyFieldJpaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,12 +27,14 @@ import java.util.Map;
 public class ContentRelationalRepository implements ContentRepository {
     private final ContentJpaRepository contentJpaRepository;
     private final ContentRatingJpaRepository contentRatingJpaRepository;
+    private final StudyFieldJpaRepository studyFieldJpaRepository;
 
     private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
 
-    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository) {
+    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository, StudyFieldJpaRepository studyFieldJpaRepository) {
         this.contentJpaRepository = contentJpaRepository;
         this.contentRatingJpaRepository = contentRatingJpaRepository;
+        this.studyFieldJpaRepository = studyFieldJpaRepository;
     }
 
     @Transactional
@@ -40,6 +43,9 @@ public class ContentRelationalRepository implements ContentRepository {
         ContentModel contentModel = mapper.map(content);
         for (CoverUrlModel url : contentModel.getCoverImage().getUrls()) {
             url.setCoverImage(contentModel.getCoverImage());
+        }
+        if (contentModel.getStudyField().getId() == null) {
+            studyFieldJpaRepository.save(contentModel.getStudyField());
         }
         contentJpaRepository.save(contentModel);
         return mapper.map(contentModel);
