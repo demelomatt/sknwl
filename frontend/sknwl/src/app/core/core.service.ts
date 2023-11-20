@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Language } from './language';
 import { Observable } from 'rxjs';
+import { Currency } from './currency';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class LanguageService {
+export class CoreService {
   private url = environment.core;
 
   constructor(private http: HttpClient) { }
@@ -24,4 +25,14 @@ export class LanguageService {
     return this.http.get<Language[]>(apiUrl, { params });
   }
 
+  getCurrencies(code?: string): Observable<Currency[]>  {
+    const apiUrl = this.url + "/currencies";
+    let params = new HttpParams();
+
+    if (code !== undefined && code !== null) {
+      params = params.set('code', code);
+    }
+
+    return this.http.get<Currency[]>(apiUrl, { params });
+  }
 }

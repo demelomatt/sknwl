@@ -45,7 +45,7 @@ export class ContentService {
     return this.http.get<StudyField[]>(apiUrl);
   }
 
-  registerContent(content: Content) {
+  publishContent(content: Content) {
     return this.http.post<Content>(this.url, content);
   }
 }

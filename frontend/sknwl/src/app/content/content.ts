@@ -3,12 +3,12 @@ import { ContentType } from "./content-type";
 import { Cover } from "./cover";
 
 export interface Content {
-    id: number,
+    id?: number,
     title: string,
     description: string,
     contentType: ContentType
     url: string
-    source: {
+    source?: {
         id: number,
         name: string,
         webSiteUri: string,
@@ -27,9 +27,17 @@ export interface Content {
     },
     durationMinutes: number,
     publisher: Member,
-    publishedDateTime: Date,
-    reviewers: number,
-    rating: number,
-    price: number,
+    publishedDateTime?: Date,
+    reviewers?: number,
+    rating?: number,
+    price: {
+        amount: number,
+        currency: {
+            id: number,
+            code: string,
+            country?: string,
+            currency?: string 
+        }
+    },
     coverImage: Cover
 }

@@ -1,4 +1,4 @@
 export interface StudyField { 
-    id: number,
+    id?: number,
     name: string
 }
