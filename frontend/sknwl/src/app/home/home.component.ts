@@ -12,7 +12,7 @@ export class HomeComponent{
   modeOptions: any[] = [{label: 'Plano de estudo', value: 'guide'}, {label: 'Conteúdo', value: 'content'}];
   modeValue: string = 'content';
 
-  sortValues: string[] = ['Relevância', 'Nº Avaliações', 'Maior nota', 'Mais recente'];
+  sortValues: string[] = ['Mais recente', 'Relevância', 'Nº Avaliações', 'Maior nota'];
   selectedSort!: string;
   searchValue?: string;
   formatTypes?: string[];

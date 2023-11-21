@@ -20,12 +20,6 @@ export class SidebarComponent implements OnInit{
   @Output() formatsChanged = new EventEmitter<string[]>();
 
   ngOnInit() {
-    this.sortValues = [
-      {type: 'Relevância'},
-      {type: 'Nº Avaliações'},
-      {type: 'Maior nota'},
-      {type: 'Mais recente'}
-    ];
   }
 
   onTypesChange() {

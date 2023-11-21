@@ -23,6 +23,7 @@ export class CardContentComponent implements OnInit{
   @Input() searchValue?: string;
   @Input() sort?: string;
   @Input() types?: string[];
+ContentType: any;
   
   constructor(private service: ContentService) {}
 
@@ -84,5 +85,12 @@ export class CardContentComponent implements OnInit{
       }
     }
     return "LATEST";
+  }
+
+  private getContentTypeKey(value: ContentType): ContentType {
+    if (Object.values(ContentType).includes(value)) {
+      return value;
+    }
+    return {} as ContentType;
   }
 }
