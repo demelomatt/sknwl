@@ -1,6 +1,6 @@
 <app-header (valueChanged)="onSearchValueChanged($event)"></app-header>
 <div class="flex flex-column md:flex-row gap-3">
-    <app-sidebar (formatsChanged)="onTypesChange($event)"></app-sidebar>
+    <app-sidebar (formatsChanged)="onTypesChange($event)" (languagesChanged)="onLanguagesChange($event)"></app-sidebar>
     <main style="min-width: 80vw">
         <div class="flex gap-6 p-3 align-items-center justify-content-between w-12 md:w-10 flex-column md:flex-row  " >
             <div>
@@ -19,6 +19,6 @@
             </div>
         </div>
     
-        <app-card-content [searchValue]="searchValue" [sort]="selectedSort" [types]="formatTypes"></app-card-content>
+        <app-card-content [searchValue]="searchValue" [sort]="selectedSort" [types]="formatTypes" [languages]="languages"></app-card-content>
     </main>    
 </div>

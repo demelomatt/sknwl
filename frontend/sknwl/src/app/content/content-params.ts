@@ -9,7 +9,7 @@ export interface ContentParams {
     minRatings?: number;
     contentTypes?: ContentType[];
     sourceId?: number;
-    languageId?: number;
+    languageIds?: number[];
     minDuration?: number;
     maxDuration?: number;
   }

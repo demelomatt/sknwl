@@ -6,6 +6,7 @@ import { ContentParams } from '../content-params';
 import { PaginatorState } from 'primeng/paginator';
 import { ContentSortType } from '../content-sort-type';
 import { ContentType } from '../content-type';
+import { Language } from 'src/app/core/language';
 
 @Component({
   selector: 'app-card-content',
@@ -23,7 +24,8 @@ export class CardContentComponent implements OnInit{
   @Input() searchValue?: string;
   @Input() sort?: string;
   @Input() types?: string[];
-ContentType: any;
+  @Input() languages?: Language[];
+  ContentType: any;
   
   constructor(private service: ContentService) {}
 
@@ -64,7 +66,8 @@ ContentType: any;
       sort: this.getEnumKeyByValue(this.sort) as ContentSortType,
       contentTypes: this.types?.map((value: string) => {
         return Object.keys(ContentType).find(key => ContentType[key as keyof typeof ContentType] === value) as keyof typeof ContentType
-    }) as unknown as ContentType[]
+    }) as unknown as ContentType[],
+      languageIds: this.languages?.map(lang => lang.id)
     };
 
     this.service.getContents(contentParams as ContentParams).subscribe((response) => {

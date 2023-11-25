@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContentType } from '../content/content-type';
 import { CardContentComponent } from '../content/card/card-content.component';
 import { ContentSortType } from '../content/content-sort-type';
+import { Language } from '../core/language';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class HomeComponent{
   selectedSort!: string;
   searchValue?: string;
   formatTypes?: string[];
+  languages?: Language[];
 
   contentFormVisible: boolean = false;
 
@@ -25,6 +27,10 @@ export class HomeComponent{
 
   onTypesChange(types: string[]) {
     this.formatTypes = types;
+  }
+
+  onLanguagesChange(languages: Language[]) {
+    this.languages = languages;
   }
 
   showContentForm() {
