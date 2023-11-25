@@ -1,7 +1,9 @@
 <aside class="flex flex-column gap-3 p-3 m-3 menu__container">
-    <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos"
-
-    ></p-multiSelect>
-    <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" (onSelect)="onLanguagesChange()"></p-autoComplete>
-
+    <span class="text-lg font-semibold ">Filtro por</span>
+    <div class="flex flex-column gap-3">
+        <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos" styleClass="w-full"
+        ></p-multiSelect>
+        <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" (onSelect)="onLanguagesChange()" styleClass="w-full"
+        ></p-autoComplete>
+    </div>
 </aside>
