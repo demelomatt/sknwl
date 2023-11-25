@@ -103,9 +103,9 @@ public class ContentRelationalRepository implements ContentRepository {
         return new PageImpl<>(contents);
     }
 
-    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration) {
+    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
 
-        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, sourceId, languageId, minDuration, maxDuration, minRatings, sort.name(), pageable);
+        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, sourceId, languageIds, minDuration, maxDuration, minRatings, sort.name(), pageable);
         var contents = contentsSummary.getContent().stream().map(contentModelSummary -> {
             var contentModel = contentModelSummary.getContent();
             contentModel.setReviewers(contentModelSummary.getCount());

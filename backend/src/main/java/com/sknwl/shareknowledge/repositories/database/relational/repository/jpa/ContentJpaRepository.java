@@ -23,7 +23,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             ") " +
             "   AND (c.contentType IN :contentTypes) " +
             "   AND (:sourceId IS NULL OR c.source.id = :sourceId) " +
-            "   AND (:languageId IS NULL OR c.language.id = :languageId) " +
+            "   AND (c.language.id IN :languageIds) " +
             "   AND (:minDuration IS NULL OR c.durationMinutes >= :minDuration) " +
             "   AND (:maxDuration IS NULL OR c.durationMinutes <= :maxDuration) " +
             "GROUP BY c.id " +
@@ -38,7 +38,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             @Param("keyphrase") String keyphrase,
             @Param("contentTypes") List<ContentType> contentTypes,
             @Param("sourceId") Long sourceId,
-            @Param("languageId") Long languageId,
+            @Param("languageIds") List<Long> languageIds,
             @Param("minDuration") Integer minDuration,
             @Param("maxDuration") Integer maxDuration,
             @Param("minRatings") Integer minRatings,

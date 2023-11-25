@@ -2,6 +2,7 @@ package com.sknwl.shareknowledge.domain.usecase;
 
 import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
+import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
@@ -18,10 +19,12 @@ public class ContentUseCase {
 
     private final ContentRepository contentRepository;
     private final CoverImageRepository coverImageRepository;
+    private final CoreUseCase coreUseCase;
 
-    public ContentUseCase(ContentRepository contentRepository, CoverImageRepository coverImageRepository) {
+    public ContentUseCase(ContentRepository contentRepository, CoverImageRepository coverImageRepository, CoreUseCase coreUseCase) {
         this.contentRepository = contentRepository;
         this.coverImageRepository = coverImageRepository;
+        this.coreUseCase = coreUseCase;
     }
 
     public Content register(Content content) {
@@ -40,12 +43,18 @@ public class ContentUseCase {
         return contentRepository.list(pageable);
     }
 
-    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, Long languageId, Integer minDuration, Integer maxDuration) {
+    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
         var pageable = PageRequest.of(pageNumber, pageSize);
         if (contentTypes == null) {
             contentTypes = List.of(ContentType.values());
         }
-        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration);
+        if (languageIds == null) {
+            languageIds = coreUseCase.listLanguage(null)
+                    .stream()
+                    .map(Language::getId)
+                    .toList();
+        }
+        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, sourceId, languageIds, minDuration, maxDuration);
     }
 
     public void delete(Long id) {
