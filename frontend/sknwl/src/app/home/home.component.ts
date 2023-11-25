@@ -18,6 +18,7 @@ export class HomeComponent{
   searchValue?: string;
   formatTypes?: string[];
   languages?: Language[];
+  duration?: Map<string, number>;
 
   contentFormVisible: boolean = false;
 
@@ -31,6 +32,10 @@ export class HomeComponent{
 
   onLanguagesChange(languages: Language[]) {
     this.languages = languages;
+  }
+
+  onDurationChange(duration: Map<string, number>) {
+    this.duration = duration;
   }
 
   showContentForm() {

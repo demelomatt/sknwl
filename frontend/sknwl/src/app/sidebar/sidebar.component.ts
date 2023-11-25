@@ -22,11 +22,14 @@ export class SidebarComponent implements OnInit{
 
   filteredLanguages: Language[] = [];
   selectedLanguages: Language[] = [];
-  private languageSearchTerms = new Subject<string>();
+
+  minDuration: number = 10;
+  maxDuration: number = 600;
 
 
   @Output() formatsChanged = new EventEmitter<string[]>();
   @Output() languagesChanged = new EventEmitter<Language[]>();
+  @Output() durationChanged = new EventEmitter<Map<string, number>>();
 
   constructor(private coreService: CoreService) {}
 
@@ -39,6 +42,15 @@ export class SidebarComponent implements OnInit{
 
   onLanguagesChange() {
     this.languagesChanged.emit(this.selectedLanguages);
+  }
+
+  onDurationChange() {
+    let durationMap = new Map<string, number>([
+      ["min", this.minDuration],
+      ["max", this.maxDuration]
+  ]);
+
+    this.durationChanged.emit(durationMap);
   }
 
   filterLanguage(event: { query: any; }) {

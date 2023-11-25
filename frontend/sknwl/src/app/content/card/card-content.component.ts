@@ -25,6 +25,7 @@ export class CardContentComponent implements OnInit{
   @Input() sort?: string;
   @Input() types?: string[];
   @Input() languages?: Language[];
+  @Input() duration?: Map<string, number>;
   ContentType: any;
   
   constructor(private service: ContentService) {}
@@ -67,7 +68,9 @@ export class CardContentComponent implements OnInit{
       contentTypes: this.types?.map((value: string) => {
         return Object.keys(ContentType).find(key => ContentType[key as keyof typeof ContentType] === value) as keyof typeof ContentType
     }) as unknown as ContentType[],
-      languageIds: this.languages?.map(lang => lang.id)
+      languageIds: this.languages?.map(lang => lang.id),
+      minDuration: this.duration?.get('min'),
+      maxDuration: this.duration?.get('max')
     };
 
     this.service.getContents(contentParams as ContentParams).subscribe((response) => {

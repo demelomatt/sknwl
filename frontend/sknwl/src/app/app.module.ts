@@ -28,6 +28,7 @@ import { ContentFormComponent } from './content/form/content-form.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { SliderModule } from 'primeng/slider';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     InputTextModule,
     ChipsModule,
     AutoCompleteModule,
-    TooltipModule
+    TooltipModule,
+    SliderModule
   ],
   providers: [ContentService],
   bootstrap: [AppComponent]
