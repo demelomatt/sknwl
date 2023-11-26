@@ -20,6 +20,7 @@ export class HomeComponent{
   searchValue?: string;
   formatTypes?: string[];
   languages?: Language[];
+  fields?: {id: number, name: string}[];
   duration?: Map<string, number>;
   costTypes?: ComponentProperties[];
 
@@ -35,6 +36,10 @@ export class HomeComponent{
 
   onLanguagesChange(languages: Language[]) {
     this.languages = languages;
+  }
+
+  onFieldsChange(fields: {id: number, name: string}[]) {
+    this.fields = fields;
   }
 
   onDurationChange(duration: Map<string, number>) {

@@ -14,4 +14,5 @@ export interface ContentParams {
     minDuration?: number;
     maxDuration?: number;
     costTypes?: CostType[];
+    fields: string[];
   }

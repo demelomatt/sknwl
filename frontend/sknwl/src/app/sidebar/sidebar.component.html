@@ -5,6 +5,8 @@
         ></p-multiSelect>
         <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" (onSelect)="onLanguagesChange()" styleClass="w-full"
         ></p-autoComplete>
+        <p-autoComplete [(ngModel)]="selectedFields" [suggestions]="filteredFields" (completeMethod)="filterField($event)" (onUnselect)="onFieldsChange()" field="name" placeholder="Áreas de estudo" [multiple]="true" [dropdown]="true" (onSelect)="onFieldsChange()" styleClass="w-full"
+        ></p-autoComplete>
         <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
             <div class="flex flex-wrap p-inputgroup flex gap-3">
                 <label class="my-2" for="minDuration">Duração minímina</label>

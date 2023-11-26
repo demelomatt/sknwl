@@ -5,6 +5,7 @@ import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { CoreService } from '../core/core.service';
 import { CostType } from '../content/cost-type';
 import { ComponentProperties } from '../component-properties';
+import { ContentService } from '../content/content.service';
 
 interface Sort {
   type: string;
@@ -25,6 +26,9 @@ export class SidebarComponent implements OnInit{
   filteredLanguages: Language[] = [];
   selectedLanguages: Language[] = [];
 
+  filteredFields: {id: number, name: string}[]= [];
+  selectedFields: {id: number, name: string}[]= [];
+
   minDuration: number = 10;
   maxDuration: number = 600;
 
@@ -38,8 +42,10 @@ export class SidebarComponent implements OnInit{
   @Output() languagesChanged = new EventEmitter<Language[]>();
   @Output() durationChanged = new EventEmitter<Map<string, number>>();
   @Output() costChanged = new EventEmitter<any[]>();
+  @Output() fieldsChanged = new EventEmitter<{id: number, name: string}[]>();
 
-  constructor(private coreService: CoreService) {}
+
+  constructor(private coreService: CoreService, private contentService: ContentService) {}
 
   ngOnInit() {
   }
@@ -50,6 +56,10 @@ export class SidebarComponent implements OnInit{
 
   onLanguagesChange() {
     this.languagesChanged.emit(this.selectedLanguages);
+  }
+
+  onFieldsChange() {
+    this.fieldsChanged.emit(this.selectedFields);
   }
 
   onDurationChange() {
@@ -70,6 +80,14 @@ export class SidebarComponent implements OnInit{
 
     this.coreService.getLanguages(query).subscribe((response) => {
       this.filteredLanguages = response;
+    })
+  };
+
+  filterField(event: { query: any; }) {
+    let query = event.query;
+
+    this.contentService.getStudyFields(query).subscribe((response) => {
+      this.filteredFields = response;
     })
   };
 }

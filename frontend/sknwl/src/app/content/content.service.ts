@@ -40,9 +40,14 @@ export class ContentService {
     return this.http.get<Page<Content>>(this.url, { params });
   }
 
-  getStudyFields(field: string) {
-    const apiUrl = environment.field + "/name/" + field;
-    return this.http.get<StudyField[]>(apiUrl);
+  getStudyFields(search?: string): Observable<{id: number, name: string}[]>  {
+    const apiUrl = environment.field;
+    let params = new HttpParams();
+
+    if (search !== undefined && search !== null) {
+      params = params.set('search', search);
+    }
+    return this.http.get<{id: number, name: string}[]>(apiUrl, { params });
   }
 
   publishContent(content: Content) {

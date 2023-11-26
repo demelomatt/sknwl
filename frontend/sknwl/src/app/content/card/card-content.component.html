@@ -1,4 +1,5 @@
 
+<div *ngIf="page.totalElements > 0; else emptyContent">
   <div class="flex flex-wrap gap-4">
     <div *ngFor="let content of page.content" class="w-12 md:w-24rem">
       <p-card 
@@ -112,4 +113,9 @@
   <div class="w-10">
     <p-paginator (onPageChange)="onPageChange($event)"[rows]="pageSize" [totalRecords]="totalElements" [rowsPerPageOptions]="defaultPageSizes"></p-paginator>
   </div>
+
+</div>
+<ng-template #emptyContent>
+  <p class="text-center">Nenhum conteúdo encontrado com os critérios informados</p>
+</ng-template>
 
