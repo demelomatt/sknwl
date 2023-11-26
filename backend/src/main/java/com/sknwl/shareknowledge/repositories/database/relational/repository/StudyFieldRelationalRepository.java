@@ -55,8 +55,15 @@ public class StudyFieldRelationalRepository implements StudyFieldRepository {
     }
 
     @Override
-    public List<StudyField> list(String name) {
-        return studyFieldJpaRepository.findTop30ByNameContainingIgnoreCase(name)
+    public List<StudyField> list(String search) {
+        if (search == null) {
+            return studyFieldJpaRepository.findFirst30ByOrderByNameAsc()
+                    .stream()
+                    .map(mapper::map)
+                    .toList();
+        }
+
+        return studyFieldJpaRepository.findTop30ByNameContainingIgnoreCase(search)
                 .stream()
                 .map(mapper::map)
                 .toList();

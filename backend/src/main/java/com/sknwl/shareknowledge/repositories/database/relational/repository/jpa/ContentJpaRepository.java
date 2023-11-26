@@ -27,6 +27,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "   AND (:minDuration IS NULL OR c.durationMinutes >= :minDuration) " +
             "   AND (:maxDuration IS NULL OR c.durationMinutes <= :maxDuration) " +
             "   AND (:isFree IS NULL OR (:isFree = false AND c.price.price.amount > 0) OR(:isFree = true AND c.price.price.amount = 0)) " +
+            "   AND (:fields IS NULL OR (LOWER(c.studyField.name) IN :fields)) " +
             "GROUP BY c.id " +
             "HAVING (:minRatings IS NULL OR COUNT(r) >= :minRatings) " +
             "ORDER BY " +
@@ -44,6 +45,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             @Param("minDuration") Integer minDuration,
             @Param("maxDuration") Integer maxDuration,
             @Param("minRatings") Integer minRatings,
+            @Param("fields")  List<String> fields,
             @Param("sort") String sort,
             Pageable pageable
     );

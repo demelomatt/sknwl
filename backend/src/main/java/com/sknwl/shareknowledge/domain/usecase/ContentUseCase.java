@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContentUseCase {
@@ -44,10 +45,15 @@ public class ContentUseCase {
         return contentRepository.list(pageable);
     }
 
-    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, List<CostType> costTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
+    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, List<CostType> costTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration, List<String> fields) {
         var pageable = PageRequest.of(pageNumber, pageSize);
         if (contentTypes == null) {
             contentTypes = List.of(ContentType.values());
+        }
+        if (fields != null) {
+            fields = fields.stream()
+                    .map(String::toLowerCase)
+                    .collect(Collectors.toList());
         }
         if (languageIds == null) {
             languageIds = coreUseCase.listLanguage(null)
@@ -60,7 +66,7 @@ public class ContentUseCase {
             CostType type = costTypes.get(0);
             isFree = CostType.FREE.equals(type);
         }
-        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, isFree,  sourceId, languageIds, minDuration, maxDuration);
+        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, isFree,  sourceId, languageIds, minDuration, maxDuration, fields);
     }
 
     public void delete(Long id) {

@@ -81,9 +81,10 @@ public class ContentController {
             @RequestParam(required = false) Long sourceId,
             @RequestParam(required = false) List<Long> languageIds,
             @RequestParam(required = false) Integer minDuration,
-            @RequestParam(required = false) Integer maxDuration
+            @RequestParam(required = false) Integer maxDuration,
+            @RequestParam(required = false) List<String> fields
             ) {
-        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, costTypes, sourceId, languageIds, minDuration, maxDuration);
+        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, costTypes, sourceId, languageIds, minDuration, maxDuration, fields);
         var responseContents = mapper.map(contents.getContent());
         return ResponseEntity.ok(new PageImpl<>(responseContents, PageRequest.of(contents.getNumber(), contents.getSize()), contents.getTotalElements()));
     }
