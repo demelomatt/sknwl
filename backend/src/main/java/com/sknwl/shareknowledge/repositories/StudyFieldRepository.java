@@ -11,6 +11,6 @@ public interface StudyFieldRepository {
     StudyField update(StudyField studyField);
     void delete(Long id);
     StudyField get(Long id);
-    List<StudyField> list(String name);
+    List<StudyField> list(String search);
     Page<StudyField> list(Pageable pageable);
 }

@@ -15,11 +15,19 @@ public class CoreUseCase {
         this.coreRepository = coreRepository;
     }
 
-    public List<Currency> listCurrencies(String code, String currencyName) {
-        return coreRepository.listCurrencies(code, currencyName);
+    public List<Currency> listCurrencies(String code) {
+        if (code != null && !code.isBlank()) {
+            return coreRepository.listCurrencies(code);
+        }
+        return coreRepository.listCurrencies();
     }
 
-    public List<Language> listLanguage(String code, String name) {
-        return coreRepository.listLanguage(code, name);
+    public List<Language> listLanguage(String search) {
+        if (search != null) {
+            return coreRepository.listLanguageByValue(search);
+        }
+
+        return coreRepository.listLanguage();
+
     }
 }

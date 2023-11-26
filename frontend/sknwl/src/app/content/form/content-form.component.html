@@ -1,0 +1,64 @@
+<form [formGroup]="contentForm" (ngSubmit)="onSubmit()" class="flex flex-column" [ngStyle]="{ 'min-width': '30vw'}">
+    <div>
+        <div class="field flex flex-column">
+            <label for="title">Título</label>
+            <input id="title" formControlName="title" pInputText type="text"/>
+            <div *ngIf="contentForm.get('title')?.hasError('required') && contentForm.get('title')?.touched" class="text-red-400 p-1">
+                Necessário informar um título.
+            </div>
+        </div>
+        <div class="field flex flex-column">
+            <label for="url">URL</label>
+            <input id="url" formControlName="url" pInputText type="text"/>
+            <div *ngIf="contentForm.get('url')?.hasError('required') && contentForm.get('url')?.touched" class="text-red-400 p-1">
+                Necessário informar URL.
+            </div>
+        </div>
+        <div class="field flex flex-column">
+            <label for="description">Descrição</label>
+            <textarea id="description" formControlName="description" pInputTextarea rows="5" cols="28"></textarea>
+        </div>
+        <div class="field flex flex-column">
+            <label for="contentType">Tipo de conteúdo</label>
+            <p-dropdown id="contentType" formControlName="contentType" [options]="formatOptions" styleClass="form_field" [style]="{ 'min-width': '30vw'}"></p-dropdown>
+            <div *ngIf="contentForm.get('contentType')?.hasError('required') && contentForm.get('contentType')?.touched" class="text-red-400 p-1">
+                Necessário informar tipo do conteúdo.
+            </div>
+        </div>
+        <div class="field flex flex-column">
+            <label for="authors">Autores</label>
+            <p-chips id="authors" formControlName="authors" [style]="{ 'min-width': '30vw'}"></p-chips>
+        </div>
+        <div class="field flex flex-column">
+            <label for="language">Idioma</label>
+            <p-autoComplete id="language" formControlName="language" [dropdown]="true" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" field="name"></p-autoComplete>
+            <div *ngIf="contentForm.get('language')?.hasError('required') && contentForm.get('language')?.touched" class="text-red-400 p-1">
+                Necessário informar o idioma.
+            </div>
+        </div>
+        <div class="field flex flex-column">
+            <label for="durationMinutes">Duração (min)</label>
+            <p-inputNumber id="durationMinutes" formControlName="durationMinutes" inputId="integeronly" [style]="{ 'min-width': '30vw'}"></p-inputNumber>
+        </div>
+        <div class="field flex flex-column">
+            <label for="price">Preço</label>
+            <p-inputNumber id="price" formControlName="price" mode="currency" inputId="currency-brazil" currency="BRL" locale="pt-BR" [style]="{ 'min-width': '30vw'}"></p-inputNumber>
+    
+        </div>
+        <div class="field flex flex-column">
+            <label for="subjects">Assuntos</label>
+            <p-chips id="subjects" formControlName="subjects" placeholder="Assuntos relacionados a esse conteúdo. Ex.: Data Science, Marketing" [style]="{ 'min-width': '30vw'}"></p-chips>
+        </div>
+        <div class="field flex flex-column">
+            <label for="studyField">Campo de estudo</label>
+            <p-autoComplete id="studyField" [(ngModel)]="selectedField" formControlName="studyField" [suggestions]="studyFields" (completeMethod)="filterField($event)" field="name" [style]="{ 'min-width': '30vw'}"></p-autoComplete>
+            <div *ngIf="contentForm.get('studyField')?.hasError('required') && contentForm.get('studyField')?.touched" class="text-red-400 p-1">
+                Necessário informar a área de estudo.
+            </div>
+        </div>
+        <div>
+            <button pButton pRipple type="submit" label="Cadastrar" [disabled]="contentForm.invalid"></button>
+        </div>
+    </div>
+</form>
+  

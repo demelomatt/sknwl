@@ -22,10 +22,14 @@ public class ContentModel {
     private Long id;
 
     private String title;
+
+    @Column(length = 2000)
     private String description;
 
     @Enumerated()
     private ContentType contentType;
+
+    @Column(length = 2000)
     private String url;
 
     @ManyToOne
@@ -42,7 +46,7 @@ public class ContentModel {
     @Column(name = "name")
     private List<String> subjects;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "study_field_id", referencedColumnName = "id")
     private StudyFieldModel studyField;
 

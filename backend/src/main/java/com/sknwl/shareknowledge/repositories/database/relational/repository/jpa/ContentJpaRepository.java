@@ -22,26 +22,30 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "   OR (:keyphrase IS NOT NULL AND EXISTS (SELECT s FROM c.subjects s WHERE s LIKE %:keyphrase%))" +
             ") " +
             "   AND (c.contentType IN :contentTypes) " +
-            "   AND (:sourceId IS NULL OR c.source.id = :sourceId) " +
-            "   AND (:languageId IS NULL OR c.language.id = :languageId) " +
+            "   AND (:sourceIds IS NULL OR c.source.id IN :sourceIds) " +
+            "   AND (c.language.id IN :languageIds) " +
             "   AND (:minDuration IS NULL OR c.durationMinutes >= :minDuration) " +
             "   AND (:maxDuration IS NULL OR c.durationMinutes <= :maxDuration) " +
+            "   AND (:isFree IS NULL OR (:isFree = false AND c.price.price.amount > 0) OR(:isFree = true AND c.price.price.amount = 0)) " +
+            "   AND (:fields IS NULL OR (LOWER(c.studyField.name) IN :fields)) " +
             "GROUP BY c.id " +
             "HAVING (:minRatings IS NULL OR COUNT(r) >= :minRatings) " +
             "ORDER BY " +
             "   CASE WHEN :sort = 'LATEST' THEN c.publishedDateTime END DESC, " +
             "   CASE WHEN :sort = 'OLDEST' THEN c.publishedDateTime END ASC, " +
-            "   CASE WHEN :sort = 'RATING_AVG_DESC' THEN AVG(r.rating) END DESC, " +
-            "   CASE WHEN :sort = 'RATING_COUNT_DESC' THEN COUNT(r) END DESC, " +
-            "   CASE WHEN :sort = 'RATING_AVG_COUNT_DESC' THEN COUNT(r) END DESC, AVG(r.rating) DESC")
+            "   CASE WHEN :sort = 'RATING_AVG' THEN AVG(r.rating) END DESC, " +
+            "   CASE WHEN :sort = 'RATING_COUNT' THEN COUNT(r) END DESC, " +
+            "   CASE WHEN :sort = 'RATING_AVG_COUNT' THEN COUNT(r) END DESC, AVG(r.rating) DESC")
     Page<ContentModelSummary> findContents(
             @Param("keyphrase") String keyphrase,
             @Param("contentTypes") List<ContentType> contentTypes,
-            @Param("sourceId") Long sourceId,
-            @Param("languageId") Long languageId,
+            @Param("isFree") Boolean isFree,
+            @Param("sourceIds") List<Long> sourceIds,
+            @Param("languageIds") List<Long> languageIds,
             @Param("minDuration") Integer minDuration,
             @Param("maxDuration") Integer maxDuration,
             @Param("minRatings") Integer minRatings,
+            @Param("fields")  List<String> fields,
             @Param("sort") String sort,
             Pageable pageable
     );

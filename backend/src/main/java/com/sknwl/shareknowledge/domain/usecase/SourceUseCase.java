@@ -37,7 +37,7 @@ public class SourceUseCase {
         return coreRepository.list(pageable);
     }
 
-    public List<Source> list(String uri) {
-        return coreRepository.list(uri);
+    public List<Source> list(String search) {
+        return coreRepository.list(search);
     }
 }

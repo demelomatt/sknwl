@@ -50,7 +50,18 @@ public class StudyFieldController {
         return ResponseEntity.ok(mapper.map(studyField));
     }
 
-    @GetMapping()
+    @GetMapping
+    public ResponseEntity<List<StudyFieldPayload>> list(
+            @RequestParam(required = false) String search
+    ) {
+        var fields = studyFieldUseCase.list(search)
+                .stream()
+                .map(mapper::map)
+                .toList();
+        return ResponseEntity.ok(fields);
+    }
+
+    @GetMapping("/page")
     public ResponseEntity<Page<StudyFieldPayload>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
@@ -61,16 +72,5 @@ public class StudyFieldController {
                 .map(mapper::map)
                 .toList();
         return ResponseEntity.ok(new PageImpl<>(fields));
-    }
-
-    @GetMapping("/name/{name}")
-    public ResponseEntity<List<StudyFieldPayload>> list(
-            @PathVariable String name
-    ) {
-        var fields = studyFieldUseCase.list(name)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(fields);
     }
 }

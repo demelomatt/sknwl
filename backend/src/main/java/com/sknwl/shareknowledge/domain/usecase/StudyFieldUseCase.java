@@ -37,7 +37,7 @@ public class StudyFieldUseCase {
         return studyFieldRepository.list(pageable);
     }
 
-    public List<StudyField> list(String name) {
-        return studyFieldRepository.list(name);
+    public List<StudyField> list(String search) {
+        return studyFieldRepository.list(search);
     }
 }

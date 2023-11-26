@@ -1,0 +1,26 @@
+<app-header (valueChanged)="onSearchValueChanged($event)"></app-header>
+<div class="flex flex-column md:flex-row gap-3">
+    <app-sidebar (formatsChanged)="onTypesChange($event)" (languagesChanged)="onLanguagesChange($event)" (sourcesChanged)="onSourcesChange($event)" (fieldsChanged)="onFieldsChange($event)" (durationChanged)="onDurationChange($event)" (costChanged)="onCostChange($event)">
+    </app-sidebar>
+    <main style="min-width: 80vw">
+        <div class="flex gap-6 p-3 align-items-center justify-content-between w-12 md:w-11 flex-column md:flex-row" >
+            <div class="flex">
+                <p-selectButton [options]="modeOptions" [(ngModel)]="modeValue" optionLabel="label" optionValue="value"></p-selectButton>
+            </div>
+    
+            <div class="flex gap-4">
+                <p-toast></p-toast>
+                <p-button (click)="showContentForm()" label="Novo" icon="pi pi-plus" iconPos="right" [text]="true" [raised]="true" ></p-button>
+                    <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="contentFormVisible" styleClass="min-w-min">
+                        <app-content-form (submitEvent)="hideContentForm()" (messageEvent)="showMessageToast($event)"></app-content-form>
+                    </p-dialog>
+                <div class="p-float-label">
+                    <p-dropdown [options]="sortValues" [(ngModel)]="selectedSort"></p-dropdown>
+                    <label for="float-label">Ordenar por</label>
+                </div>
+            </div>
+        </div>
+    
+        <app-card-content [searchValue]="searchValue" [sort]="selectedSort" [types]="formatTypes" [languages]="languages" [duration]="duration" [costTypes]="costTypes" [fields]="fields" [sources]="sources"></app-card-content>
+    </main>    
+</div>

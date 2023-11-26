@@ -1,8 +1,8 @@
 export enum ContentType {
-    COURSE,
-    VIDEO,
-    ARTICLE,
-    BOOK,
-    PODCAST,
-    LECTURE
+    COURSE = 'Curso',
+    VIDEO = 'Vídeo',
+    ARTICLE = 'Artigo',
+    BOOK = 'Livro',
+    PODCAST = 'Podcast',
+    LECTURE = 'Palestra'
 }

@@ -17,9 +17,11 @@ import java.util.List;
 public interface ContentApiMapper {
     ContentApiMapper INSTANCE = Mappers.getMapper(ContentApiMapper.class);
 
-    @Mapping(target = "publisher.id", source = "publisherId")
+    @Mapping(target = "price.price", source = "price")
     Content map(ContentRequestCreate contentRequestCreate);
     Content map (ContentRequestUpdate contentRequestUpdate);
+
+    @Mapping(source = "price.price", target = "price")
     ContentResponse map(Content content);
     List<ContentResponse> map(List<Content> contents);
 

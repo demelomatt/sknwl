@@ -14,6 +14,6 @@ public interface SourceRepository {
     void delete(Long id);
 
     Source get(Long id);
-    List<Source> list(String uri);
+    List<Source> list(String search);
     Page<Source> list(Pageable pageable);
 }

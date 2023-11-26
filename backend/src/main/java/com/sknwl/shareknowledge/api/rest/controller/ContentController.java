@@ -3,6 +3,7 @@ package com.sknwl.shareknowledge.api.rest.controller;
 import com.sknwl.shareknowledge.api.rest.mapper.ContentApiMapper;
 import com.sknwl.shareknowledge.api.rest.model.*;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.CostType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.usecase.ContentUseCase;
 import org.springframework.data.domain.Page;
@@ -53,35 +54,23 @@ public class ContentController {
         return ResponseEntity.ok(mapper.map(content));
     }
 
-    /*
-    @GetMapping
-    public ResponseEntity<Page<ContentResponse>> list(
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "25") int pageSize
-    ) {
-        var contents = contentUseCase.list(pageNumber, pageSize)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(new PageImpl<>(contents));
-    }
-
-     */
-
     @GetMapping
     public ResponseEntity<Page<ContentResponse>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
-            @RequestParam(defaultValue = "RATING_AVG_COUNT_DESC") SortType sort,
+            @RequestParam(defaultValue = "LATEST") SortType sort,
             @RequestParam(required = false) String keyphrase,
             @RequestParam(defaultValue = "0") Integer minRatings,
             @RequestParam(required = false) List<ContentType> contentTypes,
+            @RequestParam(required = false) List<CostType> costTypes,
             @RequestParam(required = false) Long sourceId,
-            @RequestParam(required = false) Long languageId,
+            @RequestParam(required = false) List<Long> languageIds,
+            @RequestParam(required = false) List<Long> sourceIds,
             @RequestParam(required = false) Integer minDuration,
-            @RequestParam(required = false) Integer maxDuration
+            @RequestParam(required = false) Integer maxDuration,
+            @RequestParam(required = false) List<String> fields
             ) {
-        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, sourceId, languageId, minDuration, maxDuration);
+        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, costTypes, sourceIds, languageIds, minDuration, maxDuration, fields);
         var responseContents = mapper.map(contents.getContent());
         return ResponseEntity.ok(new PageImpl<>(responseContents, PageRequest.of(contents.getNumber(), contents.getSize()), contents.getTotalElements()));
     }
