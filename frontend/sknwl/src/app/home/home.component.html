@@ -4,14 +4,14 @@
     </app-sidebar>
     <main style="min-width: 80vw">
         <div class="flex gap-6 p-3 align-items-center justify-content-between w-12 md:w-11 flex-column md:flex-row" >
-            <div>
+            <div class="flex">
                 <p-selectButton [options]="modeOptions" [(ngModel)]="modeValue" optionLabel="label" optionValue="value"></p-selectButton>
             </div>
     
             <div class="flex gap-4">
                 <p-toast></p-toast>
                 <p-button (click)="showContentForm()" label="Novo" icon="pi pi-plus" iconPos="right" [text]="true" [raised]="true" ></p-button>
-                    <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="contentFormVisible" [style]="{width: '50vw'}">
+                    <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="contentFormVisible" styleClass="min-w-min">
                         <app-content-form (submitEvent)="hideContentForm()" (messageEvent)="showMessageToast($event)"></app-content-form>
                     </p-dialog>
                 <div class="p-float-label">

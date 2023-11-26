@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Content } from '../content';
 import { ContentService } from '../content.service';
 import { Page } from 'src/app/core/page';
@@ -33,16 +33,26 @@ export class CardContentComponent implements OnInit{
   @Input() costTypes?: ComponentProperties[];
   @Input() fields?: {id: number, name: string}[];
 
+  @Input() reload?: boolean = true;
+  @Output() reloadFinished = new EventEmitter<void>();
+
   constructor(private service: ContentService) {}
 
   ngOnInit(): void {
+    if (window.innerWidth < 600) {
+      this.pageSize = 8;
+    }
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.isFirstChange) {
       this.isFirstChange = false;
+      this.reload = true;
       return;
     }
+
+
     this.getContents();
     // Check if 'myProperty' has changed
     /*
@@ -83,12 +93,12 @@ export class CardContentComponent implements OnInit{
       }) as unknown as CostType[],
     };
 
-    console.log(this.costTypes);
-
     this.service.getContents(contentParams as ContentParams).subscribe((response) => {
       this.page = response;
       this.totalElements = response.totalElements;
     })
+
+    this.reloadFinished.emit();
   }
 
   openExternalLink(url: string) {

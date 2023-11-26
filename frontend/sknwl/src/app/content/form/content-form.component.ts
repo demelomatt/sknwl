@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { CoreService } from 'src/app/core/core.service';
 import { Currency } from 'src/app/core/currency';
@@ -36,15 +36,15 @@ export class ContentFormComponent implements OnInit{
 
   constructor(private fb: FormBuilder, private coreService: CoreService, private contentService: ContentService) {
     this.contentForm = this.fb.group({
-      title: [''],
+      title: ['', [Validators.required]],
       description: [''],
-      contentType: [ContentType.COURSE],
-      url: [''],
+      contentType: [ContentType.COURSE, [Validators.required]],
+      url: ['', [Validators.required]],
       authors: [[]],
       subjects: [[]],
-      language: [{}],
+      language: [{}, [Validators.required]],
       currency: [{}], 
-      studyField: [{} as StudyField],
+      studyField: [{} as StudyField, [Validators.required]],
       durationMinutes: [0],
       price: [0.0]
     });

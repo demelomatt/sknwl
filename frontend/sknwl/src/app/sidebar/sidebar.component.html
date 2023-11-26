@@ -1,30 +1,33 @@
-<aside class="flex flex-column gap-3 p-3 m-3 surface-ground" style="min-width:15vw">
-    <span class="text-lg font-semibold ">Filtro por</span>
-    <div class="flex flex-column gap-3">
-        <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos" styleClass="w-full"
-        ></p-multiSelect>
-        <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onSelect)="onLanguagesChange()" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" styleClass="w-full"
-        ></p-autoComplete>
-        <p-autoComplete [(ngModel)]="selectedFields" [suggestions]="filteredFields" (completeMethod)="filterField($event)" (onSelect)="onFieldsChange()" (onUnselect)="onFieldsChange()" field="name" placeholder="Áreas de estudo" [multiple]="true" [dropdown]="true" styleClass="w-full"
-        ></p-autoComplete>
-        <p-autoComplete [(ngModel)]="selectedSources" [suggestions]="filteredSources" (completeMethod)="filterSource($event)" (onSelect)="onSourcesChange()" (onUnselect)="onSourcesChange()" field="webSiteUri" placeholder="Fonte do conteúdo" [multiple]="true" [dropdown]="true" styleClass="w-full"
-        ></p-autoComplete>
-        <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
-            <div class="flex flex-wrap p-inputgroup flex gap-3">
-                <label class="my-2" for="minDuration">Duração minímina</label>
-                <p-inputNumber [(ngModel)]="minDuration" inputId="minDuration" suffix=" min" [showButtons]="true" [min]="0" [max]="maxDuration" [step]="10"> </p-inputNumber>
+<aside class="m-3" style="min-width:17vw" [ngClass]="{'min-w-0': !visible}">
+    <p-button [icon]="visible ? 'pi pi-chevron-left' : 'pi pi-chevron-right'" [rounded]="true" styleClass="mx-3" (onClick)="showMenu()"></p-button>
+    <div class="flex-column gap-3 p-3 m-3 surface-ground" [ngClass]="{'flex': visible, 'hidden': !visible}">
+        <span class="text-lg font-semibold ">Filtro por</span>
+        <div class="flex flex-column gap-3">
+            <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos" styleClass="w-full"
+            ></p-multiSelect>
+            <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onSelect)="onLanguagesChange()" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" styleClass="min-w-full w-full"
+            ></p-autoComplete>
+            <p-autoComplete [(ngModel)]="selectedFields" [suggestions]="filteredFields" (completeMethod)="filterField($event)" (onSelect)="onFieldsChange()" (onUnselect)="onFieldsChange()" field="name" placeholder="Áreas de estudo" [multiple]="true" [dropdown]="true" styleClass="min-w-full w-full"
+            ></p-autoComplete>
+            <p-autoComplete [(ngModel)]="selectedSources" [suggestions]="filteredSources" (completeMethod)="filterSource($event)" (onSelect)="onSourcesChange()" (onUnselect)="onSourcesChange()" field="webSiteUri" placeholder="Fonte do conteúdo" [multiple]="true" [dropdown]="true" styleClass="min-w-full	w-full"
+            ></p-autoComplete>
+            <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
+                <div class="flex flex-wrap p-inputgroup flex gap-3">
+                    <label class="my-2" for="minDuration">Duração minímina</label>
+                    <p-inputNumber [(ngModel)]="minDuration" inputId="minDuration" suffix=" min" [showButtons]="true" [min]="0" [max]="maxDuration" [step]="10"> </p-inputNumber>
+                </div>
+                <div class="flex flex-wrap p-inputgroup flex gap-3">
+                    <label class="my-2" for="maxDuration">Duração máxima</label>
+                    <p-inputNumber [(ngModel)]="maxDuration" inputId="maxDuration" suffix=" min" [showButtons]="true" [min]="minDuration" [step]="10"> </p-inputNumber>
+                </div>
+                <p-button icon="pi pi-check" (onClick)="onDurationChange()" severity="success"></p-button>
             </div>
-            <div class="flex flex-wrap p-inputgroup flex gap-3">
-                <label class="my-2" for="maxDuration">Duração máxima</label>
-                <p-inputNumber [(ngModel)]="maxDuration" inputId="maxDuration" suffix=" min" [showButtons]="true" [min]="minDuration" [step]="10"> </p-inputNumber>
-            </div>
-            <p-button icon="pi pi-check" (onClick)="onDurationChange()" severity="success"></p-button>
-        </div>
-        <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
-            <label class="my-2" for="minDuration">Custo</label>
-            <div *ngFor="let option of costOptions" class="field-checkbox">
-                <p-checkbox name="group" [value]="option" [(ngModel)]="selectedCostOptions" [inputId]="option.id" (onChange)="onCostChange()"></p-checkbox>
-                <label [for]="option.id">{{ option.value }}</label>
+            <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
+                <label class="my-2" for="minDuration">Custo</label>
+                <div *ngFor="let option of costOptions" class="field-checkbox">
+                    <p-checkbox name="group" [value]="option" [(ngModel)]="selectedCostOptions" [inputId]="option.id" (onChange)="onCostChange()"></p-checkbox>
+                    <label [for]="option.id">{{ option.value }}</label>
+                </div>
             </div>
         </div>
     </div>

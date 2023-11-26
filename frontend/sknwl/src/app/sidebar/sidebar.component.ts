@@ -1,12 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ContentType } from '../content/content-type';
-import { Language } from '../core/language';
-import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { CoreService } from '../core/core.service';
-import { CostType } from '../content/cost-type';
+import { Component, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 import { ComponentProperties } from '../component-properties';
+import { ContentType } from '../content/content-type';
 import { ContentService } from '../content/content.service';
+import { CostType } from '../content/cost-type';
+import { CoreService } from '../core/core.service';
+import { Language } from '../core/language';
 import { Source } from '../core/source';
+import { HostListener } from '@angular/core';
+
 
 interface Sort {
   type: string;
@@ -56,6 +57,13 @@ export class SidebarComponent implements OnInit{
   constructor(private coreService: CoreService, private contentService: ContentService) {}
 
   ngOnInit() {
+    if (window.innerWidth < 600) {
+      this.visible = false;
+    }
+  }
+
+  showMenu() {
+    this.visible = !this.visible;
   }
 
   onTypesChange() {
