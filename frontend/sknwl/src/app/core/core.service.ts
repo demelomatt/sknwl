@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Language } from './language';
 import { Observable } from 'rxjs';
 import { Currency } from './currency';
+import { Source } from './source';
 
 
 @Injectable({
@@ -23,6 +24,17 @@ export class CoreService {
     }
 
     return this.http.get<Language[]>(apiUrl, { params });
+  }
+
+  getSources(search?: string): Observable<Source[]>  {
+    const apiUrl = environment.source;
+    let params = new HttpParams();
+
+    if (search !== undefined && search !== null) {
+      params = params.set('search', search);
+    }
+
+    return this.http.get<Source[]>(apiUrl, { params });
   }
 
   getCurrencies(code?: string): Observable<Currency[]>  {

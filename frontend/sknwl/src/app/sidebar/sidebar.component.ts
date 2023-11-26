@@ -6,6 +6,7 @@ import { CoreService } from '../core/core.service';
 import { CostType } from '../content/cost-type';
 import { ComponentProperties } from '../component-properties';
 import { ContentService } from '../content/content.service';
+import { Source } from '../core/source';
 
 interface Sort {
   type: string;
@@ -26,6 +27,9 @@ export class SidebarComponent implements OnInit{
   filteredLanguages: Language[] = [];
   selectedLanguages: Language[] = [];
 
+  filteredSources: Source[] = [];
+  selectedSources: Source[] = [];
+
   filteredFields: {id: number, name: string}[]= [];
   selectedFields: {id: number, name: string}[]= [];
 
@@ -40,6 +44,7 @@ export class SidebarComponent implements OnInit{
 
   @Output() formatsChanged = new EventEmitter<string[]>();
   @Output() languagesChanged = new EventEmitter<Language[]>();
+  @Output() sourcesChanged = new EventEmitter<Source[]>();
   @Output() durationChanged = new EventEmitter<Map<string, number>>();
   @Output() costChanged = new EventEmitter<any[]>();
   @Output() fieldsChanged = new EventEmitter<{id: number, name: string}[]>();
@@ -56,6 +61,10 @@ export class SidebarComponent implements OnInit{
 
   onLanguagesChange() {
     this.languagesChanged.emit(this.selectedLanguages);
+  }
+
+  onSourcesChange() {
+    this.sourcesChanged.emit(this.selectedSources);
   }
 
   onFieldsChange() {
@@ -80,6 +89,14 @@ export class SidebarComponent implements OnInit{
 
     this.coreService.getLanguages(query).subscribe((response) => {
       this.filteredLanguages = response;
+    })
+  };
+
+  filterSource(event: { query: any; }) {
+    let query = event.query;
+
+    this.coreService.getSources(query).subscribe((response) => {
+      this.filteredSources = response;
     })
   };
 

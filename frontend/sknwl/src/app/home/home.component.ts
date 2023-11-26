@@ -5,6 +5,7 @@ import { ContentSortType } from '../content/content-sort-type';
 import { Language } from '../core/language';
 import { CostType } from '../content/cost-type';
 import { ComponentProperties } from '../component-properties';
+import { Source } from '../core/source';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ export class HomeComponent{
   searchValue?: string;
   formatTypes?: string[];
   languages?: Language[];
+  sources?: Source[];
   fields?: {id: number, name: string}[];
   duration?: Map<string, number>;
   costTypes?: ComponentProperties[];
@@ -36,6 +38,10 @@ export class HomeComponent{
 
   onLanguagesChange(languages: Language[]) {
     this.languages = languages;
+  }
+
+  onSourcesChange(sources: Source[]) {
+    this.sources = sources;
   }
 
   onFieldsChange(fields: {id: number, name: string}[]) {

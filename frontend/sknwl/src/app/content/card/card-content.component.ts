@@ -9,6 +9,7 @@ import { ContentType } from '../content-type';
 import { Language } from 'src/app/core/language';
 import { CostType } from '../cost-type';
 import { ComponentProperties } from 'src/app/component-properties';
+import { Source } from 'src/app/core/source';
 
 @Component({
   selector: 'app-card-content',
@@ -27,6 +28,7 @@ export class CardContentComponent implements OnInit{
   @Input() sort?: string;
   @Input() types?: string[];
   @Input() languages?: Language[];
+  @Input() sources?: Source[];
   @Input() duration?: Map<string, number>;
   @Input() costTypes?: ComponentProperties[];
   @Input() fields?: {id: number, name: string}[];
@@ -72,6 +74,7 @@ export class CardContentComponent implements OnInit{
         return Object.keys(ContentType).find(key => ContentType[key as keyof typeof ContentType] === value) as keyof typeof ContentType
     }) as unknown as ContentType[],
       languageIds: this.languages?.map(lang => lang.id),
+      sourceIds: this.sources?.map(source => source.id),
       fields: this.fields?.map(field => field.name),
       minDuration: this.duration?.get('min'),
       maxDuration: this.duration?.get('max'),

@@ -1,6 +1,6 @@
 <app-header (valueChanged)="onSearchValueChanged($event)"></app-header>
 <div class="flex flex-column md:flex-row gap-3">
-    <app-sidebar (formatsChanged)="onTypesChange($event)" (languagesChanged)="onLanguagesChange($event)" (fieldsChanged)="onFieldsChange($event)" (durationChanged)="onDurationChange($event)" (costChanged)="onCostChange($event)">
+    <app-sidebar (formatsChanged)="onTypesChange($event)" (languagesChanged)="onLanguagesChange($event)" (sourcesChanged)="onSourcesChange($event)" (fieldsChanged)="onFieldsChange($event)" (durationChanged)="onDurationChange($event)" (costChanged)="onCostChange($event)">
     </app-sidebar>
     <main style="min-width: 80vw">
         <div class="flex gap-6 p-3 align-items-center justify-content-between w-12 md:w-11 flex-column md:flex-row" >
@@ -20,6 +20,6 @@
             </div>
         </div>
     
-        <app-card-content [searchValue]="searchValue" [sort]="selectedSort" [types]="formatTypes" [languages]="languages" [duration]="duration" [costTypes]="costTypes" [fields]="fields"></app-card-content>
+        <app-card-content [searchValue]="searchValue" [sort]="selectedSort" [types]="formatTypes" [languages]="languages" [duration]="duration" [costTypes]="costTypes" [fields]="fields" [sources]="sources"></app-card-content>
     </main>    
 </div>

@@ -3,9 +3,11 @@
     <div class="flex flex-column gap-3">
         <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos" styleClass="w-full"
         ></p-multiSelect>
-        <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" (onSelect)="onLanguagesChange()" styleClass="w-full"
+        <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onSelect)="onLanguagesChange()" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" styleClass="w-full"
         ></p-autoComplete>
-        <p-autoComplete [(ngModel)]="selectedFields" [suggestions]="filteredFields" (completeMethod)="filterField($event)" (onUnselect)="onFieldsChange()" field="name" placeholder="Áreas de estudo" [multiple]="true" [dropdown]="true" (onSelect)="onFieldsChange()" styleClass="w-full"
+        <p-autoComplete [(ngModel)]="selectedFields" [suggestions]="filteredFields" (completeMethod)="filterField($event)" (onSelect)="onFieldsChange()" (onUnselect)="onFieldsChange()" field="name" placeholder="Áreas de estudo" [multiple]="true" [dropdown]="true" styleClass="w-full"
+        ></p-autoComplete>
+        <p-autoComplete [(ngModel)]="selectedSources" [suggestions]="filteredSources" (completeMethod)="filterSource($event)" (onSelect)="onSourcesChange()" (onUnselect)="onSourcesChange()" field="webSiteUri" placeholder="Fonte do conteúdo" [multiple]="true" [dropdown]="true" styleClass="w-full"
         ></p-autoComplete>
         <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
             <div class="flex flex-wrap p-inputgroup flex gap-3">
