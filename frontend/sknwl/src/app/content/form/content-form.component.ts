@@ -37,12 +37,12 @@ export class ContentFormComponent implements OnInit{
     this.contentForm = this.fb.group({
       title: [''],
       description: [''],
-      contentType: [''],
+      contentType: [ContentType.COURSE],
       url: [''],
       authors: [[]],
       subjects: [[]],
       language: [{}],
-      currency: [{}],
+      currency: [{}], 
       studyField: [{} as StudyField],
       durationMinutes: [0],
       price: [0.0]

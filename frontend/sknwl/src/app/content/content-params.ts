@@ -1,5 +1,6 @@
 import { ContentSortType } from "./content-sort-type";
 import { ContentType } from "./content-type";
+import { CostType } from "./cost-type";
 
 export interface ContentParams {
     pageNumber: number;
@@ -12,4 +13,5 @@ export interface ContentParams {
     languageIds?: number[];
     minDuration?: number;
     maxDuration?: number;
+    costTypes?: CostType[];
   }

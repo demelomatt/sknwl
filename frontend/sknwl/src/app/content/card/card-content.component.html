@@ -69,6 +69,10 @@
               <span class="pi pi-user" pTooltip="Avaliadores"> {{content.reviewers}}</span>
             </div>
           </div>
+          <div class="flex gap-3 py-3">
+            <span class="pi pi-money-bill" pTooltip="Preço"> {{content.price?.currency?.code}}</span>
+            <span> ${{content.price?.amount | number: '1.2'}}</span>
+          </div>
         </div>
         <ng-template pTemplate="footer">
           <div class="flex justify-content-evenly">

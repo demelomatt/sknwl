@@ -7,6 +7,8 @@ import { PaginatorState } from 'primeng/paginator';
 import { ContentSortType } from '../content-sort-type';
 import { ContentType } from '../content-type';
 import { Language } from 'src/app/core/language';
+import { CostType } from '../cost-type';
+import { ComponentProperties } from 'src/app/component-properties';
 
 @Component({
   selector: 'app-card-content',
@@ -26,8 +28,8 @@ export class CardContentComponent implements OnInit{
   @Input() types?: string[];
   @Input() languages?: Language[];
   @Input() duration?: Map<string, number>;
-  ContentType: any;
-  
+  @Input() costTypes?: ComponentProperties[];
+
   constructor(private service: ContentService) {}
 
   ngOnInit(): void {
@@ -70,8 +72,13 @@ export class CardContentComponent implements OnInit{
     }) as unknown as ContentType[],
       languageIds: this.languages?.map(lang => lang.id),
       minDuration: this.duration?.get('min'),
-      maxDuration: this.duration?.get('max')
+      maxDuration: this.duration?.get('max'),
+      costTypes: this.costTypes?.map((type: ComponentProperties) => {
+        return Object.keys(CostType).find(key => CostType[key as keyof typeof CostType] === type.value) as keyof typeof CostType;
+      }) as unknown as CostType[],
     };
+
+    console.log(this.costTypes);
 
     this.service.getContents(contentParams as ContentParams).subscribe((response) => {
       this.page = response;

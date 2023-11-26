@@ -3,6 +3,8 @@ import { ContentType } from '../content/content-type';
 import { CardContentComponent } from '../content/card/card-content.component';
 import { ContentSortType } from '../content/content-sort-type';
 import { Language } from '../core/language';
+import { CostType } from '../content/cost-type';
+import { ComponentProperties } from '../component-properties';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +21,7 @@ export class HomeComponent{
   formatTypes?: string[];
   languages?: Language[];
   duration?: Map<string, number>;
+  costTypes?: ComponentProperties[];
 
   contentFormVisible: boolean = false;
 
@@ -36,6 +39,11 @@ export class HomeComponent{
 
   onDurationChange(duration: Map<string, number>) {
     this.duration = duration;
+  }
+
+  onCostChange(cost: ComponentProperties[]) {
+    this.costTypes = cost;
+    console.log(this.costTypes);
   }
 
   showContentForm() {

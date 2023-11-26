@@ -3,6 +3,8 @@ import { ContentType } from '../content/content-type';
 import { Language } from '../core/language';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { CoreService } from '../core/core.service';
+import { CostType } from '../content/cost-type';
+import { ComponentProperties } from '../component-properties';
 
 interface Sort {
   type: string;
@@ -26,10 +28,16 @@ export class SidebarComponent implements OnInit{
   minDuration: number = 10;
   maxDuration: number = 600;
 
+  costOptions: ComponentProperties[] = [
+    { key: 'FREE', value: CostType.FREE, id: 'free'},
+    { key: 'PAID', value: CostType.PAID, id: 'paid'}
+  ];
+  selectedCostOptions: ComponentProperties[] = this.costOptions;
 
   @Output() formatsChanged = new EventEmitter<string[]>();
   @Output() languagesChanged = new EventEmitter<Language[]>();
   @Output() durationChanged = new EventEmitter<Map<string, number>>();
+  @Output() costChanged = new EventEmitter<any[]>();
 
   constructor(private coreService: CoreService) {}
 
@@ -51,6 +59,10 @@ export class SidebarComponent implements OnInit{
   ]);
 
     this.durationChanged.emit(durationMap);
+  }
+
+  onCostChange() {
+    this.costChanged.emit(this.selectedCostOptions);
   }
 
   filterLanguage(event: { query: any; }) {

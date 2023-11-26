@@ -1,20 +1,27 @@
-<aside class="flex flex-column gap-3 p-3 m-3 menu__container">
+<aside class="flex flex-column gap-3 p-3 m-3 surface-ground" style="min-width:15vw">
     <span class="text-lg font-semibold ">Filtro por</span>
     <div class="flex flex-column gap-3">
         <p-multiSelect [options]="formatOptions" [(ngModel)]="selectedFormats" (onChange)="onTypesChange()" placeholder="Formatos" styleClass="w-full"
         ></p-multiSelect>
         <p-autoComplete [(ngModel)]="selectedLanguages" [suggestions]="filteredLanguages" (completeMethod)="filterLanguage($event)" (onUnselect)="onLanguagesChange()" field="name" placeholder="Idiomas" [multiple]="true" [dropdown]="true" (onSelect)="onLanguagesChange()" styleClass="w-full"
         ></p-autoComplete>
-        <div class="flex flex-column gap-3 p-2 shadow-2 surface-100">
-            <div class="p-inputgroup flex gap-3">
+        <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
+            <div class="flex flex-wrap p-inputgroup flex gap-3">
                 <label class="my-2" for="minDuration">Duração minímina</label>
                 <p-inputNumber [(ngModel)]="minDuration" inputId="minDuration" suffix=" min" [showButtons]="true" [min]="0" [max]="maxDuration" [step]="10"> </p-inputNumber>
             </div>
-            <div class="p-inputgroup flex gap-3">
+            <div class="flex flex-wrap p-inputgroup flex gap-3">
                 <label class="my-2" for="maxDuration">Duração máxima</label>
                 <p-inputNumber [(ngModel)]="maxDuration" inputId="maxDuration" suffix=" min" [showButtons]="true" [min]="minDuration" [step]="10"> </p-inputNumber>
             </div>
             <p-button icon="pi pi-check" (onClick)="onDurationChange()"></p-button>
+        </div>
+        <div class="flex flex-column flex-wrap gap-3 p-2 shadow-2 surface-100 max-w-full">
+            <label class="my-2" for="minDuration">Custo</label>
+            <div *ngFor="let option of costOptions" class="field-checkbox">
+                <p-checkbox name="group" [value]="option" [(ngModel)]="selectedCostOptions" [inputId]="option.id" (onChange)="onCostChange()"></p-checkbox>
+                <label [for]="option.id">{{ option.value }}</label>
+            </div>
         </div>
     </div>
 </aside>
