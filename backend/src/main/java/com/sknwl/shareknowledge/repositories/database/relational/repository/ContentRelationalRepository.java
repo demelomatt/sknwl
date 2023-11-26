@@ -7,14 +7,8 @@ import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.mapper.ContentRepositoryMapper;
-import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModel;
-import com.sknwl.shareknowledge.repositories.database.relational.model.ContentModelSummary;
-import com.sknwl.shareknowledge.repositories.database.relational.model.ContentRatingModel;
-import com.sknwl.shareknowledge.repositories.database.relational.model.CoverUrlModel;
-import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentJpaRepository;
-import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentPriceJpaRepository;
-import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
-import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.StudyFieldJpaRepository;
+import com.sknwl.shareknowledge.repositories.database.relational.model.*;
+import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.*;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -30,14 +24,16 @@ public class ContentRelationalRepository implements ContentRepository {
     private final ContentRatingJpaRepository contentRatingJpaRepository;
     private final StudyFieldJpaRepository studyFieldJpaRepository;
     private final ContentPriceJpaRepository contentPriceJpaRepository;
+    private final SourceJpaRepository sourceJpaRepository;
 
     private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
 
-    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository, StudyFieldJpaRepository studyFieldJpaRepository, ContentPriceJpaRepository contentPriceJpaRepository) {
+    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository, StudyFieldJpaRepository studyFieldJpaRepository, ContentPriceJpaRepository contentPriceJpaRepository, SourceJpaRepository sourceJpaRepository) {
         this.contentJpaRepository = contentJpaRepository;
         this.contentRatingJpaRepository = contentRatingJpaRepository;
         this.studyFieldJpaRepository = studyFieldJpaRepository;
         this.contentPriceJpaRepository = contentPriceJpaRepository;
+        this.sourceJpaRepository = sourceJpaRepository;
     }
 
     @Transactional
@@ -47,9 +43,14 @@ public class ContentRelationalRepository implements ContentRepository {
         for (CoverUrlModel url : contentModel.getCoverImage().getUrls()) {
             url.setCoverImage(contentModel.getCoverImage());
         }
-        if (contentModel.getStudyField().getId() == null) {
-            studyFieldJpaRepository.save(contentModel.getStudyField());
-        }
+
+        var studyFieldModelOptional = studyFieldJpaRepository.findFirstByNameIgnoreCase(content.getStudyField().getName());
+        var studyFieldModel = studyFieldModelOptional.orElseGet(() -> studyFieldJpaRepository.save(contentModel.getStudyField()));
+        contentModel.setStudyField(studyFieldModel);
+
+        var sourceModelOptional = sourceJpaRepository.findFirstByWebSiteUri(content.getSource().getWebSiteUri());
+        var sourceModel = sourceModelOptional.orElseGet(() -> sourceJpaRepository.save(contentModel.getSource()));
+        contentModel.setSource(sourceModel);
 
         var createdContent = contentJpaRepository.save(contentModel);
         createdContent.getPrice().setContent(createdContent);
@@ -110,9 +111,9 @@ public class ContentRelationalRepository implements ContentRepository {
         return new PageImpl<>(contents);
     }
 
-    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Boolean isFree, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration, List<String> fields) {
+    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Boolean isFree, List<Long> sourceIds, List<Long> languageIds, Integer minDuration, Integer maxDuration, List<String> fields) {
 
-        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, isFree, sourceId, languageIds, minDuration, maxDuration, minRatings, fields, sort.name(), pageable);
+        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, isFree, sourceIds, languageIds, minDuration, maxDuration, minRatings, fields, sort.name(), pageable);
         var contents = contentsSummary.getContent().stream().map(contentModelSummary -> {
             var contentModel = contentModelSummary.getContent();
             contentModel.setReviewers(contentModelSummary.getCount());

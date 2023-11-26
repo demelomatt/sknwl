@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping("sources")
 public class SourceController {
     private final SourceApiMapper mapper = SourceApiMapper.INSTANCE;
-    private final SourceUseCase coreUseCase;
+    private final SourceUseCase sourceUseCase;
 
-    public SourceController(SourceUseCase coreUseCase) {
-        this.coreUseCase = coreUseCase;
+    public SourceController(SourceUseCase sourceUseCase) {
+        this.sourceUseCase = sourceUseCase;
     }
 
     @PostMapping
@@ -26,7 +26,7 @@ public class SourceController {
             @RequestBody SourcePayload sourceRequest,
             UriComponentsBuilder uriBuilder
     ) {
-        var source = coreUseCase.register(mapper.map(sourceRequest));
+        var source = sourceUseCase.register(mapper.map(sourceRequest));
 
         var uri = uriBuilder.path("/contents/sources").buildAndExpand(source.getId()).toUri();
         return ResponseEntity.created(uri).body(mapper.map(source));
@@ -34,43 +34,43 @@ public class SourceController {
 
     @PutMapping
     public ResponseEntity<SourcePayload> update(@RequestBody SourcePayload sourceRequest) {
-        var source = coreUseCase.update(mapper.map(sourceRequest));
+        var source = sourceUseCase.update(mapper.map(sourceRequest));
         return ResponseEntity.ok(mapper.map(source));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        coreUseCase.delete(id);
+        sourceUseCase.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SourcePayload> get(@PathVariable Long id) {
-        var source = coreUseCase.get(id);
+        var source = sourceUseCase.get(id);
         return ResponseEntity.ok(mapper.map(source));
     }
 
-    @GetMapping
+    @GetMapping()
+    public ResponseEntity<List<SourcePayload>> list(
+            @RequestParam(required = false) String search
+    ) {
+        var sources = sourceUseCase.list(search)
+                .stream()
+                .map(mapper::map)
+                .toList();
+        return ResponseEntity.ok(sources);
+    }
+
+    @GetMapping("/page")
     public ResponseEntity<Page<SourcePayload>> list(
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "25") int pageSize,
             @RequestParam(defaultValue = "asc") String sortOrder
     ) {
-        var sources = coreUseCase.list(pageNumber, pageSize)
+        var sources = sourceUseCase.list(pageNumber, pageSize)
                 .stream()
                 .map(mapper::map)
                 .toList();
         return ResponseEntity.ok(new PageImpl<>(sources));
-    }
-
-    @GetMapping("/uri/{uri}")
-    public ResponseEntity<List<SourcePayload>> list(
-            @PathVariable String uri
-    ) {
-        var sources = coreUseCase.list(uri)
-                .stream()
-                .map(mapper::map)
-                .toList();
-        return ResponseEntity.ok(sources);
     }
 }

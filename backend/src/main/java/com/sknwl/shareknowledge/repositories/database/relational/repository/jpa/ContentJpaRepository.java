@@ -22,7 +22,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "   OR (:keyphrase IS NOT NULL AND EXISTS (SELECT s FROM c.subjects s WHERE s LIKE %:keyphrase%))" +
             ") " +
             "   AND (c.contentType IN :contentTypes) " +
-            "   AND (:sourceId IS NULL OR c.source.id = :sourceId) " +
+            "   AND (:sourceIds IS NULL OR c.source.id IN :sourceIds) " +
             "   AND (c.language.id IN :languageIds) " +
             "   AND (:minDuration IS NULL OR c.durationMinutes >= :minDuration) " +
             "   AND (:maxDuration IS NULL OR c.durationMinutes <= :maxDuration) " +
@@ -40,7 +40,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             @Param("keyphrase") String keyphrase,
             @Param("contentTypes") List<ContentType> contentTypes,
             @Param("isFree") Boolean isFree,
-            @Param("sourceId") Long sourceId,
+            @Param("sourceIds") List<Long> sourceIds,
             @Param("languageIds") List<Long> languageIds,
             @Param("minDuration") Integer minDuration,
             @Param("maxDuration") Integer maxDuration,

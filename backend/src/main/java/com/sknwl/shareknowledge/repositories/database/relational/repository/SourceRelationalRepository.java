@@ -55,8 +55,15 @@ public class SourceRelationalRepository implements SourceRepository {
     }
 
     @Override
-    public List<Source> list(String uri) {
-        return sourceJpaRepository.findTop30ByWebSiteUriContainingIgnoreCase(uri)
+    public List<Source> list(String search) {
+        if (search == null) {
+            return sourceJpaRepository.findFirst30ByOrderByWebSiteUriAsc()
+                    .stream()
+                    .map(mapper::map)
+                    .toList();
+        }
+
+        return sourceJpaRepository.findTop30ByWebSiteUriContainingIgnoreCase(search)
                 .stream()
                 .map(mapper::map)
                 .toList();
