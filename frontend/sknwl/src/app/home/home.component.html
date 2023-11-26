@@ -9,9 +9,10 @@
             </div>
     
             <div class="flex gap-4">
+                <p-toast></p-toast>
                 <p-button (click)="showContentForm()" label="Novo" icon="pi pi-plus" iconPos="right" [text]="true" [raised]="true" ></p-button>
                     <p-dialog header="Cadastrar conteúdo" [modal]="true" [(visible)]="contentFormVisible" [style]="{width: '50vw'}">
-                        <app-content-form (submitEvent)="hideContentForm()"></app-content-form>
+                        <app-content-form (submitEvent)="hideContentForm()" (messageEvent)="showMessageToast($event)"></app-content-form>
                     </p-dialog>
                 <div class="p-float-label">
                     <p-dropdown [options]="sortValues" [(ngModel)]="selectedSort"></p-dropdown>

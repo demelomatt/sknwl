@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ContentType } from '../content-type';
-import { CoreService } from 'src/app/core/core.service';
-import { Language } from 'src/app/core/language';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { StudyField } from '../study-field';
-import { ContentService } from '../content.service';
-import { Content } from '../content';
-import { Cover } from '../cover';
+import { CoreService } from 'src/app/core/core.service';
 import { Currency } from 'src/app/core/currency';
+import { Language } from 'src/app/core/language';
+import { Content } from '../content';
+import { ContentType } from '../content-type';
+import { ContentService } from '../content.service';
+import { Cover } from '../cover';
+import { StudyField } from '../study-field';
 
 @Component({
   selector: 'app-content-form',
@@ -17,6 +17,7 @@ import { Currency } from 'src/app/core/currency';
 })
 export class ContentFormComponent implements OnInit{
   @Output() submitEvent = new EventEmitter<void>();
+  @Output() messageEvent = new EventEmitter<{ severity: string, summary: string, detail: string }>();
 
   contentForm: FormGroup;
   authors: string[] | undefined;
@@ -120,12 +121,12 @@ export class ContentFormComponent implements OnInit{
       };
       this.contentService.publishContent(content).subscribe(
         (response) => {
-          // Handle success
-          console.log('Content submitted successfully', response);
+          const message = { severity: 'success', summary: 'Sucesso', detail: 'Conteúdo criado com sucesso.' };
+          this.messageEvent.emit(message);
         },
         (error) => {
-          // Handle error
-          console.error('Error submitting content', error);
+          const message = { severity: 'error', summary: 'Erro', detail: 'Erro ao criar conteúdo: ' + error.message};
+          this.messageEvent.emit(message);
         }
       );
       this.submitEvent.emit();

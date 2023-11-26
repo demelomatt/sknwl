@@ -18,6 +18,9 @@ interface Sort {
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit{
+
+  visible: boolean = true;
+
   sortValues: Sort[] | undefined;
   selectedSort: Sort | undefined;
 

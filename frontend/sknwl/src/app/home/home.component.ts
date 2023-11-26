@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ContentType } from '../content/content-type';
-import { CardContentComponent } from '../content/card/card-content.component';
-import { ContentSortType } from '../content/content-sort-type';
-import { Language } from '../core/language';
-import { CostType } from '../content/cost-type';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { ComponentProperties } from '../component-properties';
+import { Language } from '../core/language';
 import { Source } from '../core/source';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [MessageService]
+
 })
 export class HomeComponent{
+
   modeOptions: any[] = [{label: 'Plano de estudo', value: 'guide'}, {label: 'Conteúdo', value: 'content'}];
   modeValue: string = 'content';
 
@@ -27,6 +28,8 @@ export class HomeComponent{
   costTypes?: ComponentProperties[];
 
   contentFormVisible: boolean = false;
+
+  constructor(private messageService: MessageService) {}
 
   onSearchValueChanged(value: string) {
     this.searchValue = value
@@ -54,8 +57,7 @@ export class HomeComponent{
 
   onCostChange(cost: ComponentProperties[]) {
     this.costTypes = cost;
-    console.log(this.costTypes);
-  }
+    }
 
   showContentForm() {
     this.contentFormVisible = true;
@@ -63,5 +65,9 @@ export class HomeComponent{
 
   hideContentForm() {
     this.contentFormVisible = false;
+  }
+
+  showMessageToast(message: {severity:string, summary:string, detail: string}) {
+    this.messageService.add(message)
   }
 }

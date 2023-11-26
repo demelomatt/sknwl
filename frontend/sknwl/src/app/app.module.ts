@@ -21,6 +21,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { SliderModule } from 'primeng/slider';
 import { StyleClassModule } from 'primeng/styleclass';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { ContentFormComponent } from './content/form/content-form.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AutoCompleteModule,
     TooltipModule,
     SliderModule,
-    CheckboxModule
+    CheckboxModule,
+    ToastModule
   ],
   providers: [ContentService],
   bootstrap: [AppComponent]
