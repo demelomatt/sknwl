@@ -13,7 +13,9 @@ public interface ContentRepositoryMapper {
 
     ContentModel map(Content content);
     @Mapping(target = "publisher", qualifiedByName = "memberModelToMember")
+    @Mapping(target = "price.content", ignore = true)
     Content map(ContentModel contentModel);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void update(Content content, @MappingTarget ContentModel contentModel);
 

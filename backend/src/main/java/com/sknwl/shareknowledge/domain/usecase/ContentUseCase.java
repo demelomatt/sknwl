@@ -4,6 +4,7 @@ import com.sknwl.shareknowledge.domain.entity.Content;
 import com.sknwl.shareknowledge.domain.entity.ContentRating;
 import com.sknwl.shareknowledge.domain.entity.Language;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.CostType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.repositories.ContentRepository;
 import com.sknwl.shareknowledge.repositories.CoverImageRepository;
@@ -43,7 +44,7 @@ public class ContentUseCase {
         return contentRepository.list(pageable);
     }
 
-    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
+    public Page<Content> list(Integer pageNumber, Integer pageSize, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, List<CostType> costTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
         var pageable = PageRequest.of(pageNumber, pageSize);
         if (contentTypes == null) {
             contentTypes = List.of(ContentType.values());
@@ -54,7 +55,12 @@ public class ContentUseCase {
                     .map(Language::getId)
                     .toList();
         }
-        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, sourceId, languageIds, minDuration, maxDuration);
+        Boolean isFree = null;
+        if (costTypes!= null && costTypes.size() == 1) {
+            CostType type = costTypes.get(0);
+            isFree = CostType.FREE.equals(type);
+        }
+        return contentRepository.list(pageable, sort, keyphrase, minRatings, contentTypes, isFree,  sourceId, languageIds, minDuration, maxDuration);
     }
 
     public void delete(Long id) {

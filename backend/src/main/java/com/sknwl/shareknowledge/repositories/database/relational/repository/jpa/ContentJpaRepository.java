@@ -26,6 +26,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
             "   AND (c.language.id IN :languageIds) " +
             "   AND (:minDuration IS NULL OR c.durationMinutes >= :minDuration) " +
             "   AND (:maxDuration IS NULL OR c.durationMinutes <= :maxDuration) " +
+            "   AND (:isFree IS NULL OR (:isFree = false AND c.price.price.amount > 0) OR(:isFree = true AND c.price.price.amount = 0)) " +
             "GROUP BY c.id " +
             "HAVING (:minRatings IS NULL OR COUNT(r) >= :minRatings) " +
             "ORDER BY " +
@@ -37,6 +38,7 @@ public interface ContentJpaRepository extends JpaRepository<ContentModel, Long> 
     Page<ContentModelSummary> findContents(
             @Param("keyphrase") String keyphrase,
             @Param("contentTypes") List<ContentType> contentTypes,
+            @Param("isFree") Boolean isFree,
             @Param("sourceId") Long sourceId,
             @Param("languageIds") List<Long> languageIds,
             @Param("minDuration") Integer minDuration,

@@ -3,6 +3,7 @@ package com.sknwl.shareknowledge.api.rest.controller;
 import com.sknwl.shareknowledge.api.rest.mapper.ContentApiMapper;
 import com.sknwl.shareknowledge.api.rest.model.*;
 import com.sknwl.shareknowledge.domain.entity.enums.ContentType;
+import com.sknwl.shareknowledge.domain.entity.enums.CostType;
 import com.sknwl.shareknowledge.domain.entity.enums.SortType;
 import com.sknwl.shareknowledge.domain.usecase.ContentUseCase;
 import org.springframework.data.domain.Page;
@@ -76,12 +77,13 @@ public class ContentController {
             @RequestParam(required = false) String keyphrase,
             @RequestParam(defaultValue = "0") Integer minRatings,
             @RequestParam(required = false) List<ContentType> contentTypes,
+            @RequestParam(required = false) List<CostType> costTypes,
             @RequestParam(required = false) Long sourceId,
             @RequestParam(required = false) List<Long> languageIds,
             @RequestParam(required = false) Integer minDuration,
             @RequestParam(required = false) Integer maxDuration
             ) {
-        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, sourceId, languageIds, minDuration, maxDuration);
+        var contents = contentUseCase.list(pageNumber, pageSize, sort, keyphrase, minRatings, contentTypes, costTypes, sourceId, languageIds, minDuration, maxDuration);
         var responseContents = mapper.map(contents.getContent());
         return ResponseEntity.ok(new PageImpl<>(responseContents, PageRequest.of(contents.getNumber(), contents.getSize()), contents.getTotalElements()));
     }

@@ -15,7 +15,7 @@ public interface ContentRepository {
     void hardDelete(Long id);
     Content get(Long id);
     Page<Content> list(Pageable pageable);
-    Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration);
+    Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Boolean isFree, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration);
 
     ContentRating registerRating(ContentRating contentRating);
     ContentRating updateRating(ContentRating contentRating);

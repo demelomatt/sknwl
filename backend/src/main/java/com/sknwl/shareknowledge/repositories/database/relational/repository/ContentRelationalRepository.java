@@ -12,6 +12,7 @@ import com.sknwl.shareknowledge.repositories.database.relational.model.ContentMo
 import com.sknwl.shareknowledge.repositories.database.relational.model.ContentRatingModel;
 import com.sknwl.shareknowledge.repositories.database.relational.model.CoverUrlModel;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentJpaRepository;
+import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentPriceJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.ContentRatingJpaRepository;
 import com.sknwl.shareknowledge.repositories.database.relational.repository.jpa.StudyFieldJpaRepository;
 import jakarta.transaction.Transactional;
@@ -28,13 +29,15 @@ public class ContentRelationalRepository implements ContentRepository {
     private final ContentJpaRepository contentJpaRepository;
     private final ContentRatingJpaRepository contentRatingJpaRepository;
     private final StudyFieldJpaRepository studyFieldJpaRepository;
+    private final ContentPriceJpaRepository contentPriceJpaRepository;
 
     private final ContentRepositoryMapper mapper = ContentRepositoryMapper.INSTANCE;
 
-    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository, StudyFieldJpaRepository studyFieldJpaRepository) {
+    public ContentRelationalRepository(ContentJpaRepository contentJpaRepository, ContentRatingJpaRepository contentRatingJpaRepository, StudyFieldJpaRepository studyFieldJpaRepository, ContentPriceJpaRepository contentPriceJpaRepository) {
         this.contentJpaRepository = contentJpaRepository;
         this.contentRatingJpaRepository = contentRatingJpaRepository;
         this.studyFieldJpaRepository = studyFieldJpaRepository;
+        this.contentPriceJpaRepository = contentPriceJpaRepository;
     }
 
     @Transactional
@@ -47,8 +50,12 @@ public class ContentRelationalRepository implements ContentRepository {
         if (contentModel.getStudyField().getId() == null) {
             studyFieldJpaRepository.save(contentModel.getStudyField());
         }
-        contentJpaRepository.save(contentModel);
-        return mapper.map(contentModel);
+
+        var createdContent = contentJpaRepository.save(contentModel);
+        createdContent.getPrice().setContent(createdContent);
+        contentPriceJpaRepository.save(createdContent.getPrice());
+
+        return mapper.map(createdContent);
     }
 
     @Transactional
@@ -103,9 +110,9 @@ public class ContentRelationalRepository implements ContentRepository {
         return new PageImpl<>(contents);
     }
 
-    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
+    public Page<Content> list(Pageable pageable, SortType sort, String keyphrase, Integer minRatings, List<ContentType> contentTypes, Boolean isFree, Long sourceId, List<Long> languageIds, Integer minDuration, Integer maxDuration) {
 
-        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, sourceId, languageIds, minDuration, maxDuration, minRatings, sort.name(), pageable);
+        var contentsSummary = contentJpaRepository.findContents(keyphrase, contentTypes, isFree, sourceId, languageIds, minDuration, maxDuration, minRatings, sort.name(), pageable);
         var contents = contentsSummary.getContent().stream().map(contentModelSummary -> {
             var contentModel = contentModelSummary.getContent();
             contentModel.setReviewers(contentModelSummary.getCount());
