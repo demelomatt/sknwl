@@ -23,11 +23,13 @@ public class ContentModel {
 
     private String title;
 
-    @Column(length = 1000)
+    @Column(length = 2000)
     private String description;
 
     @Enumerated()
     private ContentType contentType;
+
+    @Column(length = 2000)
     private String url;
 
     @ManyToOne
