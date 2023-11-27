@@ -11,5 +11,6 @@ public interface MemberRepository {
     void softDelete(Long id);
     void hardDelete(Long id);
     Member get(Long id);
+    Member get(String email);
     Page<Member> list(PageRequest pageable);
 }

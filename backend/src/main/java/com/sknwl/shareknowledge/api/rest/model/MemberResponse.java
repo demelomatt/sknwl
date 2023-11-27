@@ -5,6 +5,7 @@ import java.util.List;
 
 public record MemberResponse(Long id,
                              String name,
+                             String email,
                              String biography,
                              List<String> subjects,
                              List<StudyFieldPayload> studyFields,

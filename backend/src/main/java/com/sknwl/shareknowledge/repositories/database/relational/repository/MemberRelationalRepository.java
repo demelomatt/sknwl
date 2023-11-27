@@ -72,6 +72,12 @@ public class MemberRelationalRepository implements MemberRepository {
     }
 
     @Override
+    public Member get(String email) {
+        var memberModel = memberJpaRepository.findByEmail(email).orElseThrow(()-> new NotFoundException("Unable to find the specified member"));
+        return mapper.map(memberModel);
+    }
+
+    @Override
     public Page<Member> list(PageRequest pageable) {
         var members = memberJpaRepository.findAllByActiveTrue(pageable)
                 .stream()
