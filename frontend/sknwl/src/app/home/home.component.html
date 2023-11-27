@@ -2,7 +2,7 @@
 <div class="flex flex-column md:flex-row gap-3">
     <app-sidebar (formatsChanged)="onTypesChange($event)" (languagesChanged)="onLanguagesChange($event)" (sourcesChanged)="onSourcesChange($event)" (fieldsChanged)="onFieldsChange($event)" (durationChanged)="onDurationChange($event)" (costChanged)="onCostChange($event)">
     </app-sidebar>
-    <main style="min-width: 80vw">
+    <main style="min-width: 78vw">
         <div class="flex gap-6 p-3 align-items-center justify-content-between w-12 md:w-11 flex-column md:flex-row" >
             <div class="flex">
                 <p-selectButton [options]="modeOptions" [(ngModel)]="modeValue" optionLabel="label" optionValue="value"></p-selectButton>

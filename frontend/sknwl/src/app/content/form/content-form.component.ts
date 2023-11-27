@@ -112,7 +112,7 @@ export class ContentFormComponent implements OnInit{
         language: this.contentForm.value.language,
         studyField: Object.hasOwn(this.selectedField , 'id') ? this.selectedField : {name: this.contentForm.value.studyField},
         durationMinutes: this.contentForm.value.durationMinutes,
-        price: {amount: this.contentForm.value.price, currency: {id: 19, code: 'BRL'}},
+        price: {amount: this.contentForm.value.price, currency: {id: 18, code: 'BRL'}},
         publisher: {
           id: 1,
           name: 'System User'
@@ -129,6 +129,7 @@ export class ContentFormComponent implements OnInit{
           this.messageEvent.emit(message);
         }
       );
+      this.contentForm.reset();
       this.submitEvent.emit();
     } else {
       console.log("Preencha todos os campos");
