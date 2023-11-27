@@ -129,6 +129,7 @@ export class ContentFormComponent implements OnInit{
           this.messageEvent.emit(message);
         }
       );
+      this.contentForm.reset();
       this.submitEvent.emit();
     } else {
       console.log("Preencha todos os campos");
