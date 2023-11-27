@@ -29,4 +29,6 @@ public class Member {
     private List<Donation> sentDonations;
     private List<Donation> receivedDonations;
     private Boolean active;
+    private String email;
+    private String pwd;
 }

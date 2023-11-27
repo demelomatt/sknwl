@@ -22,6 +22,10 @@ public class MemberModel {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
+    private String email;
+    private String pwd;
     private String biography;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

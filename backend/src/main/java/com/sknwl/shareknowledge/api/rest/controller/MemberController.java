@@ -1,6 +1,7 @@
 package com.sknwl.shareknowledge.api.rest.controller;
 
 import com.sknwl.shareknowledge.api.rest.mapper.MemberApiMapper;
+import com.sknwl.shareknowledge.api.rest.model.MemberAuthRequest;
 import com.sknwl.shareknowledge.api.rest.model.MemberRequest;
 import com.sknwl.shareknowledge.api.rest.model.MemberResponse;
 import com.sknwl.shareknowledge.domain.usecase.MemberUseCase;
@@ -18,6 +19,12 @@ public class MemberController {
 
     public MemberController(MemberUseCase memberUseCase) {
         this.memberUseCase = memberUseCase;
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<MemberResponse> auth(@RequestBody MemberAuthRequest memberRequest) {
+        var member = memberUseCase.authenticate(mapper.map(memberRequest));
+        return ResponseEntity.ok(mapper.map(member));
     }
 
     @PostMapping

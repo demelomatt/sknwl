@@ -1,5 +1,6 @@
 package com.sknwl.shareknowledge.api.rest;
 
+import com.sknwl.shareknowledge.domain.exception.AuthenticationException;
 import com.sknwl.shareknowledge.domain.exception.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,12 @@ public class ExceptionAdvice {
     @ExceptionHandler({NotFoundException.class, EntityNotFoundException.class})
     public ResponseEntity<String> handleNotFound(Exception ex, WebRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({AuthenticationException.class})
+    public ResponseEntity<String> handleUnauthorized(Exception ex, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 
 }
